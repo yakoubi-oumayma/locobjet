@@ -10,8 +10,32 @@ use Illuminate\Support\Facades\DB;
 class Ad extends Model
 {
     use HasFactory;
+    protected $fillable = ['ad_id', 'item_id'];
+    protected $table = 'ads';
+    protected $primaryKey = "ad_id";
 
-    public static function getAllAd(){
+    public function adReviews()
+    {
+        return $this->hasMany(AdReview::class, 'ad_id');
+    }
+
+    public function item()
+    {
+        return $this->belongsTo(Item::class, 'item_id');
+    }
+
+    public static function getAllAd()
+    {
+        $all_ads = Ad::orderby("ad_id", "asc")->get();
+        return $all_ads;
+    }
+
+    public static function getAdInfo($ad_id)
+    {
+        $ad = DB::select("SELECT * FROM ads,items WHERE ads.item_id=items.item_id AND ad_id=? LIMIT 1", [$ad_id]);
+        return $ad[0];
+
+public static function getAllAd(){
         $all_ads = DB::select("SELECT * FROM ads order by ad_id ASC");
         $ad_images = [];
         foreach ($all_ads as $ad){
@@ -49,11 +73,20 @@ class Ad extends Model
         return $ad_infos;
     }
 
-    static public function addAd($name, $price, $city, $description, $category_id,
-                                 $imagename,
-                                 $title, $available_form, $min_rent_period, $availability,
-                                 $available_month, $available_days)
-    {
+    static public function addAd(
+        $name,
+        $price,
+        $city,
+        $description,
+        $category_id,
+        $imagename,
+        $title,
+        $available_form,
+        $min_rent_period,
+        $availability,
+        $available_month,
+        $available_days
+    ) {
         DB::insert('INSERT INTO items (name, price, city, description, category_id, user_id ) VALUES (?,?,?,?,?,?)', [$name, $price, $city, $description, $category_id, 1]);
 
         $lastId = DB::table('items')->latest('item_id')->first()->item_id;
@@ -82,8 +115,15 @@ class Ad extends Model
     }
 
 
-    static public function addExistenItemAd($item_id, $title, $available_from, $min_rent_period, $availability,
-                                            $available_month, $available_days){
+    static public function addExistenItemAd(
+        $item_id,
+        $title,
+        $available_from,
+        $min_rent_period,
+        $availability,
+        $available_month,
+        $available_days
+    ) {
 
         $createdAt = Carbon::now();
         DB::insert('INSERT INTO ads (title, available_from, min_rent_period, availability,createdAt , item_id) VALUES (?,?,?,?,?,?)', [$title, $available_from, $min_rent_period, $availability, $createdAt, $item_id]);
@@ -103,19 +143,15 @@ class Ad extends Model
         }
     }
 
-    static public function searchByItemId($itemId){
+    static public function searchByItemId($itemId)
+    {
         $item = DB::select('SELECT  items.*, categories.name as category_name
                      FROM items
                      INNER JOIN categories ON items.category_id = categories.category_id
                      WHERE items.item_id = ?', [$itemId]);
 
-        $item_image= DB::select('SELECT imagename  FROM  item_images  WHERE item_images.item_id = ?', [$itemId]);
+        $item_image = DB::select('SELECT imagename  FROM  item_images  WHERE item_images.item_id = ?', [$itemId]);
 
         return [$item, $item_image];
-    }
-
-    public function item()
-    {
-        return $this->belongsTo(Item::class, 'item_id');
     }
 }
