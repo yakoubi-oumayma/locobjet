@@ -27,7 +27,7 @@
     @else
         <ul class="navbar-nav ms-auto">
             <nav class="nav-items">
-                <a href="#">Mes annonces</a>
+                <a href="{{route("myAds")}}">Mes annonces</a>
                 <a href="#">Mes objets</a>
                 <a href="#">My Id : {{Auth::user()->user_id }}</a>
                 <form action="{{ route('logout') }}" method="POST">

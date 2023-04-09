@@ -65,7 +65,7 @@
                                     <div class="col-12 col-md-6 col-lg-4">
                                         <div class="clean-product-item">
                                             <div class="image"><a href="#"><img class="img-fluid d-block mx-auto"
-                                                                                src="{{asset("assets/img/tech/image2.jpg")}}"></a>
+                                                                                src="{{asset("storage/".$ad_images[$ad->ad_id])}}"></a>
                                             </div>
                                             <div class="product-name"><a href="#">{{$ad->title}}</a></div>
                                             <div class="about">
