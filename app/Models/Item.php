@@ -3,11 +3,20 @@
 namespace App\Models;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class Item
+class Item extends Model
 {
     protected $fillable = ['item_id', 'user_id'];
     protected $primaryKey = 'item_id';
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
     /*public function __construct($name, $price, $description, $image, $category, $user_id)
     {
         $this->name = $name;
@@ -17,7 +26,7 @@ class Item
         $this->category_id = $category;
         $this->user_id = $user_id;
     }*/
-/*
+    /*
     public static function getAllItems()
     {
         $db = new Database();

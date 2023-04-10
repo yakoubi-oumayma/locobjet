@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
@@ -20,12 +21,23 @@ class User extends Authenticatable
      */
     protected $primaryKey = 'user_id';
     protected $fillable = [
+        'user_id',
         'f_name',
         'l_name',
         'username',
         'email',
         'password',
     ];
+
+    /**
+     * Get the name of the primary key for the model.
+     *
+     * @return string
+     */
+    public function getKeyName()
+    {
+        return 'user_id';
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -54,15 +66,21 @@ class User extends Authenticatable
 
     public static function selectUser()
     {
-        $user_id =  1;
-        $user = DB::select("SELECT * FROM users WHERE user_id=?",[$user_id]);
-        return $user[0];
+        $email =  session('email');
+        $user = User::where('email', $email)->orderBy('username', 'asc')->get();
+        return $user;
     }
+    /* public static function selectUser()
+    {
+        $user_id =  1;
+        $user = DB::select("SELECT * FROM users WHERE user_id=?", [$user_id]);
+        return $user[0];
+    }*/
 
     public static function getUserId()
     {
         $email =  session('email');
-        $user_id = User::where('email', $email)->pluck('id');
+        $user_id = User::where('email', $email)->pluck('user_id');
         return $user_id;
     }
 
@@ -83,9 +101,9 @@ class User extends Authenticatable
             $data['email'] = $fields['email'];
             session()->put('email',  $data['email']);
         }
-        /*if (!empty($fields['password'])) {
+        if (!empty($fields['password'])) {
             $data['password'] = Hash::make($fields['password']);
-        }*/
+        }
         $this->update($data);
     }
 }
