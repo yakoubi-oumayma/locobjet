@@ -44,24 +44,24 @@ class Item extends Model
         return $result;
     }
 */
-    public static function getItemsByUserId($user_id)
+    public static function getItemsByUserId($user_id): array
     {
-        $all_items = DB::select("SELECT *,items.name as item_name,categories.name as category_name FROM items,categories WHERE user_id = ? AND items.category_id=categories.category_id", [$user_id]);
-        return $all_items;
+        return DB::select("SELECT *, items.name as item_name,
+                                        categories.name as category_name, items.category_id as category_id
+                                        FROM items,categories
+                                        WHERE user_id = ?
+                                        AND items.category_id = categories.category_id", [$user_id]);
     }
 
-    /*
-    public function save()
+    public static function editItem($name, $price, $city, $description, $user_id, $category_id, $item_id): void
     {
-        $db = new Database();
-        $db->query("INSERT INTO items (name, price, description, image, category, user_id) VALUES (:name, :price, :description, :image, :category, :user_id)");
-        $db->bind(':name', $this->name);
-        $db->bind(':price', $this->price);
-        $db->bind(':description', $this->description);
-        $db->bind(':image', $this->image);
-        $db->bind(':category', $this->category_id);
-        $db->bind(':user_id', $this->user_id);
-        $db->execute();
+        DB::update("UPDATE items SET name = ?, price = ?, city = ?, description = ?, user_id = ?, category_id = ?
+             WHERE item_id = ?", [$name, $price, $city, $description, $user_id, $category_id, $item_id]);
     }
-*/
+
+    public static function getCategories()
+    {
+        return DB::select("SELECT * FROM categories");
+    }
+
 }
