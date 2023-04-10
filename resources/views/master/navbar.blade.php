@@ -11,7 +11,10 @@
     <link rel="stylesheet" href="{{asset("assets/css/baguetteBox.min.css")}}">
     <link rel="stylesheet" href="{{asset("assets/css/vanilla-zoom.min.css")}}">
     <link rel="stylesheet" href="{{asset("assets/css/navbar.css")}}">
-    @yield("link-style")
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-..checksum.." crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js" integrity="sha512-..checksum.." crossorigin="anonymous"></script>
+   @yield("link-style")
 
 </head>
 <header class="header">
