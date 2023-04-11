@@ -1,4 +1,7 @@
- <section class="clean-block clean-catalog dark">
+@php
+if(!isset($cat_ids)) $cat_ids = "";
+@endphp
+<section class="clean-block clean-catalog dark">
         <div class="container">
             <div class="block-heading">
                 <h2 class="text-info">Annonces</h2>
@@ -11,20 +14,20 @@
                                 <div class="filter-item">
                                     <h3>Categories</h3>
                                     <div class="form-check"><input class="form-check-input" type="checkbox"
-                                                                   id="formCheck-1"><label class="form-check-label"
-                                                                                           for="formCheck-1">Phones</label>
+                                                                   id="formCheck-1" value="1" onchange="redirectToPage()"  @php if(strstr($cat_ids,"1")) echo "checked" @endphp><label class="form-check-label"
+                                                                                           for="formCheck-1">Sports et Divertissement</label>
                                     </div>
                                     <div class="form-check"><input class="form-check-input" type="checkbox"
-                                                                   id="formCheck-2"><label class="form-check-label"
+                                                                   id="formCheck-2" value="2" onchange="redirectToPage()"  @php if(strstr($cat_ids,"2")) echo "checked" @endphp><label class="form-check-label"
                                                                                            for="formCheck-2">Laptops</label>
                                     </div>
                                     <div class="form-check"><input class="form-check-input" type="checkbox"
-                                                                   id="formCheck-3"><label class="form-check-label"
+                                                                   id="formCheck-3" value="3" onchange="redirectToPage()"  @php if(strstr($cat_ids,"3")) echo "checked" @endphp><label class="form-check-label"
                                                                                            for="formCheck-3">PC</label>
                                     </div>
                                     <div class="form-check"><input class="form-check-input" type="checkbox"
-                                                                   id="formCheck-4"><label class="form-check-label"
-                                                                                           for="formCheck-4">Tablets</label>
+                                                                   id="formCheck-4" value="4" onchange="redirectToPage()"  @php if(strstr($cat_ids,"4")) echo "checked" @endphp><label class="form-check-label"
+                                                                                           for="formCheck-4">Véhicules et automobiles</label>
                                     </div>
                                 </div>
                             </div>
@@ -99,4 +102,28 @@
             </div>
         </div>
     </section>
+ <script>
+     function redirectToPage() {
+         console.log("hahahahahaha");
+         // get all the checkboxes
+         const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 
+         // initialize an empty array to store the selected checkboxes
+         const selectedCheckboxes = [];
+
+         // loop through the checkboxes and check if they are checked
+         checkboxes.forEach(checkbox => {
+             if (checkbox.checked) {
+                 // if checked, add the checkbox to the selectedCheckboxes array
+                 selectedCheckboxes.push(checkbox.value);
+             }
+         });
+
+         // if any checkbox is selected, redirect to the desired page
+         if (selectedCheckboxes.length > 0) {
+             console.log("pppp")
+             const selectedCheckboxesValue = selectedCheckboxes.join(",");
+             window.location.href = "/all-ads/" + selectedCheckboxesValue;
+         }
+     }
+ </script>
