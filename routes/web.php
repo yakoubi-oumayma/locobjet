@@ -1,10 +1,11 @@
 <?php
 
+use App\Http\Controllers\MyreservationsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdController;
-use \App\Http\Controllers\ItemController;
+use App\Http\Controllers\ItemController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,13 +32,23 @@ Route::get("/ad/{ad_id}", [AdController::class, "showAd"])->name("showAd");
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get("/all_items", [ItemController::class, 'listItems'])->name('allItems');
-Route::get("/createAd/{item_id}", [AdController::class, 'createAdFromItem'])->name('createAdFromItem');
-Route::get("/createAd", [AdController::class, 'createAd'])->name('createAd');
-Route::post("/createAd/{itemId}", [AdController::class, "storeExistenItemAd"]);
-Route::post("/createAd", [AdController::class, "storeAd"]);
+
+Route::get("/all_items",[ItemController::class,'listItems'])->name('allItems');
+Route::post("/all_items",[ItemController::class,'editItem'])->name('editItem');
+
+Route::get("/createAd/{item_id}",[AdController::class,'createAdFromItem'])->name('createAdFromItem');
+Route::get("/createAd",[AdController::class,'createAd'])->name('createAd');
+Route::post("/createAd/{itemId}" ,[AdController::class , "storeExistenItemAd"]);
+Route::post("/createAd" ,[AdController::class , "storeAd"]);
 
 
+
+Route::get("/my_reservation",[\App\Http\Controllers\MyreservationsController::class,"showMyAdsactive"])->name('myAds');
+
+
+Route::post("/my_reservation" ,[MyreservationsController::class ,"addCom"]);
+Route::get("/my_locations",[\App\Http\Controllers\MylocationsController::class,"ShowMylocations"]);
+Route::post("/my_locations" ,[\App\Http\Controllers\MylocationsController::class ,"addCom"]);
 //Route::get("/profile",[ProfileController::class,"index"])->name('profile');
 Route::get("/my_ads", [AdController::class, "showMyAds"])->name('myAds');
 
