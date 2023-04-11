@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AdReview;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
@@ -15,14 +16,12 @@ class ProfileController extends Controller
 
     public function index()
     {
-        if (!session()->has('email')) {
-            return view('SignIn');
-        } else {
+        if (Auth::check()) {
             $user = new User();
             $user_infos = $user::selectUser();
             $email_session = session('email');
             //$userId = auth()->user()->id; // Get the ID of the currently logged in user
-            $user_id = $user::getUserId();
+            $user_id = Auth::user()->user_id ;
             /* $reviews = DB::select("SELECT * FROM ad_reviews,ads,items,users WHERE
                         ad_reviews.ad_id=ads.ad_id AND ads.item_id=items.item_id AND items.user_id=users.user_id AND users.user_id=?",[$user_id]);*/
             $reviews = AdReview::whereHas('ad.item.user', function ($query) use ($user_id) {
@@ -34,7 +33,10 @@ class ProfileController extends Controller
                 'reviews'    => $reviews,
                 'email_session' => $email_session
             ]);
+        } else {
+            return redirect()->route('login');
         }
+
     }
 
     public function settings()

@@ -85,12 +85,12 @@
 
     @foreach ($user_infos as $u)
         @php
-            
+
             $username = $u->username;
             $email = $u->email;
             $f_name = $u->f_name;
             $l_name = $u->l_name;
-            
+
         @endphp
     @endforeach
 
@@ -278,7 +278,7 @@
                             @foreach ($reviews as $review)
                                 @php
                                     $comment = $review->comment;
-                                    $review_date = $review->created_at->format('Y-m-d');
+                                    $review_date = $review->created_at;
                                     $rating = $review->rating;
                                     $f_name = $review->fromUser->f_name;
                                     $l_name = $review->fromUser->l_name;

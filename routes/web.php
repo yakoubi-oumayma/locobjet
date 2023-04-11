@@ -46,9 +46,7 @@ Route::post("/createAd" ,[AdController::class , "storeAd"]);
 Route::get("/my_ads", [AdController::class, "showMyAds"])->name('myAds');
 
 
-Route::get('/login', function () {
-    return view('SignIn');
-});
+
 Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile');
 Route::get('/settings', [App\Http\Controllers\ProfileController::class, 'settings'])->name('settings');
 Route::put('/settings/{user}', [App\Http\Controllers\ProfileController::class, 'update'])->name('user.update');
