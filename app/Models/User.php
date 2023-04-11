@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Hash;
@@ -66,7 +67,7 @@ class User extends Authenticatable
 
     public static function selectUser()
     {
-        $email =  session('email');
+        $email =  Auth::user()->email;
         $user = User::where('email', $email)->orderBy('username', 'asc')->get();
         return $user;
     }

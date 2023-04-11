@@ -24,18 +24,11 @@ class Ad extends Model
         return $this->belongsTo(Item::class, 'item_id');
     }
 
-    public static function getAllAd()
-    {
-        $all_ads = Ad::orderby("ad_id", "asc")->get();
-        return $all_ads;
-    }
 
-    public static function getAdInfo($ad_id)
-    {
-        $ad = DB::select("SELECT * FROM ads,items WHERE ads.item_id=items.item_id AND ad_id=? LIMIT 1", [$ad_id]);
-        return $ad[0];
 
-public static function getAllAd(){
+
+
+    public static function getAllAd(){
         $all_ads = DB::select("SELECT * FROM ads order by ad_id ASC");
         $ad_images = [];
         foreach ($all_ads as $ad){
