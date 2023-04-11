@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MyreservationsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -40,4 +41,10 @@ Route::post("/createAd" ,[AdController::class , "storeAd"]);
 
 Route::get("/profile",[ProfileController::class,"index"])->name('profile');
 Route::get("/my_ads",[AdController::class,"showMyAds"])->name('myAds');
+Route::get("/my_reservation",[\App\Http\Controllers\MyreservationsController::class,"showMyAdsactive"])->name('myAds');
+
+
+Route::post("/my_reservation" ,[MyreservationsController::class ,"addCom"]);
+Route::get("/my_locations",[\App\Http\Controllers\MylocationsController::class,"ShowMylocations"]);
+Route::post("/my_locations" ,[\App\Http\Controllers\MylocationsController::class ,"addCom"]);
 

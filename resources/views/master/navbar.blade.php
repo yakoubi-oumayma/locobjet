@@ -11,6 +11,10 @@
     <link rel="stylesheet" href="{{asset("assets/css/baguetteBox.min.css")}}">
     <link rel="stylesheet" href="{{asset("assets/css/vanilla-zoom.min.css")}}">
     <link rel="stylesheet" href="{{asset("assets/css/navbar.css")}}">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
+
     @yield("link-style")
 
 </head>
@@ -21,6 +25,8 @@
             <nav class="nav-items">
                 <a href="/login">Se connecter</a>
                 <a href="/register">S'inscrire</a>
+                <a href="/my_reservation">Mes reservations</a>
+                <a href="/my_locations">Mes locations</a>
                 <button class="custom-btn btn-5"><span>Ajouter annonce</span></button>
             </nav>
         </ul>
