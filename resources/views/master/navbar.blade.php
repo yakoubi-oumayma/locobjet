@@ -6,9 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Catalog - Brand</title>
     <link rel="stylesheet" href="{{asset("assets/bootstrap/css/bootstrap.min.css")}}">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i&amp;display=swap">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>,700,700i,600,600i&amp;display=swap">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="{{asset("assets/fonts/simple-line-icons.min.css")}}">
     <link rel="stylesheet" href="{{asset("assets/css/baguetteBox.min.css")}}">
     <link rel="stylesheet" href="{{asset("assets/css/vanilla-zoom.min.css")}}">
