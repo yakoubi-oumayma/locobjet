@@ -19,7 +19,7 @@ class ProfileController extends Controller
         if (Auth::check()) {
             $user = new User();
             $user_infos = $user::selectUser();
-            $email_session = session('email');
+            $email_session = Auth::user()->email;
             //$userId = auth()->user()->id; // Get the ID of the currently logged in user
             $user_id = Auth::user()->user_id ;
             /* $reviews = DB::select("SELECT * FROM ad_reviews,ads,items,users WHERE
@@ -41,9 +41,7 @@ class ProfileController extends Controller
 
     public function settings()
     {
-        if (!session()->has('email')) {
-            return view('SignIn');
-        } else {
+        if (Auth::check()){
             $user = new User();
             $user_Infos = $user::selectUser();
 
@@ -51,6 +49,10 @@ class ProfileController extends Controller
                 'user_infos' => $user_Infos
             ]);
         }
+        else{
+            return redirect()->route('login');
+        }
+
     }
 
     public function update(Request $request, User $user)
@@ -65,7 +67,6 @@ class ProfileController extends Controller
                 "email",
                 Rule::unique("users", "email")->ignore($user->user_id, "user_id")
             ],
-            "password" => "nullable"
         ]);
         $user->updateFields($request->all());
 

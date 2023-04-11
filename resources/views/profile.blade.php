@@ -94,10 +94,7 @@
         @endphp
     @endforeach
 
-    @php
-        $email_session = $email_session;
-        //$email_session = 'simo@gmail.com';
-    @endphp
+
 
 
 

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('reservation', function (Blueprint $table) {
             $table->date('start_date');
             $table->date('end_date');
-            $table->enum('state', ['not reserved','waiting', 'reserved']);
+            $table->enum('state', ['requested','accepted', 'finished']);
             $table->unsignedInteger('ad_id');
             $table->foreign('ad_id')->references('ad_id')->on('ads')->onDelete('cascade');
             $table->unsignedInteger('user_id');
