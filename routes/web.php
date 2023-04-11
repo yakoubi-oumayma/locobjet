@@ -26,6 +26,7 @@ Route::get("/add_ads", [AdController::class, "index"]);
 Route::get("/add_ad_new_item", [AdController::class, "createNewItem"]);
 
 Route::get("/all-ads", [AdController::class, "showAllAds"])->name("allAds");
+Route::get("/all-ads/{cat_ids}", [AdController::class, "showAdsByCategory"])->name("AdsByCategory");
 Route::get("/ad/{ad_id}", [AdController::class, "showAd"])->name("showAd");
 
 
