@@ -22,6 +22,14 @@ class AdController extends Controller
         return view("all_ads",compact("all_ads","ad_images"));
     }
 
+    public function showAdsByCategory($cat_ids){
+        $ads_info = Ad::getAdsByCategory($cat_ids);
+        $all_ads = $ads_info["all_ads"];
+        $ad_images = $ads_info["ad_images"];
+        return view("all_ads",compact("all_ads","ad_images",'cat_ids'));
+    }
+
+
     public function showAd(Request $request, $ad_id)
     {
         $info = Ad::getAdInfo($ad_id);

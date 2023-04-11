@@ -14,19 +14,20 @@
     <link rel="stylesheet" href="{{asset("assets/css/baguetteBox.min.css")}}">
     <link rel="stylesheet" href="{{asset("assets/css/vanilla-zoom.min.css")}}">
     <link rel="stylesheet" href="{{asset("assets/css/navbar.css")}}">
-
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-..checksum.." crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js" integrity="sha512-..checksum.." crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
+
+
    @yield("link-style")
+
+
+
+
 
 </head>
 <header class="header">
-    <a href="/" class="logo"><span class="logo-first">LOC</span>OBJET</a>
     @guest
         <ul class="navbar-nav ms-auto">
             <nav class="nav-items">
@@ -38,19 +39,64 @@
             </nav>
         </ul>
     @else
-        <ul class="navbar-nav ms-auto">
-            <nav class="nav-items">
-                <a href="{{route("myAds")}}">Mes annonces</a>
-                <a href="#">Mes objets</a>
-                <a href="#">My Id : {{Auth::user()->user_id }}</a>
-                <form action="{{ route('logout') }}" method="POST">
-                    @csrf
-                    <button type="submit" class="btn btn-danger">Logout</button>
-                </form>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a href="/" class="logo"><span class="logo-first">LOC</span>OBJET</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav" style="  margin-left: auto;">
+                    <button class="custom-btn btn-5"><span>Ajouter annonce</span></button>
+                </ul>
+                <ul class="navbar-nav ml-auto" style="margin-left: auto;">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-user"></i>
+                        </a>
 
-                <button class="custom-btn btn-5"><span>Ajouter annonce</span></button>
-            </nav>
-        </ul>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profileDropdown">
+                            <a class="dropdown-item" href="/profile">Profile</a>
+                            <a class="dropdown-item" href="">Friends</a>
+                            <a class="dropdown-item" href="discussion.html">Discussions</a>
+                            <a class="dropdown-item" href="FavQuotes.html">Favorite Quotes</a>
+                            <a class="dropdown-item" href="addQuotes.html">Add Quote</a>
+                            <a class="dropdown-item" href="settings.html">Account Settings</a>
+                            <div class="dropdown-divider"></div>
+                            <form action="{{ route('logout') }}" method="POST">
+                                @csrf
+                            <button class="dropdown-item">Se déconnecter</button>
+                            </form>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="far fa-bell"></i>
+                            <span class="badge badge-warning">3</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="notifDropdown">
+                            <a class="dropdown-item" href="#">Notification 1</a>
+                            <a class="dropdown-item" href="#">Notification 2</a>
+                            <a class="dropdown-item" href="#">Notification 3</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">View All Notifications</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="far fa-envelope"></i>
+                            <span class="badge badge-danger">1</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+
+
     @endguest
 
 </header>
@@ -62,6 +108,14 @@
 <script src="{{asset("assets/js/baguetteBox.min.js")}}"></script>
 <script src="{{asset("assets/js/vanilla-zoom.js")}}"></script>
 <script src="{{asset("assets/js/theme.js")}}"></script>
+<script src=" https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script>
+    $('.favorite').on('click', function() {
+        $(this).toggleClass('active');
+    });
+</script>
 </body>
 
 </html>

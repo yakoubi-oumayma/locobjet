@@ -100,10 +100,6 @@ class User extends Authenticatable
         }
         if (!empty($fields['email'])) {
             $data['email'] = $fields['email'];
-            session()->put('email',  $data['email']);
-        }
-        if (!empty($fields['password'])) {
-            $data['password'] = Hash::make($fields['password']);
         }
         $this->update($data);
     }

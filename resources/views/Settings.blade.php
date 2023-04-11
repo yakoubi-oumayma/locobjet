@@ -145,13 +145,6 @@
                                 </div>
                             </div>
 
-                            <div class="row mt-3">
-                                <div class="col-md-12">
-                                    <label class="labels">Password</label>
-                                    <input type="text" name="password" class="form-control"
-                                        placeholder="******************">
-                                </div>
-                            </div>
 
                             <div class="mt-5 text-center">
                                 <button class="btn btn-primary profile-button" type="submit">Save Profile</button>

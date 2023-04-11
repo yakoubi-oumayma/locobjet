@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('item_images', function (Blueprint $table) {
-            $table->String('image-name');
+            $table->String('imagename');
             $table->unsignedInteger('item_id');
-            $table->primary(['image-name', 'item_id']);
+            $table->primary(['imagename', 'item_id']);
             $table->foreign('item_id')->references('item_id')->on('items')->onDelete('cascade');
             Schema::enableForeignKeyConstraints();
         });
