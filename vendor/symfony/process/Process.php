@@ -308,7 +308,7 @@ class Process implements \IteratorAggregate
         $env += '\\' === \DIRECTORY_SEPARATOR ? array_diff_ukey($this->getDefaultEnv(), $env, 'strcasecmp') : $this->getDefaultEnv();
 
         if (\is_array($commandline = $this->commandline)) {
-            $commandline = implode(' ', array_map($this->escapeArgument(...), $commandline));
+            $commandline = implode(' ', array_map([$this, 'escapeArgument'], $commandline));
 
             if ('\\' !== \DIRECTORY_SEPARATOR) {
                 // exec is mandatory to deal with sending a signal to the process
@@ -604,8 +604,6 @@ class Process implements \IteratorAggregate
      *
      * @param int $flags A bit field of Process::ITER_* flags
      *
-     * @return \Generator<string, string>
-     *
      * @throws LogicException in case the output has been disabled
      * @throws LogicException In case the process is not started
      */
@@ -874,7 +872,7 @@ class Process implements \IteratorAggregate
      * Stops the process.
      *
      * @param int|float $timeout The timeout in seconds
-     * @param int|null  $signal  A POSIX signal to send in case the process has not stop at timeout, default is SIGKILL (9)
+     * @param int       $signal  A POSIX signal to send in case the process has not stop at timeout, default is SIGKILL (9)
      *
      * @return int|null The exit-code of the process or null if it's not running
      */
@@ -948,7 +946,7 @@ class Process implements \IteratorAggregate
      */
     public function getCommandLine(): string
     {
-        return \is_array($this->commandline) ? implode(' ', array_map($this->escapeArgument(...), $this->commandline)) : $this->commandline;
+        return \is_array($this->commandline) ? implode(' ', array_map([$this, 'escapeArgument'], $this->commandline)) : $this->commandline;
     }
 
     /**
@@ -1206,7 +1204,11 @@ class Process implements \IteratorAggregate
     {
         static $isTtySupported;
 
-        return $isTtySupported ??= ('/' === \DIRECTORY_SEPARATOR && stream_isatty(\STDOUT));
+        if (null === $isTtySupported) {
+            $isTtySupported = (bool) @proc_open('echo 1 >/dev/null', [['file', '/dev/tty', 'r'], ['file', '/dev/tty', 'w'], ['file', '/dev/tty', 'w']], $pipes);
+        }
+
+        return $isTtySupported;
     }
 
     /**

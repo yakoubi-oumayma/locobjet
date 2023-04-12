@@ -215,7 +215,7 @@ trait InteractsWithDatabase
      * Cast a JSON string to a database compatible type.
      *
      * @param  array|object|string  $value
-     * @return \Illuminate\Contracts\Database\Query\Expression
+     * @return \Illuminate\Database\Query\Expression
      */
     public function castAsJson($value)
     {

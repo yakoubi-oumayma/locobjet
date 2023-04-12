@@ -217,24 +217,6 @@ class Str
     }
 
     /**
-     * Get the character at the specified index.
-     *
-     * @param  string  $subject
-     * @param  int  $index
-     * @return string|false
-     */
-    public static function charAt($subject, $index)
-    {
-        $length = mb_strlen($subject);
-
-        if ($index < 0 ? $index < -$length : $index > $length - 1) {
-            return false;
-        }
-
-        return mb_substr($subject, $index, 1);
-    }
-
-    /**
      * Determine if a given string contains a given substring.
      *
      * @param  string  $haystack
@@ -491,7 +473,11 @@ class Str
      */
     public static function length($value, $encoding = null)
     {
-        return mb_strlen($value, $encoding);
+        if ($encoding) {
+            return mb_strlen($value, $encoding);
+        }
+
+        return mb_strlen($value);
     }
 
     /**
@@ -629,32 +615,6 @@ class Str
     }
 
     /**
-     * Determine if a given string matches a given pattern.
-     *
-     * @param  string|iterable<string>  $pattern
-     * @param  string  $value
-     * @return bool
-     */
-    public static function isMatch($pattern, $value)
-    {
-        $value = (string) $value;
-
-        if (! is_iterable($pattern)) {
-            $pattern = [$pattern];
-        }
-
-        foreach ($pattern as $pattern) {
-            $pattern = (string) $pattern;
-
-            if (preg_match($pattern, $value) === 1) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
      * Get the string matching the given pattern.
      *
      * @param  string  $pattern
@@ -759,39 +719,6 @@ class Str
         $lastWord = array_pop($parts);
 
         return implode('', $parts).self::plural($lastWord, $count);
-    }
-
-    /**
-     * Generate a random, secure password.
-     *
-     * @param  int  $length
-     * @param  bool  $letters
-     * @param  bool  $numbers
-     * @param  bool  $symbols
-     * @param  bool  $spaces
-     * @return string
-     */
-    public static function password($length = 32, $letters = true, $numbers = true, $symbols = true, $spaces = false)
-    {
-        return (new Collection)
-                ->when($letters, fn ($c) => $c->merge([
-                    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
-                    'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
-                    'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G',
-                    'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
-                    'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-                ]))
-                ->when($numbers, fn ($c) => $c->merge([
-                    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-                ]))
-                ->when($symbols, fn ($c) => $c->merge([
-                    '~', '!', '#', '$', '%', '^', '&', '*', '(', ')', '-',
-                    '_', '.', ',', '<', '>', '?', '/', '\\', '{', '}', '[',
-                    ']', '|', ':', ';',
-                ]))
-                ->when($spaces, fn ($c) => $c->merge([' ']))
-                ->pipe(fn ($c) => Collection::times($length, fn () => $c[random_int(0, $c->count() - 1)]))
-                ->implode('');
     }
 
     /**
@@ -917,10 +844,9 @@ class Str
      * @param  string|iterable<string>  $search
      * @param  string|iterable<string>  $replace
      * @param  string|iterable<string>  $subject
-     * @param  bool  $caseSensitive
      * @return string
      */
-    public static function replace($search, $replace, $subject, $caseSensitive = true)
+    public static function replace($search, $replace, $subject)
     {
         if ($search instanceof Traversable) {
             $search = collect($search)->all();
@@ -934,9 +860,7 @@ class Str
             $subject = collect($subject)->all();
         }
 
-        return $caseSensitive
-                ? str_replace($search, $replace, $subject)
-                : str_ireplace($search, $replace, $subject);
+        return str_replace($search, $replace, $subject);
     }
 
     /**
@@ -1422,16 +1346,11 @@ class Str
     /**
      * Generate a ULID.
      *
-     * @param  \DateTimeInterface|null  $time
      * @return \Symfony\Component\Uid\Ulid
      */
-    public static function ulid($time = null)
+    public static function ulid()
     {
-        if ($time === null) {
-            return new Ulid();
-        }
-
-        return new Ulid(Ulid::generate($time));
+        return new Ulid();
     }
 
     /**

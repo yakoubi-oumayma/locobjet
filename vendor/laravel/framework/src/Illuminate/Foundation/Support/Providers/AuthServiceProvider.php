@@ -19,18 +19,6 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
-    {
-        $this->booting(function () {
-            $this->registerPolicies();
-        });
-    }
-
-    /**
-     * Register the application's policies.
-     *
-     * @return void
-     */
     public function registerPolicies()
     {
         foreach ($this->policies() as $model => $policy) {

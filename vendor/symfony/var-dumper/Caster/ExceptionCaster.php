@@ -337,7 +337,7 @@ class ExceptionCaster
                     $stub->attr['file'] = $f;
                     $stub->attr['line'] = $caller->getStartLine();
                 }
-            } catch (\ReflectionException) {
+            } catch (\ReflectionException $e) {
                 // ignore fake class/function
             }
 
@@ -352,7 +352,9 @@ class ExceptionCaster
             $pad = null;
             for ($i = $srcContext << 1; $i >= 0; --$i) {
                 if (isset($src[$i][$ltrim]) && "\r" !== ($c = $src[$i][$ltrim]) && "\n" !== $c) {
-                    $pad ??= $c;
+                    if (null === $pad) {
+                        $pad = $c;
+                    }
                     if ((' ' !== $c && "\t" !== $c) || $pad !== $c) {
                         break;
                     }

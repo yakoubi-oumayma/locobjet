@@ -84,7 +84,7 @@ class EncryptCookies
                 $value = $this->decryptCookie($key, $cookie);
 
                 $request->cookies->set($key, $this->validateValue($key, $value));
-            } catch (DecryptException) {
+            } catch (DecryptException $e) {
                 $request->cookies->set($key, null);
             }
         }

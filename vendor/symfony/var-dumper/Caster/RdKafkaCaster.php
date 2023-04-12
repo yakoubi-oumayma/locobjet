@@ -37,7 +37,7 @@ class RdKafkaCaster
 
         try {
             $assignment = $c->getAssignment();
-        } catch (RdKafkaException) {
+        } catch (RdKafkaException $e) {
             $assignment = [];
         }
 
@@ -172,7 +172,7 @@ class RdKafkaCaster
 
         try {
             $m = $c->getMetadata(true, null, 500);
-        } catch (RdKafkaException) {
+        } catch (RdKafkaException $e) {
             return [];
         }
 

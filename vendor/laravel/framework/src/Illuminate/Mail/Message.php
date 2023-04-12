@@ -7,8 +7,6 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Traits\ForwardsCalls;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
-use Symfony\Component\Mime\Part\DataPart;
-use Symfony\Component\Mime\Part\File;
 
 /**
  * @mixin \Symfony\Component\Mime\Email
@@ -346,16 +344,12 @@ class Message
                 function ($path) use ($file) {
                     $cid = $file->as ?? Str::random();
 
-                    $this->message->addPart(
-                        (new DataPart(new File($path), $cid, $file->mime))->asInline()
-                    );
+                    $this->message->embedFromPath($path, $cid, $file->mime);
 
                     return "cid:{$cid}";
                 },
                 function ($data) use ($file) {
-                    $this->message->addPart(
-                        (new DataPart($data(), $file->as, $file->mime))->asInline()
-                    );
+                    $this->message->embed($data(), $file->as, $file->mime);
 
                     return "cid:{$file->as}";
                 }
@@ -364,9 +358,7 @@ class Message
 
         $cid = Str::random(10);
 
-        $this->message->addPart(
-            (new DataPart(new File($file), $cid))->asInline()
-        );
+        $this->message->embedFromPath($file, $cid);
 
         return "cid:$cid";
     }
@@ -381,9 +373,7 @@ class Message
      */
     public function embedData($data, $name, $contentType = null)
     {
-        $this->message->addPart(
-            (new DataPart($data, $name, $contentType))->asInline()
-        );
+        $this->message->embed($data, $name, $contentType);
 
         return "cid:$name";
     }

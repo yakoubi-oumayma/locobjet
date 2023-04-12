@@ -24,9 +24,9 @@ use Symfony\Component\Serializer\SerializerInterface;
  */
 class SerializerErrorRenderer implements ErrorRendererInterface
 {
-    private SerializerInterface $serializer;
+    private $serializer;
     private string|\Closure $format;
-    private ErrorRendererInterface $fallbackErrorRenderer;
+    private $fallbackErrorRenderer;
     private bool|\Closure $debug;
 
     /**
@@ -37,11 +37,14 @@ class SerializerErrorRenderer implements ErrorRendererInterface
     public function __construct(SerializerInterface $serializer, string|callable $format, ErrorRendererInterface $fallbackErrorRenderer = null, bool|callable $debug = false)
     {
         $this->serializer = $serializer;
-        $this->format = \is_string($format) ? $format : $format(...);
+        $this->format = \is_string($format) || $format instanceof \Closure ? $format : \Closure::fromCallable($format);
         $this->fallbackErrorRenderer = $fallbackErrorRenderer ?? new HtmlErrorRenderer();
-        $this->debug = \is_bool($debug) ? $debug : $debug(...);
+        $this->debug = \is_bool($debug) || $debug instanceof \Closure ? $debug : \Closure::fromCallable($debug);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function render(\Throwable $exception): FlattenException
     {
         $headers = [];
@@ -65,7 +68,7 @@ class SerializerErrorRenderer implements ErrorRendererInterface
                 'debug' => $debug,
             ]))
             ->setHeaders($flattenException->getHeaders() + $headers);
-        } catch (NotEncodableValueException) {
+        } catch (NotEncodableValueException $e) {
             return $this->fallbackErrorRenderer->render($exception);
         }
     }

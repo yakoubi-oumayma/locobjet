@@ -140,7 +140,7 @@ class Content
     /**
      * Add a piece of view data to the message.
      *
-     * @param  array|string  $key
+     * @param  string  $key
      * @param  mixed|null  $value
      * @return $this
      */

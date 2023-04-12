@@ -1062,13 +1062,7 @@ class Grammar extends BaseGrammar
      */
     public function compileInsertUsing(Builder $query, array $columns, string $sql)
     {
-        $table = $this->wrapTable($query->from);
-
-        if (empty($columns) || $columns === ['*']) {
-            return "insert into {$table} $sql";
-        }
-
-        return "insert into {$table} ({$this->columnize($columns)}) $sql";
+        return "insert into {$this->wrapTable($query->from)} ({$this->columnize($columns)}) $sql";
     }
 
     /**

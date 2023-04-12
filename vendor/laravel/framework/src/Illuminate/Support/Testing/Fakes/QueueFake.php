@@ -5,13 +5,12 @@ namespace Illuminate\Support\Testing\Fakes;
 use BadMethodCallException;
 use Closure;
 use Illuminate\Contracts\Queue\Queue;
-use Illuminate\Queue\CallQueuedClosure;
 use Illuminate\Queue\QueueManager;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Traits\ReflectsClosures;
 use PHPUnit\Framework\Assert as PHPUnit;
 
-class QueueFake extends QueueManager implements Fake, Queue
+class QueueFake extends QueueManager implements Queue
 {
     use ReflectsClosures;
 
@@ -20,7 +19,7 @@ class QueueFake extends QueueManager implements Fake, Queue
      *
      * @var \Illuminate\Contracts\Queue\Queue
      */
-    public $queue;
+    protected $queue;
 
     /**
      * The job types that should be intercepted instead of pushed to the queue.
@@ -220,28 +219,6 @@ class QueueFake extends QueueManager implements Fake, Queue
     }
 
     /**
-     * Assert if a closure was pushed based on a truth-test callback.
-     *
-     * @param  callable|int|null  $callback
-     * @return void
-     */
-    public function assertClosurePushed($callback = null)
-    {
-        $this->assertPushed(CallQueuedClosure::class, $callback);
-    }
-
-    /**
-     * Assert that a closure was not pushed based on a truth-test callback.
-     *
-     * @param  callable|null  $callback
-     * @return void
-     */
-    public function assertClosureNotPushed($callback = null)
-    {
-        $this->assertNotPushed(CallQueuedClosure::class, $callback);
-    }
-
-    /**
      * Determine if the given chain is entirely composed of objects.
      *
      * @param  array  $chain
@@ -347,10 +324,6 @@ class QueueFake extends QueueManager implements Fake, Queue
     public function push($job, $data = '', $queue = null)
     {
         if ($this->shouldFakeJob($job)) {
-            if ($job instanceof Closure) {
-                $job = CallQueuedClosure::create($job);
-            }
-
             $this->jobs[is_object($job) ? get_class($job) : $job][] = [
                 'job' => $job,
                 'queue' => $queue,

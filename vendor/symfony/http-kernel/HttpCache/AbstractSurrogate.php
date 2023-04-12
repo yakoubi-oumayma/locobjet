@@ -46,6 +46,9 @@ abstract class AbstractSurrogate implements SurrogateInterface
         return new ResponseCacheStrategy();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function hasSurrogateCapability(Request $request): bool
     {
         if (null === $value = $request->headers->get('Surrogate-Capability')) {
@@ -55,6 +58,9 @@ abstract class AbstractSurrogate implements SurrogateInterface
         return str_contains($value, sprintf('%s/1.0', strtoupper($this->getName())));
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function addSurrogateCapability(Request $request)
     {
         $current = $request->headers->get('Surrogate-Capability');
@@ -63,6 +69,9 @@ abstract class AbstractSurrogate implements SurrogateInterface
         $request->headers->set('Surrogate-Capability', $current ? $current.', '.$new : $new);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function needsParsing(Response $response): bool
     {
         if (!$control = $response->headers->get('Surrogate-Control')) {
@@ -74,6 +83,9 @@ abstract class AbstractSurrogate implements SurrogateInterface
         return (bool) preg_match($pattern, $control);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function handle(HttpCache $cache, string $uri, string $alt, bool $ignoreErrors): string
     {
         $subRequest = Request::create($uri, Request::METHOD_GET, [], $cache->getRequest()->cookies->all(), [], $cache->getRequest()->server->all());

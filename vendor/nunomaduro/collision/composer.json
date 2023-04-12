@@ -14,31 +14,22 @@
         }
     ],
     "require": {
-        "php": "^8.1.0",
-        "filp/whoops": "^2.15.1",
-        "nunomaduro/termwind": "^1.15.1",
-        "symfony/console": "^6.2.7"
+        "php": "^8.0.0",
+        "filp/whoops": "^2.14.5",
+        "symfony/console": "^6.0.2"
     },
     "require-dev": {
-        "brianium/paratest": "^7.1.2",
-        "laravel/framework": "^10.5.1",
-        "laravel/pint": "^1.7.0",
-        "laravel/sail": "^1.21.3",
-        "laravel/sanctum": "^3.2.1",
-        "laravel/tinker": "^2.8.1",
-        "nunomaduro/larastan": "^2.5.1",
-        "orchestra/testbench-core": "^8.2.0",
-        "pestphp/pest": "^2.3.0",
-        "phpunit/phpunit": "^10.0.19",
-        "sebastian/environment": "^6.0.0",
-        "spatie/laravel-ignition": "^2.0.0"
-    },
-    "conflict": {
-        "phpunit/phpunit": "<10.0.17"
+        "brianium/paratest": "^6.4.1",
+        "laravel/framework": "^9.26.1",
+        "laravel/pint": "^1.1.1",
+        "nunomaduro/larastan": "^1.0.3",
+        "nunomaduro/mock-final-classes": "^1.1.0",
+        "orchestra/testbench": "^7.7",
+        "phpunit/phpunit": "^9.5.23",
+        "spatie/ignition": "^1.4.1"
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\Printer\\": "tests/Printer",
             "Tests\\Unit\\": "tests/Unit",
             "Tests\\FakeProgram\\": "tests/FakeProgram",
             "Tests\\": "tests/LaravelApp/tests",
@@ -50,10 +41,7 @@
     "autoload": {
         "psr-4": {
             "NunoMaduro\\Collision\\": "src/"
-        },
-        "files": [
-            "./src/Adapters/Phpunit/Autoload.php"
-        ]
+        }
     },
     "config": {
         "preferred-install": "dist",
@@ -63,6 +51,9 @@
         }
     },
     "extra": {
+        "branch-alias": {
+            "dev-develop": "6.x-dev"
+        },
         "laravel": {
             "providers": [
                 "NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider"
@@ -73,19 +64,11 @@
         "lint": "pint -v",
         "test:lint": "pint --test -v",
         "test:types": "phpstan analyse --ansi",
-        "test:unit:phpunit": [
-            "@putenv XDEBUG_MODE=coverage",
-            "phpunit --colors=always -v"
-        ],
-        "test:unit:pest": [
-            "@putenv XDEBUG_MODE=coverage",
-            "pest --colors=always -v"
-        ],
+        "test:unit": "phpunit --colors=always",
         "test": [
             "@test:lint",
             "@test:types",
-            "@test:unit:phpunit",
-            "@test:unit:pest"
+            "@test:unit"
         ]
     }
 }

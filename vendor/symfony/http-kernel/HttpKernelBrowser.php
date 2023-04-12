@@ -54,6 +54,8 @@ class HttpKernelBrowser extends AbstractBrowser
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @param Request $request
      *
      * @return Response
@@ -70,6 +72,8 @@ class HttpKernelBrowser extends AbstractBrowser
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @param Request $request
      *
      * @return string
@@ -83,7 +87,7 @@ class HttpKernelBrowser extends AbstractBrowser
 
         $requires = '';
         foreach (get_declared_classes() as $class) {
-            if (str_starts_with($class, 'ComposerAutoloaderInit')) {
+            if (0 === strpos($class, 'ComposerAutoloaderInit')) {
                 $r = new \ReflectionClass($class);
                 $file = \dirname($r->getFileName(), 2).'/autoload.php';
                 if (file_exists($file)) {
@@ -123,6 +127,9 @@ echo serialize($response);
 EOF;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function filterRequest(DomRequest $request): Request
     {
         $httpRequest = Request::create($request->getUri(), $request->getMethod(), $request->getParameters(), $request->getCookies(), $request->getFiles(), $server = $request->getServer(), $request->getContent());
@@ -179,6 +186,8 @@ EOF;
     }
 
     /**
+     * {@inheritdoc}
+     *
      * @param Response $response
      */
     protected function filterResponse(object $response): DomResponse

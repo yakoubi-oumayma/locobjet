@@ -9,33 +9,23 @@
  */
 namespace PHPUnit\Framework\Constraint;
 
-use function class_exists;
-use function interface_exists;
 use function sprintf;
-use PHPUnit\Framework\UnknownClassOrInterfaceException;
+use ReflectionClass;
+use ReflectionException;
 
 /**
  * @no-named-arguments Parameter names are not covered by the backward compatibility promise for PHPUnit
  */
 final class IsInstanceOf extends Constraint
 {
-    private readonly string $name;
-    private readonly string $type;
-
     /**
-     * @throws UnknownClassOrInterfaceException
+     * @var string
      */
-    public function __construct(string $name)
-    {
-        if (class_exists($name)) {
-            $this->type = 'class';
-        } elseif (interface_exists($name)) {
-            $this->type = 'interface';
-        } else {
-            throw new UnknownClassOrInterfaceException($name);
-        }
+    private $className;
 
-        $this->name = $name;
+    public function __construct(string $className)
+    {
+        $this->className = $className;
     }
 
     /**
@@ -44,19 +34,21 @@ final class IsInstanceOf extends Constraint
     public function toString(): string
     {
         return sprintf(
-            'is an instance of %s %s',
-            $this->type,
-            $this->name
+            'is instance of %s "%s"',
+            $this->getType(),
+            $this->className
         );
     }
 
     /**
      * Evaluates the constraint for parameter $other. Returns true if the
      * constraint is met, false otherwise.
+     *
+     * @param mixed $other value or object to evaluate
      */
-    protected function matches(mixed $other): bool
+    protected function matches($other): bool
     {
-        return $other instanceof $this->name;
+        return $other instanceof $this->className;
     }
 
     /**
@@ -64,14 +56,32 @@ final class IsInstanceOf extends Constraint
      *
      * The beginning of failure messages is "Failed asserting that" in most
      * cases. This method should return the second part of that sentence.
+     *
+     * @param mixed $other evaluated value or object
+     *
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
-    protected function failureDescription(mixed $other): string
+    protected function failureDescription($other): string
     {
         return sprintf(
-            '%s is an instance of %s %s',
+            '%s is an instance of %s "%s"',
             $this->exporter()->shortenedExport($other),
-            $this->type,
-            $this->name
+            $this->getType(),
+            $this->className
         );
+    }
+
+    private function getType(): string
+    {
+        try {
+            $reflection = new ReflectionClass($this->className);
+
+            if ($reflection->isInterface()) {
+                return 'interface';
+            }
+        } catch (ReflectionException $e) {
+        }
+
+        return 'class';
     }
 }

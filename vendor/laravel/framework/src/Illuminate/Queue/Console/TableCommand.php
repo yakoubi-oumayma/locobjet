@@ -18,6 +18,17 @@ class TableCommand extends Command
     protected $name = 'queue:table';
 
     /**
+     * The name of the console command.
+     *
+     * This name is used to identify the command during lazy loading.
+     *
+     * @var string|null
+     *
+     * @deprecated
+     */
+    protected static $defaultName = 'queue:table';
+
+    /**
      * The console command description.
      *
      * @var string
@@ -33,8 +44,6 @@ class TableCommand extends Command
 
     /**
      * @var \Illuminate\Support\Composer
-     *
-     * @deprecated Will be removed in a future Laravel version.
      */
     protected $composer;
 
@@ -67,6 +76,8 @@ class TableCommand extends Command
         );
 
         $this->components->info('Migration created successfully.');
+
+        $this->composer->dumpAutoloads();
     }
 
     /**

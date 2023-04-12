@@ -26,14 +26,14 @@ use Symfony\Contracts\Service\ResetInterface;
  */
 class Profiler implements ResetInterface
 {
-    private ProfilerStorageInterface $storage;
+    private $storage;
 
     /**
      * @var DataCollectorInterface[]
      */
     private array $collectors = [];
 
-    private ?LoggerInterface $logger;
+    private $logger;
     private bool $initiallyEnabled = true;
     private bool $enabled = true;
 
@@ -58,11 +58,6 @@ class Profiler implements ResetInterface
     public function enable()
     {
         $this->enabled = true;
-    }
-
-    public function isEnabled(): bool
-    {
-        return $this->enabled;
     }
 
     /**
@@ -115,13 +110,13 @@ class Profiler implements ResetInterface
     /**
      * Finds profiler tokens for the given criteria.
      *
-     * @param int|null    $limit The maximum number of tokens to return
+     * @param string|null $limit The maximum number of tokens to return
      * @param string|null $start The start date to search from
      * @param string|null $end   The end date to search to
      *
      * @see https://php.net/datetime.formats for the supported date/time formats
      */
-    public function find(?string $ip, ?string $url, ?int $limit, ?string $method, ?string $start, ?string $end, string $statusCode = null): array
+    public function find(?string $ip, ?string $url, ?string $limit, ?string $method, ?string $start, ?string $end, string $statusCode = null): array
     {
         return $this->storage->find($ip, $url, $limit, $method, $this->getTimestamp($start), $this->getTimestamp($end), $statusCode);
     }
@@ -142,7 +137,7 @@ class Profiler implements ResetInterface
         $profile->setStatusCode($response->getStatusCode());
         try {
             $profile->setIp($request->getClientIp());
-        } catch (ConflictingHeadersException) {
+        } catch (ConflictingHeadersException $e) {
             $profile->setIp('Unknown');
         }
 
@@ -232,8 +227,8 @@ class Profiler implements ResetInterface
         }
 
         try {
-            $value = new \DateTimeImmutable(is_numeric($value) ? '@'.$value : $value);
-        } catch (\Exception) {
+            $value = new \DateTime(is_numeric($value) ? '@'.$value : $value);
+        } catch (\Exception $e) {
             return null;
         }
 

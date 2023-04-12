@@ -61,7 +61,6 @@ trait DetectsLostConnections
             'SQLSTATE[HY000] [2002] No such file or directory',
             'SSL: Operation timed out',
             'Reason: Server is in script upgrade mode. Only administrator can connect at this time.',
-            'Unknown $curl_error_code: 77',
         ]);
     }
 }

@@ -329,34 +329,11 @@ trait ConditionallyLoadsAttributes
         }
 
         return $this->when(
-            $this->hasPivotLoadedAs($accessor, $table),
+            isset($this->resource->$accessor) &&
+            ($this->resource->$accessor instanceof $table ||
+            $this->resource->$accessor->getTable() === $table),
             ...[$value, $default]
         );
-    }
-
-    /**
-     * Determine if the resource has the specified pivot table loaded.
-     *
-     * @param  string  $table
-     * @return bool
-     */
-    protected function hasPivotLoaded($table)
-    {
-        return $this->hasPivotLoadedAs('pivot', $table);
-    }
-
-    /**
-     * Determine if the resource has the specified pivot table loaded with a custom accessor.
-     *
-     * @param  string  $accessor
-     * @param  string  $table
-     * @return bool
-     */
-    protected function hasPivotLoadedAs($accessor, $table)
-    {
-        return isset($this->resource->$accessor) &&
-            ($this->resource->$accessor instanceof $table ||
-            $this->resource->$accessor->getTable() === $table);
     }
 
     /**

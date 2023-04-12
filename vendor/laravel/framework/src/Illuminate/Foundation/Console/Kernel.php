@@ -7,8 +7,6 @@ use Closure;
 use DateTimeInterface;
 use Illuminate\Console\Application as Artisan;
 use Illuminate\Console\Command;
-use Illuminate\Console\Events\CommandFinished;
-use Illuminate\Console\Events\CommandStarting;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Contracts\Console\Kernel as KernelContract;
 use Illuminate\Contracts\Debug\ExceptionHandler;
@@ -20,10 +18,6 @@ use Illuminate\Support\Env;
 use Illuminate\Support\InteractsWithTime;
 use Illuminate\Support\Str;
 use ReflectionClass;
-use Symfony\Component\Console\ConsoleEvents;
-use Symfony\Component\Console\Event\ConsoleCommandEvent;
-use Symfony\Component\Console\Event\ConsoleTerminateEvent;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Finder\Finder;
 use Throwable;
 
@@ -44,13 +38,6 @@ class Kernel implements KernelContract
      * @var \Illuminate\Contracts\Events\Dispatcher
      */
     protected $events;
-
-    /**
-     * The Symfony event dispatcher implementation.
-     *
-     * @var \Symfony\Contracts\EventDispatcher\EventDispatcherInterface|null
-     */
-    protected $symfonyDispatcher;
 
     /**
      * The Artisan application instance.
@@ -118,41 +105,9 @@ class Kernel implements KernelContract
         $this->app = $app;
         $this->events = $events;
 
-        if (! $this->app->runningUnitTests()) {
-            $this->rerouteSymfonyCommandEvents();
-        }
-
         $this->app->booted(function () {
             $this->defineConsoleSchedule();
         });
-    }
-
-    /**
-     * Re-route the Symfony command events to their Laravel counterparts.
-     *
-     * @internal
-     *
-     * @return $this
-     */
-    public function rerouteSymfonyCommandEvents()
-    {
-        if (is_null($this->symfonyDispatcher)) {
-            $this->symfonyDispatcher = new EventDispatcher;
-
-            $this->symfonyDispatcher->addListener(ConsoleEvents::COMMAND, function (ConsoleCommandEvent $event) {
-                $this->events->dispatch(
-                    new CommandStarting($event->getCommand()->getName(), $event->getInput(), $event->getOutput())
-                );
-            });
-
-            $this->symfonyDispatcher->addListener(ConsoleEvents::TERMINATE, function (ConsoleTerminateEvent $event) {
-                $this->events->dispatch(
-                    new CommandFinished($event->getCommand()->getName(), $event->getInput(), $event->getOutput(), $event->getExitCode())
-                );
-            });
-        }
-
-        return $this;
     }
 
     /**
@@ -462,10 +417,6 @@ class Kernel implements KernelContract
             $this->artisan = (new Artisan($this->app, $this->events, $this->app->version()))
                                     ->resolveCommands($this->commands)
                                     ->setContainerCommandLoader();
-
-            if ($this->symfonyDispatcher instanceof EventDispatcher) {
-                $this->artisan->setDispatcher($this->symfonyDispatcher);
-            }
         }
 
         return $this->artisan;

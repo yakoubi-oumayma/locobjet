@@ -510,8 +510,6 @@ trait InteractsWithPivotTable
      */
     public function newPivot(array $attributes = [], $exists = false)
     {
-        $attributes = array_merge(array_column($this->pivotValues, 'value', 'column'), $attributes);
-
         $pivot = $this->related->newPivot(
             $this->parent, $attributes, $this->table, $exists, $this->using
         );

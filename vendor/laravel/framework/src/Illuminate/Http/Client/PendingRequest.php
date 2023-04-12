@@ -2,7 +2,6 @@
 
 namespace Illuminate\Http\Client;
 
-use Closure;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\CookieJar;
@@ -259,7 +258,7 @@ class PendingRequest
      * @param  string  $contentType
      * @return $this
      */
-    public function withBody($content, $contentType = 'application/json')
+    public function withBody($content, $contentType)
     {
         $this->bodyFormat('body');
 
@@ -438,7 +437,7 @@ class PendingRequest
     /**
      * Specify the user agent for the request.
      *
-     * @param  string|bool  $userAgent
+     * @param  string  $userAgent
      * @return $this
      */
     public function withUserAgent($userAgent)
@@ -959,17 +958,11 @@ class PendingRequest
 
         $laravelData = $this->parseRequestData($method, $url, $options);
 
-        $onStats = function ($transferStats) {
-            if (($callback = ($this->options['on_stats'] ?? false)) instanceof Closure) {
-                $transferStats = $callback($transferStats) ?: $transferStats;
-            }
-
-            $this->transferStats = $transferStats;
-        };
-
         return $this->buildClient()->$clientMethod($method, $url, $this->mergeOptions([
             'laravel_data' => $laravelData,
-            'on_stats' => $onStats,
+            'on_stats' => function ($transferStats) {
+                $this->transferStats = $transferStats;
+            },
         ], $options));
     }
 

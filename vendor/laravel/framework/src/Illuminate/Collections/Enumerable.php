@@ -1078,10 +1078,8 @@ interface Enumerable extends Arrayable, Countable, IteratorAggregate, Jsonable, 
     /**
      * Pass the collection into a new class.
      *
-     * @template TPipeIntoValue
-     *
-     * @param  class-string<TPipeIntoValue>  $class
-     * @return TPipeIntoValue
+     * @param  class-string  $class
+     * @return mixed
      */
     public function pipeInto($class);
 

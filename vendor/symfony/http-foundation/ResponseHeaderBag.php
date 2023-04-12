@@ -65,6 +65,9 @@ class ResponseHeaderBag extends HeaderBag
         return $headers;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function replace(array $headers = [])
     {
         $this->headerNames = [];
@@ -80,6 +83,9 @@ class ResponseHeaderBag extends HeaderBag
         }
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function all(string $key = null): array
     {
         $headers = parent::all();
@@ -97,6 +103,9 @@ class ResponseHeaderBag extends HeaderBag
         return $headers;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function set(string $key, string|array|null $values, bool $replace = true)
     {
         $uniqueKey = strtr($key, self::UPPER, self::LOWER);
@@ -125,6 +134,9 @@ class ResponseHeaderBag extends HeaderBag
         }
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function remove(string $key)
     {
         $uniqueKey = strtr($key, self::UPPER, self::LOWER);
@@ -147,11 +159,17 @@ class ResponseHeaderBag extends HeaderBag
         }
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function hasCacheControlDirective(string $key): bool
     {
         return \array_key_exists($key, $this->computedCacheControl);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getCacheControlDirective(string $key): bool|string|null
     {
         return $this->computedCacheControl[$key] ?? null;
@@ -168,7 +186,9 @@ class ResponseHeaderBag extends HeaderBag
      */
     public function removeCookie(string $name, ?string $path = '/', string $domain = null)
     {
-        $path ??= '/';
+        if (null === $path) {
+            $path = '/';
+        }
 
         unset($this->cookies[$domain][$path][$name]);
 

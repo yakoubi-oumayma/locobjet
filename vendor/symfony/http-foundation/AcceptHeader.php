@@ -127,7 +127,7 @@ class AcceptHeader
     {
         $this->sort();
 
-        return $this->items ? reset($this->items) : null;
+        return !empty($this->items) ? reset($this->items) : null;
     }
 
     /**

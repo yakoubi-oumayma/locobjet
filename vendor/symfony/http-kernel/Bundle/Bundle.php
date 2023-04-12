@@ -31,15 +31,23 @@ abstract class Bundle implements BundleInterface
     protected $path;
     private string $namespace;
 
+    /**
+     * {@inheritdoc}
+     */
     public function boot()
     {
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function shutdown()
     {
     }
 
     /**
+     * {@inheritdoc}
+     *
      * This method can be overridden to register compilation passes,
      * other extensions, ...
      */
@@ -79,6 +87,9 @@ abstract class Bundle implements BundleInterface
         return $this->extension ?: null;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getNamespace(): string
     {
         if (!isset($this->namespace)) {
@@ -88,6 +99,9 @@ abstract class Bundle implements BundleInterface
         return $this->namespace;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getPath(): string
     {
         if (null === $this->path) {
@@ -136,6 +150,8 @@ abstract class Bundle implements BundleInterface
     {
         $pos = strrpos(static::class, '\\');
         $this->namespace = false === $pos ? '' : substr(static::class, 0, $pos);
-        $this->name ??= false === $pos ? static::class : substr(static::class, $pos + 1);
+        if (null === $this->name) {
+            $this->name = false === $pos ? static::class : substr(static::class, $pos + 1);
+        }
     }
 }

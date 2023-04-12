@@ -64,7 +64,7 @@ class DatabaseLock extends Lock
             ]);
 
             $acquired = true;
-        } catch (QueryException) {
+        } catch (QueryException $e) {
             $updated = $this->connection->table($this->table)
                 ->where('key', $this->name)
                 ->where(function ($query) {

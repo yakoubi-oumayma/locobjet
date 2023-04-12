@@ -73,6 +73,9 @@ final class InputBag extends ParameterBag
         $this->parameters[$key] = $value;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function filter(string $key, mixed $default = null, int $filter = \FILTER_DEFAULT, mixed $options = []): mixed
     {
         $value = $this->has($key) ? $this->all()[$key] : $default;

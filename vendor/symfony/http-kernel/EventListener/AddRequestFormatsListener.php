@@ -42,6 +42,9 @@ class AddRequestFormatsListener implements EventSubscriberInterface
         }
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public static function getSubscribedEvents(): array
     {
         return [KernelEvents::REQUEST => ['onKernelRequest', 100]];

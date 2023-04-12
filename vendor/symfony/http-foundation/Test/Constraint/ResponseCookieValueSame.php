@@ -30,6 +30,9 @@ final class ResponseCookieValueSame extends Constraint
         $this->domain = $domain;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function toString(): string
     {
         $str = sprintf('has cookie "%s"', $this->name);
@@ -46,6 +49,8 @@ final class ResponseCookieValueSame extends Constraint
 
     /**
      * @param Response $response
+     *
+     * {@inheritdoc}
      */
     protected function matches($response): bool
     {
@@ -59,6 +64,8 @@ final class ResponseCookieValueSame extends Constraint
 
     /**
      * @param Response $response
+     *
+     * {@inheritdoc}
      */
     protected function failureDescription($response): string
     {

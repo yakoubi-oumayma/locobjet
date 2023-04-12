@@ -402,6 +402,7 @@ trait InteractsWithInput
     public function enum($key, $enumClass)
     {
         if ($this->isNotFilled($key) ||
+            ! function_exists('enum_exists') ||
             ! enum_exists($enumClass) ||
             ! method_exists($enumClass, 'tryFrom')) {
             return null;

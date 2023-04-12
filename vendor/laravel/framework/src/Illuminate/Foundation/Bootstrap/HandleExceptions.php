@@ -60,17 +60,33 @@ class HandleExceptions
      * @param  string  $message
      * @param  string  $file
      * @param  int  $line
+     * @param  array  $context
      * @return void
      *
      * @throws \ErrorException
      */
-    public function handleError($level, $message, $file = '', $line = 0)
+    public function handleError($level, $message, $file = '', $line = 0, $context = [])
     {
         if ($this->isDeprecation($level)) {
             $this->handleDeprecationError($message, $file, $line, $level);
         } elseif (error_reporting() & $level) {
             throw new ErrorException($message, 0, $level, $file, $line);
         }
+    }
+
+    /**
+     * Reports a deprecation to the "deprecations" logger.
+     *
+     * @param  string  $message
+     * @param  string  $file
+     * @param  int  $line
+     * @return void
+     *
+     * @deprecated Use handleDeprecationError instead.
+     */
+    public function handleDeprecation($message, $file, $line)
+    {
+        $this->handleDeprecationError($message, $file, $line);
     }
 
     /**
@@ -90,7 +106,7 @@ class HandleExceptions
 
         try {
             $logger = static::$app->make(LogManager::class);
-        } catch (Exception) {
+        } catch (Exception $e) {
             return;
         }
 
@@ -180,7 +196,7 @@ class HandleExceptions
 
         try {
             $this->getExceptionHandler()->report($e);
-        } catch (Exception) {
+        } catch (Exception $e) {
             //
         }
 

@@ -32,6 +32,9 @@ class Esi extends AbstractSurrogate
         return 'esi';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function addSurrogateControl(Response $response)
     {
         if (str_contains($response->getContent(), '<esi:include')) {
@@ -39,6 +42,9 @@ class Esi extends AbstractSurrogate
         }
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function renderIncludeTag(string $uri, string $alt = null, bool $ignoreErrors = true, string $comment = ''): string
     {
         $html = sprintf('<esi:include src="%s"%s%s />',
@@ -54,6 +60,9 @@ class Esi extends AbstractSurrogate
         return $html;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function process(Request $request, Response $response): Response
     {
         $type = $response->headers->get('Content-Type');

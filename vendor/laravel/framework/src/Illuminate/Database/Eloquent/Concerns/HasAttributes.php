@@ -17,10 +17,7 @@ use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Casts\AsEncryptedArrayObject;
 use Illuminate\Database\Eloquent\Casts\AsEncryptedCollection;
-use Illuminate\Database\Eloquent\Casts\AsEnumArrayObject;
-use Illuminate\Database\Eloquent\Casts\AsEnumCollection;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Casts\Json;
 use Illuminate\Database\Eloquent\InvalidCastException;
 use Illuminate\Database\Eloquent\JsonEncodingException;
 use Illuminate\Database\Eloquent\MissingAttributeException;
@@ -115,6 +112,15 @@ trait HasAttributes
         'string',
         'timestamp',
     ];
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @deprecated Use the "casts" property
+     *
+     * @var array
+     */
+    protected $dates = [];
 
     /**
      * The storage format of the model's date columns.
@@ -1244,7 +1250,7 @@ trait HasAttributes
      */
     protected function asJson($value)
     {
-        return Json::encode($value);
+        return json_encode($value);
     }
 
     /**
@@ -1256,7 +1262,7 @@ trait HasAttributes
      */
     public function fromJson($value, $asObject = false)
     {
-        return Json::decode($value ?? '', ! $asObject);
+        return json_decode($value ?? '', ! $asObject);
     }
 
     /**
@@ -1381,7 +1387,7 @@ trait HasAttributes
         // that is returned back out to the developers after we convert it here.
         try {
             $date = Date::createFromFormat($format, $value);
-        } catch (InvalidArgumentException) {
+        } catch (InvalidArgumentException $e) {
             $date = false;
         }
 
@@ -1443,10 +1449,16 @@ trait HasAttributes
      */
     public function getDates()
     {
-        return $this->usesTimestamps() ? [
+        if (! $this->usesTimestamps()) {
+            return $this->dates;
+        }
+
+        $defaults = [
             $this->getCreatedAtColumn(),
             $this->getUpdatedAtColumn(),
-        ] : [];
+        ];
+
+        return array_unique(array_merge($this->dates, $defaults));
     }
 
     /**
@@ -1595,7 +1607,9 @@ trait HasAttributes
             return false;
         }
 
-        return enum_exists($castType);
+        if (function_exists('enum_exists') && enum_exists($castType)) {
+            return true;
+        }
     }
 
     /**
@@ -2044,8 +2058,6 @@ trait HasAttributes
             return $this->castAttribute($key, $attribute) ===
                 $this->castAttribute($key, $original);
         } elseif ($this->isClassCastable($key) && in_array($this->getCasts()[$key], [AsArrayObject::class, AsCollection::class])) {
-            return $this->fromJson($attribute) === $this->fromJson($original);
-        } elseif ($this->isClassCastable($key) && Str::startsWith($this->getCasts()[$key], [AsEnumArrayObject::class, AsEnumCollection::class])) {
             return $this->fromJson($attribute) === $this->fromJson($original);
         } elseif ($this->isClassCastable($key) && $original !== null && in_array($this->getCasts()[$key], [AsEncryptedArrayObject::class, AsEncryptedCollection::class])) {
             return $this->fromEncryptedString($attribute) === $this->fromEncryptedString($original);

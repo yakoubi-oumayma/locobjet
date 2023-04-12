@@ -55,7 +55,9 @@ class FlattenException
             $statusCode = 400;
         }
 
-        $statusCode ??= 500;
+        if (null === $statusCode) {
+            $statusCode = 500;
+        }
 
         if (class_exists(Response::class) && isset(Response::$statusTexts[$statusCode])) {
             $statusText = Response::$statusTexts[$statusCode];

@@ -9,22 +9,29 @@ class {{ class }} extends Controller
 {
     /**
      * Show the form for creating the resource.
+     *
+     * @return \Illuminate\Http\Response
      */
-    public function create(): never
+    public function create()
     {
         abort(404);
     }
 
     /**
      * Store the newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
-    public function store(Request $request): never
+    public function store(Request $request)
     {
         abort(404);
     }
 
     /**
      * Display the resource.
+     *
+     * @return \Illuminate\Http\Response
      */
     public function show()
     {
@@ -33,6 +40,8 @@ class {{ class }} extends Controller
 
     /**
      * Show the form for editing the resource.
+     *
+     * @return \Illuminate\Http\Response
      */
     public function edit()
     {
@@ -41,6 +50,9 @@ class {{ class }} extends Controller
 
     /**
      * Update the resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
     {
@@ -49,8 +61,10 @@ class {{ class }} extends Controller
 
     /**
      * Remove the resource from storage.
+     *
+     * @return \Illuminate\Http\Response
      */
-    public function destroy(): never
+    public function destroy()
     {
         abort(404);
     }

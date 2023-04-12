@@ -12,7 +12,7 @@ class AsCollection implements Castable
      * Get the caster class to use when casting from / to this cast target.
      *
      * @param  array  $arguments
-     * @return \Illuminate\Contracts\Database\Eloquent\CastsAttributes<\Illuminate\Support\Collection<array-key, mixed>, iterable>
+     * @return CastsAttributes<\Illuminate\Support\Collection<array-key, mixed>, iterable>
      */
     public static function castUsing(array $arguments)
     {
@@ -24,14 +24,14 @@ class AsCollection implements Castable
                     return;
                 }
 
-                $data = Json::decode($attributes[$key]);
+                $data = json_decode($attributes[$key], true);
 
                 return is_array($data) ? new Collection($data) : null;
             }
 
             public function set($model, $key, $value, $attributes)
             {
-                return [$key => Json::encode($value)];
+                return [$key => json_encode($value)];
             }
         };
     }

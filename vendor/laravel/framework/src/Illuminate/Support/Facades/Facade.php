@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Js;
 use Illuminate\Support\Str;
-use Illuminate\Support\Testing\Fakes\Fake;
 use Mockery;
 use Mockery\LegacyMockInterface;
 use RuntimeException;
@@ -185,19 +184,6 @@ abstract class Facade
     }
 
     /**
-     * Determines whether a "fake" has been set as the facade instance.
-     *
-     * @return bool
-     */
-    protected static function isFake()
-    {
-        $name = static::getFacadeAccessor();
-
-        return isset(static::$resolvedInstance[$name]) &&
-               static::$resolvedInstance[$name] instanceof Fake;
-    }
-
-    /**
      * Get the root object behind the facade.
      *
      * @return mixed
@@ -294,7 +280,6 @@ abstract class Facade
             'Mail' => Mail::class,
             'Notification' => Notification::class,
             'Password' => Password::class,
-            'Process' => Process::class,
             'Queue' => Queue::class,
             'RateLimiter' => RateLimiter::class,
             'Redirect' => Redirect::class,

@@ -124,7 +124,7 @@ class CompiledRouteCollection extends AbstractRouteCollection
         } catch (ResourceNotFoundException|MethodNotAllowedException $e) {
             try {
                 return $this->routes->match($request);
-            } catch (NotFoundHttpException) {
+            } catch (NotFoundHttpException $e) {
                 //
             }
         }
@@ -136,7 +136,7 @@ class CompiledRouteCollection extends AbstractRouteCollection
                 if (! $dynamicRoute->isFallback) {
                     $route = $dynamicRoute;
                 }
-            } catch (NotFoundHttpException|MethodNotAllowedHttpException) {
+            } catch (NotFoundHttpException|MethodNotAllowedHttpException $e) {
                 //
             }
         }

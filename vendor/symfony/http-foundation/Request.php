@@ -134,22 +134,22 @@ class Request
     protected $content;
 
     /**
-     * @var string[]
+     * @var array
      */
     protected $languages;
 
     /**
-     * @var string[]
+     * @var array
      */
     protected $charsets;
 
     /**
-     * @var string[]
+     * @var array
      */
     protected $encodings;
 
     /**
-     * @var string[]
+     * @var array
      */
     protected $acceptableContentTypes;
 
@@ -189,7 +189,7 @@ class Request
     protected $session;
 
     /**
-     * @var string|null
+     * @var string
      */
     protected $locale;
 
@@ -199,7 +199,7 @@ class Request
     protected $defaultLocale = 'en';
 
     /**
-     * @var array<string, string[]>
+     * @var array
      */
     protected static $formats;
 
@@ -426,12 +426,12 @@ class Request
     /**
      * Clones a request and overrides some of its parameters.
      *
-     * @param array|null $query      The GET parameters
-     * @param array|null $request    The POST parameters
-     * @param array|null $attributes The request attributes (parameters parsed from the PATH_INFO, ...)
-     * @param array|null $cookies    The COOKIE parameters
-     * @param array|null $files      The FILES parameters
-     * @param array|null $server     The SERVER parameters
+     * @param array $query      The GET parameters
+     * @param array $request    The POST parameters
+     * @param array $attributes The request attributes (parameters parsed from the PATH_INFO, ...)
+     * @param array $cookies    The COOKIE parameters
+     * @param array $files      The FILES parameters
+     * @param array $server     The SERVER parameters
      */
     public function duplicate(array $query = null, array $request = null, array $attributes = null, array $cookies = null, array $files = null, array $server = null): static
     {
@@ -578,8 +578,6 @@ class Request
 
     /**
      * Gets the list of trusted proxies.
-     *
-     * @return string[]
      */
     public static function getTrustedProxies(): array
     {
@@ -614,8 +612,6 @@ class Request
 
     /**
      * Gets the list of trusted host patterns.
-     *
-     * @return string[]
      */
     public static function getTrustedHosts(): array
     {
@@ -694,8 +690,6 @@ class Request
 
     /**
      * Gets the Session.
-     *
-     * @throws SessionNotFoundException When session is not set properly
      */
     public function getSession(): SessionInterface
     {
@@ -819,7 +813,11 @@ class Request
      */
     public function getPathInfo(): string
     {
-        return $this->pathInfo ??= $this->preparePathInfo();
+        if (null === $this->pathInfo) {
+            $this->pathInfo = $this->preparePathInfo();
+        }
+
+        return $this->pathInfo;
     }
 
     /**
@@ -836,7 +834,11 @@ class Request
      */
     public function getBasePath(): string
     {
-        return $this->basePath ??= $this->prepareBasePath();
+        if (null === $this->basePath) {
+            $this->basePath = $this->prepareBasePath();
+        }
+
+        return $this->basePath;
     }
 
     /**
@@ -869,7 +871,11 @@ class Request
      */
     private function getBaseUrlReal(): string
     {
-        return $this->baseUrl ??= $this->prepareBaseUrl();
+        if (null === $this->baseUrl) {
+            $this->baseUrl = $this->prepareBaseUrl();
+        }
+
+        return $this->baseUrl;
     }
 
     /**
@@ -956,7 +962,7 @@ class Request
         $scheme = $this->getScheme();
         $port = $this->getPort();
 
-        if (('http' === $scheme && 80 == $port) || ('https' === $scheme && 443 == $port)) {
+        if (('http' == $scheme && 80 == $port) || ('https' == $scheme && 443 == $port)) {
             return $this->getHost();
         }
 
@@ -970,7 +976,11 @@ class Request
      */
     public function getRequestUri(): string
     {
-        return $this->requestUri ??= $this->prepareRequestUri();
+        if (null === $this->requestUri) {
+            $this->requestUri = $this->prepareRequestUri();
+        }
+
+        return $this->requestUri;
     }
 
     /**
@@ -1234,8 +1244,6 @@ class Request
 
     /**
      * Gets the mime types associated with the format.
-     *
-     * @return string[]
      */
     public static function getMimeTypes(string $format): array
     {
@@ -1275,7 +1283,7 @@ class Request
     /**
      * Associates a format with mime types.
      *
-     * @param string|string[] $mimeTypes The associated mime types (the preferred one must be the first as it will be used as the content type)
+     * @param string|array $mimeTypes The associated mime types (the preferred one must be the first as it will be used as the content type)
      */
     public function setFormat(?string $format, string|array $mimeTypes)
     {
@@ -1299,7 +1307,9 @@ class Request
      */
     public function getRequestFormat(?string $default = 'html'): ?string
     {
-        $this->format ??= $this->attributes->get('_format');
+        if (null === $this->format) {
+            $this->format = $this->attributes->get('_format');
+        }
 
         return $this->format ?? $default;
     }
@@ -1313,23 +1323,9 @@ class Request
     }
 
     /**
-     * Gets the usual name of the format associated with the request's media type (provided in the Content-Type header).
-     *
-     * @deprecated since Symfony 6.2, use getContentTypeFormat() instead
+     * Gets the format associated with the request.
      */
     public function getContentType(): ?string
-    {
-        trigger_deprecation('symfony/http-foundation', '6.2', 'The "%s()" method is deprecated, use "getContentTypeFormat()" instead.', __METHOD__);
-
-        return $this->getContentTypeFormat();
-    }
-
-    /**
-     * Gets the usual name of the format associated with the request's media type (provided in the Content-Type header).
-     *
-     * @see Request::$formats
-     */
-    public function getContentTypeFormat(): ?string
     {
         return $this->getFormat($this->headers->get('CONTENT_TYPE', ''));
     }
@@ -1367,7 +1363,7 @@ class Request
      */
     public function getLocale(): string
     {
-        return $this->locale ?? $this->defaultLocale;
+        return null === $this->locale ? $this->defaultLocale : $this->locale;
     }
 
     /**
@@ -1436,8 +1432,6 @@ class Request
      * @param bool $asResource If true, a resource will be returned
      *
      * @return string|resource
-     *
-     * @psalm-return ($asResource is true ? resource : string)
      */
     public function getContent(bool $asResource = false)
     {
@@ -1572,8 +1566,6 @@ class Request
 
     /**
      * Gets a list of languages acceptable by the client browser ordered in the user browser preferences.
-     *
-     * @return string[]
      */
     public function getLanguages(): array
     {
@@ -1613,8 +1605,6 @@ class Request
 
     /**
      * Gets a list of charsets acceptable by the client browser in preferable order.
-     *
-     * @return string[]
      */
     public function getCharsets(): array
     {
@@ -1627,8 +1617,6 @@ class Request
 
     /**
      * Gets a list of encodings acceptable by the client browser in preferable order.
-     *
-     * @return string[]
      */
     public function getEncodings(): array
     {
@@ -1641,8 +1629,6 @@ class Request
 
     /**
      * Gets a list of content types acceptable by the client browser in preferable order.
-     *
-     * @return string[]
      */
     public function getAcceptableContentTypes(): array
     {
@@ -1888,7 +1874,7 @@ class Request
             if (class_exists(\Locale::class, false)) {
                 \Locale::setDefault($locale);
             }
-        } catch (\Exception) {
+        } catch (\Exception $e) {
         }
     }
 
@@ -2020,7 +2006,9 @@ class Request
                 unset($clientIps[$key]);
 
                 // Fallback to this when the client IP falls into the range of trusted proxies
-                $firstTrustedIp ??= $clientIp;
+                if (null === $firstTrustedIp) {
+                    $firstTrustedIp = $clientIp;
+                }
             }
         }
 

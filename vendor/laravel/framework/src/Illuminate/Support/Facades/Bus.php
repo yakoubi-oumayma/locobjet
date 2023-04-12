@@ -60,13 +60,9 @@ class Bus extends Facade
      */
     public static function fake($jobsToFake = [], BatchRepository $batchRepository = null)
     {
-        $actualDispatcher = static::isFake()
-                ? static::getFacadeRoot()->dispatcher
-                : static::getFacadeRoot();
+        static::swap($fake = new BusFake(static::getFacadeRoot(), $jobsToFake, $batchRepository));
 
-        return tap(new BusFake($actualDispatcher, $jobsToFake, $batchRepository), function ($fake) {
-            static::swap($fake);
-        });
+        return $fake;
     }
 
     /**

@@ -97,7 +97,7 @@ class ErrorHandler
     private bool $isRecursive = false;
     private bool $isRoot = false;
     private $exceptionHandler;
-    private ?BufferingLogger $bootstrappingLogger = null;
+    private $bootstrappingLogger = null;
 
     private static ?string $reservedMemory = null;
     private static array $silencedErrorCache = [];
@@ -185,6 +185,7 @@ class ErrorHandler
             $this->setDefaultLogger($bootstrappingLogger);
         }
         $traceReflector = new \ReflectionProperty(\Exception::class, 'trace');
+        $traceReflector->setAccessible(true);
         $this->configureException = \Closure::bind(static function ($e, $trace, $file = null, $line = null) use ($traceReflector) {
             $traceReflector->setValue($e, $trace);
             $e->file = $file ?? $e->file;
@@ -212,7 +213,9 @@ class ErrorHandler
                 }
             }
         } else {
-            $levels ??= \E_ALL;
+            if (null === $levels) {
+                $levels = \E_ALL;
+            }
             foreach ($this->loggers as $type => $log) {
                 if (($type & $levels) && (empty($log[0]) || $replace || $log[0] === $this->bootstrappingLogger)) {
                     $log[0] = $logger;
@@ -537,7 +540,7 @@ class ErrorHandler
             if (null !== $exceptionHandler) {
                 return $exceptionHandler($exception);
             }
-            $handlerException ??= $exception;
+            $handlerException = $handlerException ?: $exception;
         } catch (\Throwable $handlerException) {
         }
         if ($exception === $handlerException && null === $this->exceptionHandler) {
@@ -627,7 +630,7 @@ class ErrorHandler
                 self::$exitCode = 255;
                 $handler->handleException($fatalError);
             }
-        } catch (FatalError) {
+        } catch (FatalError $e) {
             // Ignore this re-throw
         }
 

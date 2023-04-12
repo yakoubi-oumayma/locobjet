@@ -220,7 +220,7 @@ class CallQueuedHandler
         try {
             $shouldDelete = (new ReflectionClass($class))
                     ->getDefaultProperties()['deleteWhenMissingModels'] ?? false;
-        } catch (Exception) {
+        } catch (Exception $e) {
             $shouldDelete = false;
         }
 

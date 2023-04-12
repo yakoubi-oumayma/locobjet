@@ -20,6 +20,17 @@ class ScheduleWorkCommand extends Command
     protected $signature = 'schedule:work {--run-output-file= : The file to direct <info>schedule:run</info> output to}';
 
     /**
+     * The name of the console command.
+     *
+     * This name is used to identify the command during lazy loading.
+     *
+     * @var string|null
+     *
+     * @deprecated
+     */
+    protected static $defaultName = 'schedule:work';
+
+    /**
      * The console command description.
      *
      * @var string
@@ -38,7 +49,7 @@ class ScheduleWorkCommand extends Command
             $this->getLaravel()->isLocal() ? OutputInterface::VERBOSITY_NORMAL : OutputInterface::VERBOSITY_VERBOSE
         );
 
-        [$lastExecutionStartedAt, $executions] = [Carbon::now()->subMinutes(10), []];
+        [$lastExecutionStartedAt, $executions] = [null, []];
 
         $command = implode(' ', array_map(fn ($arg) => ProcessUtils::escapeArgument($arg), [
             PHP_BINARY,

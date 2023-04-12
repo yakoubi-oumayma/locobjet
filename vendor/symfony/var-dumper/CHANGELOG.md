@@ -1,12 +1,6 @@
 CHANGELOG
 =========
 
-6.2
----
-
- * Add support for `FFI\CData` and `FFI\CType`
- * Deprecate calling `VarDumper::setHandler()` without arguments
-
 5.4
 ---
 

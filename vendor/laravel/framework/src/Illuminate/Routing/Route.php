@@ -22,7 +22,7 @@ use Symfony\Component\Routing\Route as SymfonyRoute;
 
 class Route
 {
-    use CreatesRegularExpressionRouteConstraints, FiltersControllerMiddleware, Macroable, ResolvesRouteDependencies;
+    use CreatesRegularExpressionRouteConstraints, Macroable, RouteDependencyResolverTrait;
 
     /**
      * The URI pattern the route responds to.
@@ -280,11 +280,11 @@ class Route
     /**
      * Get the controller class used for the route.
      *
-     * @return string|null
+     * @return string
      */
     public function getControllerClass()
     {
-        return $this->isControllerAction() ? $this->parseControllerCallback()[0] : null;
+        return $this->parseControllerCallback()[0];
     }
 
     /**
@@ -997,7 +997,6 @@ class Route
         return is_string($missing) &&
             Str::startsWith($missing, [
                 'O:47:"Laravel\\SerializableClosure\\SerializableClosure',
-                'O:55:"Laravel\\SerializableClosure\\UnsignedSerializableClosure',
             ]) ? unserialize($missing) : $missing;
     }
 
@@ -1114,7 +1113,7 @@ class Route
     protected function staticallyProvidedControllerMiddleware(string $class, string $method)
     {
         return collect($class::middleware())->reject(function ($middleware) use ($method) {
-            return static::methodExcludedByOptions(
+            return $this->controllerDispatcher()::methodExcludedByOptions(
                 $method, ['only' => $middleware->only, 'except' => $middleware->except]
             );
         })->map->middleware->values()->all();
@@ -1341,13 +1340,13 @@ class Route
     {
         if ($this->action['uses'] instanceof Closure) {
             $this->action['uses'] = serialize(
-                SerializableClosure::unsigned($this->action['uses'])
+                new SerializableClosure($this->action['uses'])
             );
         }
 
         if (isset($this->action['missing']) && $this->action['missing'] instanceof Closure) {
             $this->action['missing'] = serialize(
-                SerializableClosure::unsigned($this->action['missing'])
+                new SerializableClosure($this->action['missing'])
             );
         }
 

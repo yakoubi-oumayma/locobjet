@@ -3,6 +3,7 @@
 namespace Illuminate\Database\Schema\Grammars;
 
 use Doctrine\DBAL\Schema\AbstractSchemaManager as SchemaManager;
+use Doctrine\DBAL\Schema\Comparator;
 use Doctrine\DBAL\Schema\Table;
 use Doctrine\DBAL\Types\Type;
 use Illuminate\Database\Connection;
@@ -33,14 +34,14 @@ class ChangeColumn
         }
 
         $schema = $connection->getDoctrineSchemaManager();
-        $databasePlatform = $connection->getDoctrineConnection()->getDatabasePlatform();
+        $databasePlatform = $schema->getDatabasePlatform();
         $databasePlatform->registerDoctrineTypeMapping('enum', 'string');
 
         $tableDiff = static::getChangedDiff(
             $grammar, $blueprint, $schema
         );
 
-        if (! $tableDiff->isEmpty()) {
+        if ($tableDiff !== false) {
             return (array) $databasePlatform->getAlterTableSQL($tableDiff);
         }
 
@@ -53,13 +54,13 @@ class ChangeColumn
      * @param  \Illuminate\Database\Schema\Grammars\Grammar  $grammar
      * @param  \Illuminate\Database\Schema\Blueprint  $blueprint
      * @param  \Doctrine\DBAL\Schema\AbstractSchemaManager  $schema
-     * @return \Doctrine\DBAL\Schema\TableDiff
+     * @return \Doctrine\DBAL\Schema\TableDiff|bool
      */
     protected static function getChangedDiff($grammar, Blueprint $blueprint, SchemaManager $schema)
     {
-        $current = $schema->introspectTable($grammar->getTablePrefix().$blueprint->getTable());
+        $current = $schema->listTableDetails($grammar->getTablePrefix().$blueprint->getTable());
 
-        return $schema->createComparator()->compareTables(
+        return (new Comparator)->diffTable(
             $current, static::getTableWithColumnChanges($blueprint, $current)
         );
     }
@@ -88,7 +89,7 @@ class ChangeColumn
                         continue;
                     }
 
-                    $column->setPlatformOption($option, static::mapFluentValueToDoctrine($option, $value));
+                    $column->setCustomSchemaOption($option, static::mapFluentValueToDoctrine($option, $value));
                 }
             }
         }
@@ -105,7 +106,7 @@ class ChangeColumn
      */
     protected static function getDoctrineColumn(Table $table, Fluent $fluent)
     {
-        return $table->modifyColumn(
+        return $table->changeColumn(
             $fluent['name'], static::getDoctrineColumnChangeOptions($fluent)
         )->getColumn($fluent['name']);
     }

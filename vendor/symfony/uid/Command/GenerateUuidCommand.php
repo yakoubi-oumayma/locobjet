@@ -26,7 +26,7 @@ use Symfony\Component\Uid\Uuid;
 #[AsCommand(name: 'uuid:generate', description: 'Generate a UUID')]
 class GenerateUuidCommand extends Command
 {
-    private UuidFactory $factory;
+    private $factory;
 
     public function __construct(UuidFactory $factory = null)
     {
@@ -35,6 +35,9 @@ class GenerateUuidCommand extends Command
         parent::__construct();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function configure(): void
     {
         $this
@@ -84,6 +87,9 @@ EOF
         ;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output instanceof ConsoleOutputInterface ? $output->getErrorOutput() : $output);
@@ -151,7 +157,7 @@ EOF
                 $create = function () use ($namespace, $name): Uuid {
                     try {
                         $factory = $this->factory->nameBased($namespace);
-                    } catch (\LogicException) {
+                    } catch (\LogicException $e) {
                         throw new \InvalidArgumentException('Missing namespace: use the "--namespace" option or configure a default namespace in the underlying factory.');
                     }
 
@@ -160,11 +166,11 @@ EOF
                 break;
 
             case $random:
-                $create = $this->factory->randomBased()->create(...);
+                $create = [$this->factory->randomBased(), 'create'];
                 break;
 
             default:
-                $create = $this->factory->create(...);
+                $create = [$this->factory, 'create'];
                 break;
         }
 

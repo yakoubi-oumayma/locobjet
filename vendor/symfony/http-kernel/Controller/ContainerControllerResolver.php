@@ -32,6 +32,9 @@ class ContainerControllerResolver extends ControllerResolver
         parent::__construct($logger);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function instantiateController(string $class): object
     {
         $class = ltrim($class, '\\');

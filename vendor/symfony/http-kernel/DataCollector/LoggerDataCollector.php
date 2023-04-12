@@ -24,10 +24,10 @@ use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
  */
 class LoggerDataCollector extends DataCollector implements LateDataCollectorInterface
 {
-    private DebugLoggerInterface $logger;
+    private $logger;
     private ?string $containerPathPrefix;
-    private ?Request $currentRequest = null;
-    private ?RequestStack $requestStack;
+    private $currentRequest = null;
+    private $requestStack;
     private ?array $processedLogs = null;
 
     public function __construct(object $logger = null, string $containerPathPrefix = null, RequestStack $requestStack = null)
@@ -40,11 +40,17 @@ class LoggerDataCollector extends DataCollector implements LateDataCollectorInte
         $this->requestStack = $requestStack;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function collect(Request $request, Response $response, \Throwable $exception = null)
     {
         $this->currentRequest = $this->requestStack && $this->requestStack->getMainRequest() !== $request ? $request : null;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function reset()
     {
         if (isset($this->logger)) {
@@ -53,6 +59,9 @@ class LoggerDataCollector extends DataCollector implements LateDataCollectorInte
         $this->data = [];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function lateCollect()
     {
         if (isset($this->logger)) {
@@ -178,6 +187,9 @@ class LoggerDataCollector extends DataCollector implements LateDataCollectorInte
         return $this->cloneVar($this->getContainerCompilerLogs($this->data['compiler_logs_filepath'] ?? null));
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getName(): string
     {
         return 'logger';

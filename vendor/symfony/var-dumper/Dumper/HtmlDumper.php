@@ -74,6 +74,9 @@ class HtmlDumper extends CliDumper
     ];
     private array $extraDisplayOptions = [];
 
+    /**
+     * {@inheritdoc}
+     */
     public function __construct($output = null, string $charset = null, int $flags = 0)
     {
         AbstractDumper::__construct($output, $charset, $flags);
@@ -82,6 +85,9 @@ class HtmlDumper extends CliDumper
         $this->styles = static::$themes['dark'] ?? self::$themes['dark'];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function setStyles(array $styles)
     {
         $this->headerIsDumped = false;
@@ -125,6 +131,9 @@ class HtmlDumper extends CliDumper
         $this->dumpSuffix = $suffix;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function dump(Data $data, $output = null, array $extraDisplayOptions = []): ?string
     {
         $this->extraDisplayOptions = $extraDisplayOptions;
@@ -773,6 +782,9 @@ EOHTML
         return $this->dumpHeader = preg_replace('/\s+/', ' ', $line).'</style>'.$this->dumpHeader;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function dumpString(Cursor $cursor, string $str, bool $bin, int $cut)
     {
         if ('' === $str && isset($cursor->attr['img-data'], $cursor->attr['content-type'])) {
@@ -788,6 +800,9 @@ EOHTML
         }
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function enterHash(Cursor $cursor, int $type, string|int|null $class, bool $hasChild)
     {
         if (Cursor::HASH_OBJECT === $type) {
@@ -816,6 +831,9 @@ EOHTML
         }
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function leaveHash(Cursor $cursor, int $type, string|int|null $class, bool $hasChild, int $cut)
     {
         $this->dumpEllipsis($cursor, $hasChild, $cut);
@@ -825,6 +843,9 @@ EOHTML
         parent::leaveHash($cursor, $type, $class, $hasChild, 0);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function style(string $style, string $value, array $attr = []): string
     {
         if ('' === $value) {
@@ -917,6 +938,9 @@ EOHTML
         return $v;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function dumpLine(int $depth, bool $endOfValue = false)
     {
         if (-1 === $this->lastDepth) {

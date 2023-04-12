@@ -480,7 +480,7 @@ class Gate implements GateContract
             $reflection = new ReflectionClass($class);
 
             $method = $reflection->getMethod($method);
-        } catch (Exception) {
+        } catch (Exception $e) {
             return false;
         }
 

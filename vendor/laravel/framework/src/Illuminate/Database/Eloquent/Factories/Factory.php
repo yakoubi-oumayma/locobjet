@@ -874,7 +874,7 @@ abstract class Factory
             return Container::getInstance()
                             ->make(Application::class)
                             ->getNamespace();
-        } catch (Throwable) {
+        } catch (Throwable $e) {
             return 'App\\';
         }
     }

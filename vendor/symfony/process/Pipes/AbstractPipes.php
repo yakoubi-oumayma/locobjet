@@ -41,6 +41,9 @@ abstract class AbstractPipes implements PipesInterface
         }
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function close()
     {
         foreach ($this->pipes as $pipe) {

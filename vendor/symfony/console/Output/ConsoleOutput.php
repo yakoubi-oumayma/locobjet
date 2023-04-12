@@ -29,7 +29,7 @@ use Symfony\Component\Console\Formatter\OutputFormatterInterface;
  */
 class ConsoleOutput extends StreamOutput implements ConsoleOutputInterface
 {
-    private OutputInterface $stderr;
+    private $stderr;
     private array $consoleSectionOutputs = [];
 
     /**
@@ -64,29 +64,44 @@ class ConsoleOutput extends StreamOutput implements ConsoleOutputInterface
         return new ConsoleSectionOutput($this->getStream(), $this->consoleSectionOutputs, $this->getVerbosity(), $this->isDecorated(), $this->getFormatter());
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function setDecorated(bool $decorated)
     {
         parent::setDecorated($decorated);
         $this->stderr->setDecorated($decorated);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function setFormatter(OutputFormatterInterface $formatter)
     {
         parent::setFormatter($formatter);
         $this->stderr->setFormatter($formatter);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function setVerbosity(int $level)
     {
         parent::setVerbosity($level);
         $this->stderr->setVerbosity($level);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getErrorOutput(): OutputInterface
     {
         return $this->stderr;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function setErrorOutput(OutputInterface $error)
     {
         $this->stderr = $error;

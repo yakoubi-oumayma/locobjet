@@ -30,9 +30,6 @@ class StreamedResponse extends Response
     protected $streamed;
     private bool $headersSent;
 
-    /**
-     * @param int $status The HTTP status code (200 "OK" by default)
-     */
     public function __construct(callable $callback = null, int $status = 200, array $headers = [])
     {
         parent::__construct(null, $status, $headers);
@@ -57,6 +54,8 @@ class StreamedResponse extends Response
     }
 
     /**
+     * {@inheritdoc}
+     *
      * This method only sends the headers once.
      *
      * @return $this
@@ -73,6 +72,8 @@ class StreamedResponse extends Response
     }
 
     /**
+     * {@inheritdoc}
+     *
      * This method only sends the content once.
      *
      * @return $this
@@ -95,9 +96,11 @@ class StreamedResponse extends Response
     }
 
     /**
-     * @return $this
+     * {@inheritdoc}
      *
      * @throws \LogicException when the content is not null
+     *
+     * @return $this
      */
     public function setContent(?string $content): static
     {
@@ -110,6 +113,9 @@ class StreamedResponse extends Response
         return $this;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getContent(): string|false
     {
         return false;

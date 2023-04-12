@@ -45,7 +45,7 @@ class ArgvInput extends Input
 
     public function __construct(array $argv = null, InputDefinition $definition = null)
     {
-        $argv ??= $_SERVER['argv'] ?? [];
+        $argv = $argv ?? $_SERVER['argv'] ?? [];
 
         // strip the application name
         array_shift($argv);
@@ -60,6 +60,9 @@ class ArgvInput extends Input
         $this->tokens = $tokens;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function parse()
     {
         $parseOptions = true;
@@ -260,6 +263,9 @@ class ArgvInput extends Input
         }
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getFirstArgument(): ?string
     {
         $isOption = false;
@@ -292,6 +298,9 @@ class ArgvInput extends Input
         return null;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function hasParameterOption(string|array $values, bool $onlyParams = false): bool
     {
         $values = (array) $values;
@@ -314,6 +323,9 @@ class ArgvInput extends Input
         return false;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getParameterOption(string|array $values, string|bool|int|float|array|null $default = false, bool $onlyParams = false): mixed
     {
         $values = (array) $values;

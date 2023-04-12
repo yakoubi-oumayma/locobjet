@@ -6,7 +6,6 @@ use Carbon\CarbonImmutable;
 use Closure;
 use DateTimeInterface;
 use Illuminate\Database\Connection;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\PostgresConnection;
 use Illuminate\Database\Query\Expression;
 use Illuminate\Support\Str;
@@ -141,7 +140,7 @@ class DatabaseBatchRepository implements PrunableBatchRepository
             return [
                 'pending_jobs' => $batch->pending_jobs - 1,
                 'failed_jobs' => $batch->failed_jobs,
-                'failed_job_ids' => json_encode(array_values(array_diff((array) json_decode($batch->failed_job_ids, true), [$jobId]))),
+                'failed_job_ids' => json_encode(array_values(array_diff(json_decode($batch->failed_job_ids, true), [$jobId]))),
             ];
         });
 
@@ -164,7 +163,7 @@ class DatabaseBatchRepository implements PrunableBatchRepository
             return [
                 'pending_jobs' => $batch->pending_jobs,
                 'failed_jobs' => $batch->failed_jobs + 1,
-                'failed_job_ids' => json_encode(array_values(array_unique(array_merge((array) json_decode($batch->failed_job_ids, true), [$jobId])))),
+                'failed_job_ids' => json_encode(array_values(array_unique(array_merge(json_decode($batch->failed_job_ids, true), [$jobId])))),
             ];
         });
 
@@ -340,11 +339,7 @@ class DatabaseBatchRepository implements PrunableBatchRepository
             $serialized = base64_decode($serialized);
         }
 
-        try {
-            return unserialize($serialized);
-        } catch (ModelNotFoundException $e) {
-            return [];
-        }
+        return unserialize($serialized);
     }
 
     /**
@@ -362,7 +357,7 @@ class DatabaseBatchRepository implements PrunableBatchRepository
             (int) $batch->total_jobs,
             (int) $batch->pending_jobs,
             (int) $batch->failed_jobs,
-            (array) json_decode($batch->failed_job_ids, true),
+            json_decode($batch->failed_job_ids, true),
             $this->unserialize($batch->options),
             CarbonImmutable::createFromTimestamp($batch->created_at),
             $batch->cancelled_at ? CarbonImmutable::createFromTimestamp($batch->cancelled_at) : $batch->cancelled_at,
