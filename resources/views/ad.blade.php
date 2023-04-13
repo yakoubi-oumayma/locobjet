@@ -35,7 +35,16 @@
                                 <div class="price">
                                     <h3>{{$ad->price}} MAD</h3>
                                 </div>
-                                <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#exampleModal"><i class="icon-basket"></i>Réserver</button>
+                                @guest
+                                    <a href="/login" class="btn btn-primary" type="button">Se connecter</a>
+                                @else
+                                @if(Auth::user()->user_id == $ad->user_id)
+                                    <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#exampleModal" disabled><i class="icon-basket"></i>Réserver</button>
+                                @else
+                                    <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#exampleModal"><i class="icon-basket"></i>Réserver</button>
+                                @endif
+                                @endguest
+
 
 
                                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
