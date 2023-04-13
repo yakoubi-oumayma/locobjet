@@ -9,7 +9,14 @@
             <div class="intro" style="background-image: url({{asset('assets/img/img2.jpg')}})">
                 <h1>Location des objects</h1>
                 <p>le premier site web de location des objets</p>
-                <a href="/register">Rejoignez-nous</a>
+                @if(Auth::check())
+                    <a href="#">Bienvenue</a>
+                @else
+                    <a href="/register">Rejoignez-nous</a>
+                @endif
+            </div>
+            <div class="all-ads">
+                @include("components.ads")
             </div>
             <div class="achievements">
                 <div class="work">

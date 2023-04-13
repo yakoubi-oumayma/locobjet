@@ -39,7 +39,7 @@
                                         <div class="clean-product-item">
                                             <div class="image">
                                                 <a href="{{route("createAdFromItem",["item_id" => $item->item_id])}}">
-                                                    <img class="img-fluid d-block mx-auto" src="assets/img/tech/image2.jpg">
+                                                    <img class="img-fluid d-block mx-auto" src="{{asset("storage/".$item_images[$item->item_id])}}">
                                                 </a>
                                             </div>
                                             <div class="product-name">
