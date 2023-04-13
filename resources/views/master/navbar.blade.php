@@ -29,18 +29,24 @@
 </head>
 <header class="header">
     @guest
-        <ul class="navbar-nav ms-auto">
-            <nav class="nav-items">
-                <a href="/login">Se connecter</a>
-                <a href="/register">S'inscrire</a>
-                <a href="/my_reservation">Mes reservations</a>
-                <a href="/my_locations">Mes locations</a>
-                <button class="custom-btn btn-5"><span>Ajouter annonce</span></button>
-            </nav>
-        </ul>
-    @else
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-lg " style="background-color:#F8F0DF ;height: 70px !important;">
             <a href="/" class="logo"><span class="logo-first">LOC</span>OBJET</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav" style="  margin-left: auto;">
+                    <button class="custom-btn btn-5" style="margin-top: 10px" ><a href="login" class="custom-btn btn-5"style="text-decoration: none">Ajouter annonce</a></button>
+                    <a href="/login" STYLE="color:orangered; text-decoration: none; padding: 20px" >Se connecter</a>
+                    <a href="/register" STYLE="color:orangered; text-decoration: none; padding: 20px">S'inscrire</a>
+                </ul>
+
+            </div>
+        </nav>
+    @else
+        <nav class="navbar navbar-expand-lg " style="background-color:#F8F0DF ;height: 70px !important;">
+            <a href="all-ads" class="logo"><span class="logo-first">LOC</span>OBJET</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -58,11 +64,10 @@
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profileDropdown">
                             <a class="dropdown-item" href="/profile">Profile</a>
-                            <a class="dropdown-item" href="">Friends</a>
-                            <a class="dropdown-item" href="discussion.html">Discussions</a>
-                            <a class="dropdown-item" href="FavQuotes.html">Favorite Quotes</a>
-                            <a class="dropdown-item" href="addQuotes.html">Add Quote</a>
-                            <a class="dropdown-item" href="settings.html">Account Settings</a>
+                            <a class="dropdown-item" href="">Mes objets</a>
+                            <a class="dropdown-item" href="my_ads">Mes annonces</a>
+                            <a class="dropdown-item" href="my_reservation">Mes reservations</a>
+                            <a class="dropdown-item" href="my_locations">Mes locations</a>
                             <div class="dropdown-divider"></div>
                             <form action="{{ route('logout') }}" method="POST">
                                 @csrf

@@ -15,7 +15,7 @@
         @endphp
     @endforeach
 
-    <div class="container emp-profile">
+    <div class="container emp-profile" style="background-color:white">
         <form method="post">
             <div class="row">
                 <div class="col-md-4">
@@ -37,15 +37,15 @@
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home"
-                                   role="tab" aria-controls="home" aria-selected="true">About</a>
+                                   role="tab" aria-controls="home" aria-selected="true" STYLE="color: #ee8f6c">About</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile"
-                                   role="tab" aria-controls="profile" aria-selected="false">Ads review </a>
+                                   role="tab" aria-controls="profile" aria-selected="false" STYLE="color: #ee8f6c">Commentaire des annonces </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profileUser"
-                                   role="tab" aria-controls="profile" aria-selected="false">Review as user</a>
+                                   role="tab" aria-controls="profile" aria-selected="false" STYLE="color: #ee8f6c">Commentaire</a>
                             </li>
                         </ul>
 
