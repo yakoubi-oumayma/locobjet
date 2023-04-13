@@ -72,7 +72,7 @@ Route::get("/ad/{ad_id}/{start_date}/{end_date}",[AdController::class,"storeRese
 Auth::routes();
 
 Route::post("/my_reservation" ,[MyreservationsController::class ,"addCom"]);
-Route::get("/my_reservation",[\App\Http\Controllers\MyreservationsController::class,"showMyAdsactive"]);
+Route::get("/my_reservation",[\App\Http\Controllers\MyreservationsController::class,"showMyAdsactive"])->name("myReservations");
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get("/all_items",[ItemController::class,'listItems'])->name('allItems');

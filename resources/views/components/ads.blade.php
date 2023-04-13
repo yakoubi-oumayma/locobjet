@@ -116,5 +116,8 @@ if(!isset($cat_ids)) $cat_ids = "";
              const selectedCheckboxesValue = selectedCheckboxes.join(",");
              window.location.href = "/all-ads/" + selectedCheckboxesValue;
          }
+         else{
+             window.location.href = "/all-ads";
+         }
      }
  </script>
