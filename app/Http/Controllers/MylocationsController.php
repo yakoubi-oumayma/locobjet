@@ -18,7 +18,7 @@ class MylocationsController
 
     public function ShowMylocations(){
         $user_id = 3; // votre variable contenant l'ID de l'utilisateur
-        $all_ads=Mylocations::getMylocations(3);
+        $all_ads=Mylocations::getMylocations(2);
         $dt = Carbon::now();
         $dt->toDateString();
         return view('my_locations', compact("all_ads","dt"));
@@ -29,9 +29,9 @@ class MylocationsController
         $client = $request->submit;
         $comment=$request->comment;
         $rating=$request->rating;
-        $user_id = 3;
+        $user_id = 2;
         DB::insert('INSERT INTO user_reviews (from_user_id, to_user_id, comment, rating) VALUES (?,?,?,?)', [$user_id, $client, $comment, $rating]);
-        $all_ads=Mylocations::getMylocations(3);
+        $all_ads=Mylocations::getMylocations(2);
         $dt = Carbon::now();
         $dt->toDateString();
         return view('my_locations', compact("all_ads","dt"));

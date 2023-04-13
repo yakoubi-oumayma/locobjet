@@ -49,8 +49,8 @@
                                     </div><button class="btn btn-primary d-block btn-user w-100" type="submit" style="background-color: orangered !important; border: orangered">Se connecter</button>
                                     <br>
                                 </form>
-                                <div class="text-center"><a class="small" href="forgot-password.html" style="color: orangered">Mot de passe oublier?</a></div>
-                                <div class="text-center"><a class="small" href="register.html" style="color: orangered">Créer un compte!</a></div>
+                                <div class="text-center"><a class="small" href="forgot-password" style="color: orangered">Mot de passe oublier?</a></div>
+                                <div class="text-center"><a class="small" href="register" style="color: orangered">Créer un compte!</a></div>
                             </div>
                         </div>
                     </div>
