@@ -17,9 +17,16 @@ use App\Http\Controllers\ItemController;
 |
 */
 
+Route::prefix('admin')->middleware(['auth','isAdmin'])->group(function (){
+
+});
+
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::post("/my_reservation" ,[MyreservationsController::class ,"addCom"]);
+Route::get("/my_reservation",[\App\Http\Controllers\MyreservationsController::class,"showMyAdsactive"]);
 
 Route::get("/add_ads", [AdController::class, "index"])->name("addAd");
 
@@ -44,7 +51,7 @@ Route::post("/createAd" ,[AdController::class , "storeAd"]);
 
 
 
-Route::get("/my_reservation",[\App\Http\Controllers\MyreservationsController::class,"showMyAdsactive"])->name('myAds');
+
 
 
 Route::post("/my_reservation" ,[MyreservationsController::class ,"addCom"]);
@@ -53,6 +60,7 @@ Route::post("/my_locations" ,[\App\Http\Controllers\MylocationsController::class
 //Route::get("/profile",[ProfileController::class,"index"])->name('profile');
 Route::get("/my_ads", [AdController::class, "showMyAds"])->name('myAds');
 
+//
 
 
 Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile');
@@ -61,3 +69,5 @@ Route::put('/settings/{user}', [App\Http\Controllers\ProfileController::class, '
 Route::get('/store_email', [App\Http\Controllers\ProfileController::class, 'storeEmail'])->name('storeEmail');
 
 Route::get('/inscription', [App\Http\Controllers\Auth\RegisterController::class, 'index']);
+Route::get('/', [App\Http\Controllers\WelcomeController::class, 'index']);
+

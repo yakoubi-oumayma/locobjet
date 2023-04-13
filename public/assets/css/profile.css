@@ -1,5 +1,5 @@
 .favorite {
-    color: blue;
+    color: orangered;
 }
 
 .favorite.active {
@@ -43,7 +43,7 @@
 }
 
 body {
-    background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+    background: #f5f5f5;
 }
 
 .emp-profile {
@@ -86,7 +86,7 @@ body {
 }
 
 .profile-head h6 {
-    color: #0062cc;
+    color: orangered;
 }
 
 .profile-edit-btn {
@@ -95,13 +95,13 @@ body {
     width: 70%;
     padding: 2%;
     font-weight: 600;
-    color: #6c757d;
+    color: #ff544e;
     cursor: pointer;
 }
 
 .proile-rating {
     font-size: 12px;
-    color: #818182;
+    color: #ff544e;
     margin-top: 5%;
 }
 
@@ -122,7 +122,7 @@ body {
 
 .profile-head .nav-tabs .nav-link.active {
     border: none;
-    border-bottom: 2px solid #0062cc;
+    border-bottom: 2px solid orangered;
 }
 
 .profile-work {
@@ -132,7 +132,7 @@ body {
 
 .profile-work p {
     font-size: 12px;
-    color: #818182;
+    color: #ff544e;
     font-weight: 600;
     margin-top: 10%;
 }
@@ -154,5 +154,5 @@ body {
 
 .profile-tab p {
     font-weight: 600;
-    color: #0062cc;
+    color: orangered;
 }
