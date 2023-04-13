@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+@extends('master.navbar')
+@section("content")
+    <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -18,21 +20,22 @@
                 <div class="card-body p-0">
                     <div class="row">
                         <div class="col-lg-6 d-none d-lg-flex">
-                            <div class="flex-grow-1 bg-login-image" style="background-image: url({{asset("assets/img/dogs/image3.jpeg")}});"></div>
+                            <div class="flex-grow-1 bg-login-image" style="background-image: url({{asset('images/img2.jpg')}}); background-size:cover; "></div>
                         </div>
                         <div class="col-lg-6">
                             <div class="p-5">
                                 <div class="text-center">
-                                    <h4 class="text-dark mb-4">Inscrivez-vous maintenant!</h4>
+                                    <h4 class="text-dark mb-4" style="color:orangered !important;">Inscrivez-vous maintenant!</h4>
                                 </div>
                                 <form method="POST" action="{{ route('register') }}" class="user">
                                     @csrf
                                     <div class="mb-3"><input class="form-control form-control-user @error('username') is-invalid @enderror" type="text" id="exampleInputEmail"  placeholder="nom d'utilisateur..." name="username" value="{{ old('username') }}" required autocomplete="username" /></div>
                                     @error('username')
+
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                         </span>
-                                        @enderror
+                                    @enderror
                                     <div class="mb-3"><input class="form-control form-control-user @error('l_name') is-invalid @enderror" type="text" id="" placeholder="Nom" name="l_name" value="{{ old('l_name') }}" required autocomplete="l_name" /></div>
                                     @error('l_name')
                                     <span class="invalid-feedback" role="alert">
@@ -63,7 +66,7 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror
-                                   <button class="btn btn-primary d-block btn-user w-100" type="submit">S'inscrire</button>
+                                    <button class="btn btn-primary d-block btn-user w-100" type="submit" style="background-color: orangered !important; border: orangered">S'inscrire</button>
                                 </form>
                             </div>
                         </div>
@@ -77,4 +80,6 @@
 <script src="{{asset("assets/js/theme.js")}}"></script>
 </body>
 
-</html>
+
+@endsection
+

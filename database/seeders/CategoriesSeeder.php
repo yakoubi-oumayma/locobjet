@@ -14,7 +14,8 @@ class CategoriesSeeder extends Seeder
     public function run(): void
     {
         $users = DB::table('categories');
-        $users->insert([ ['name' => 'immobilier'],
+        $users->insert([
+            ['name' => 'immobilier'],
             ['name' => 'Maison, Cuisine & Jardin'],
             ['name' => 'sport'],
             ['name' => 'Vehicules'],

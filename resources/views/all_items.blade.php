@@ -24,6 +24,10 @@
 
 <main class="page catalog-page">
     <section class="clean-block clean-catalog dark">
+        <div class="block-heading">
+            <h2 class="text-info">Mes objets</h2>
+        </div>
+
         <div class="container">
             <div class="content">
                 <div class="row">

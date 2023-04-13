@@ -11,7 +11,7 @@
                             <div class="row g-0">
                                 @foreach($all_ads as $ad)
                                     <div class="col-12 col-md-6 col-lg-4">
-                                        <div class="clean-product-item"  style="width: 300px>
+                                        <div class="clean-product-item"  style="width: 300px">
                                             <div class="image"><a href="#"><img class="img-fluid d-block mx-auto"
                                                                                 src="{{asset("assets/img/tech/image2.jpg")}}"></a>
                                             </div>

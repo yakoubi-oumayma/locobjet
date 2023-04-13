@@ -27,9 +27,41 @@ class Ad extends Model
 
 
 
-
+  public static function getAllCategories(){
+        $all_categories = DB::select("SELECT * FROM categories");
+        return $all_categories;
+  }
     public static function getAllAd(){
-        $all_ads = DB::select("SELECT * FROM ads order by ad_id ASC");
+        $all_ads = DB::select("SELECT * FROM ads,items WHERE ads.item_id=items.item_id order by ad_id ASC");
+        $ad_images = [];
+        foreach ($all_ads as $ad){
+            $image_name= DB::select("SELECT imagename FROM item_images WHERE item_id=? LIMIT 1",[$ad->item_id]);
+            if (!empty($image_name)){
+                $ad_images[$ad->ad_id] = $image_name[0]->imagename;
+            }
+            else{
+                $ad_images[$ad->ad_id] = "";
+            }
+        }
+        return ["all_ads" => $all_ads, "ad_images" => $ad_images];
+    }
+
+    public static function getAdsByCategory($cat_ids_str){
+
+        $cat_ids = explode(",",$cat_ids_str);
+        $nb_cat = count($cat_ids);
+        $categories = "(";
+        for ($i=0;$i<$nb_cat;$i++){
+            if ($i == $nb_cat - 1){
+                $categories .= $cat_ids[$i].")";
+                break;
+            }
+            else{
+                $categories .=$cat_ids[$i].",";
+            }
+        }
+        $all_ads = DB::select("SELECT * FROM ads,items WHERE ads.item_id=items.item_id AND category_id IN $categories order by ad_id ASC",);
+
         $ad_images = [];
         foreach ($all_ads as $ad){
             $image_name= DB::select("SELECT imagename FROM item_images WHERE item_id=? LIMIT 1",[$ad->item_id]);
