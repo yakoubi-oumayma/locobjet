@@ -36,7 +36,7 @@
                                     <h3>{{$ad->price}} MAD</h3>
                                 </div>
                                 @guest
-                                    <a href="/login" class="btn btn-primary" type="button">Se connecter</a>
+                                    <a href="/login" class="btn btn-primary" type="button">Se connecter pour réserver</a>
                                 @else
                                 @if(Auth::user()->user_id == $ad->user_id)
                                     <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#exampleModal" disabled><i class="icon-basket"></i>Réserver</button>
