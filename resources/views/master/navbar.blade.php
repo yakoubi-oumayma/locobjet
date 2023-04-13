@@ -50,18 +50,7 @@
             </div>
         </nav>
 
-    @else
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a href="/all-ads" class="logo"><span class="logo-first">LOC</span>OBJET</a>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav" style="  margin-left: auto;">
-                    <button class="custom-btn btn-5" style="margin-top: 10px" ><a href="login" class="custom-btn btn-5"style="text-decoration: none">Ajouter annonce</a></button>
-                    <a href="/login" STYLE="color:orangered; text-decoration: none; padding: 20px" >Se connecter</a>
-                    <a href="/register" STYLE="color:orangered; text-decoration: none; padding: 20px">S'inscrire</a>
-                </ul>
 
-            </div>
-        </nav>
     @else
         <nav class="navbar navbar-expand-lg " style="background-color:#F8F0DF ;height: 70px !important;">
             <a href="all-ads" class="logo"><span class="logo-first">LOC</span>OBJET</a>

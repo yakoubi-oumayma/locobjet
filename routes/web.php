@@ -25,8 +25,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post("/my_reservation" ,[MyreservationsController::class ,"addCom"]);
-Route::get("/my_reservation",[\App\Http\Controllers\MyreservationsController::class,"showMyAdsactive"]);
+
 
 Route::get("/add_ads", [AdController::class, "index"])->name("addAd");
 
@@ -39,6 +38,8 @@ Route::get("/ad/{ad_id}", [AdController::class, "showAd"])->name("showAd");
 
 Auth::routes();
 
+Route::post("/my_reservation" ,[MyreservationsController::class ,"addCom"]);
+Route::get("/my_reservation",[\App\Http\Controllers\MyreservationsController::class,"showMyAdsactive"]);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get("/all_items",[ItemController::class,'listItems'])->name('allItems');
