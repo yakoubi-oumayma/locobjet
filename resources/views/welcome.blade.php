@@ -6,7 +6,7 @@
 @section('content')
     <div class="cont">
         <main>
-            <div class="intro">
+            <div class="intro" style="background-image: url({{asset('assets/img/img2.jpg')}})">
                 <h1>Location des objects</h1>
                 <p>le premier site web de location des objets</p>
                 <a href="/register">Rejoignez-nous</a>
@@ -34,7 +34,7 @@
                     <h2>Apropos locobjet</h2>
                     <p>La premiere application au maroc de location des objets, vous pouvez deposer des anonces qui concernent les objets que vous voulez louer ou bien se connecter pour louer un objet que vous souhaitez </p>
                 </div>
-                <img src="{{asset('images/img1.jpg')}}" alt="me">
+                <img src="{{asset('assets/img/img1.jpg')}}" alt="me">
             </div>
         </main>
         <footer class="footer">

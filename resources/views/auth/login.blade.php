@@ -20,7 +20,7 @@
                 <div class="card-body p-0">
                     <div class="row">
                         <div class="col-lg-6 d-none d-lg-flex">
-                            <div class="flex-grow-1 bg-login-image" style="background-image: url({{asset('images/img2.jpg')}}); background-size: cover; margin-left: -100px"></div>
+                            <div class="flex-grow-1 bg-login-image" style="background-image: url({{asset('assets/img/img2.jpg')}}); background-size: cover; margin-left: -100px"></div>
                         </div>
                         <div class="col-lg-6">
                             <div class="p-5">
