@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Ad;
 use App\Models\AdReservation;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -115,6 +116,13 @@ class AdController extends Controller
                             echo "disponible allTime";
                             echo "Toutes les conditions sont vérifiés";
                             echo "On va envoyer la réservation";
+                            $info = Ad::getAdInfo($ad_id);
+                            $ad = $info["ad_infos"];
+                            $start = Carbon::createFromFormat('Y-m-d', $start)->setTime(0, 0, 0);;
+                            $end = Carbon::createFromFormat('Y-m-d', $end)->setTime(0, 0, 0);;
+                            $nbDays = $start->diffInDays($end);
+                            return view("confirmReservation",compact("ad","start","nbDays", "end"));
+
                         }
                         else{
                             $AvailableMonthDay=AdReservation::isAvailableMonthDay($ad_id, $start, $end);

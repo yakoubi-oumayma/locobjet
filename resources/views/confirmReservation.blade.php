@@ -20,9 +20,16 @@
                             <h6>Du <span style="font-weight:bold;">{{$start}}</span> Au <span style="font-weight:bold ;">{{$end}}</span></h6>
                             <hr>
                             <h6>+ Objet disponible dans ces jours:</h6>
-                            @foreach($availableDay as $day)
-                            <h6><i class="fa fa-check" style="font-size: 10px;"></i> {{$day}}</h6>
-                            @endforeach
+                            @if(isset($availableDay))
+                                @foreach($availableDay as $day)
+                                    <h6><i class="fa fa-check" style="font-size: 10px;"></i> {{$day}}</h6>
+                                @endforeach
+                            @else
+                                <h6><i class="fa fa-check" style="font-size: 10px;"></i> Cet objet est disponible pendant toute la semaine</h6>
+
+                            @endif
+
+
                             <br>
                             <hr>
                             <h6><svg xmlns="http://www.w3.org/2000/svg" style="margin-top:-8px;" width="20" height="20" fill="currentColor" class="bi bi-cash-stack" viewBox="0 0 16 16">
