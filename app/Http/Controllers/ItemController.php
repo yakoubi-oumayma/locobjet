@@ -10,9 +10,11 @@ class ItemController extends Controller
     // list all items
     public static function listItems()
     {
-        $items = Item::getItemsByUserId(1);
+        $items_infos = Item::getItemsByUserId(1);
+        $items = $items_infos["all_items"];
+        $item_images = $items_infos["item_images"];
         $categories = Item::getCategories();
-        return view('all_items', ['items' => $items, 'categories' => $categories]);
+        return view('all_items', ['items' => $items, "item_images" => $item_images, 'categories' => $categories]);
     }
 
     public function editItem(Request  $request)

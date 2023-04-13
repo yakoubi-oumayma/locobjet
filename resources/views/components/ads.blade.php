@@ -15,8 +15,8 @@ if(!isset($cat_ids)) $cat_ids = "";
                                     <h3>Categories</h3>
                                     @foreach($all_categories as $cat)
                                         <div class="form-check"><input class="form-check-input" type="checkbox"
-                                                                       id="formCheck-1" value="{{$cat->category_id}}" onchange="redirectToPage()"  @php if(strstr($cat_ids,$cat->category_id)) echo "checked" @endphp><label class="form-check-label"
-                                                                                                                                                                                           for="formCheck-1">{{$cat->name}}</label>
+                                                                       id="formCheck-{{$cat->category_id}}" value="{{$cat->category_id}}" onchange="redirectToPage()"  @php if(strstr($cat_ids,$cat->category_id)) echo "checked" @endphp><label class="form-check-label"
+                                                                                                                                                                                           for="formCheck-{{$cat->category_id}}">{{$cat->name}}</label>
                                         </div>
                                     @endforeach
                                 </div>

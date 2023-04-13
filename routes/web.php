@@ -8,6 +8,7 @@ use App\Http\Controllers\MyreservationsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\TypeController;
+use App\Models\Ad;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdController;
@@ -50,9 +51,6 @@ Route::prefix('admin')->middleware(['auth','isAdmin'])->group(function (){
     Route::get('/reservation', [ReservationController::class, 'ShowReserv'])->name('Reservations');
 });
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 
 
@@ -105,5 +103,5 @@ Route::put('/settings/{user}', [App\Http\Controllers\ProfileController::class, '
 Route::get('/store_email', [App\Http\Controllers\ProfileController::class, 'storeEmail'])->name('storeEmail');
 
 Route::get('/inscription', [App\Http\Controllers\Auth\RegisterController::class, 'index']);
-Route::get('/', [App\Http\Controllers\WelcomeController::class, 'index']);
+Route::get('/', [App\Http\Controllers\WelcomeController::class, 'index'])->name("homePage");
 

@@ -33,7 +33,7 @@
 <header class="header">
     @guest
        <nav class="navbar navbar-expand-lg " style="background-color:#F8F0DF ;height: 70px !important;">
-            <a href="/" class="logo"><span class="logo-first">LOC</span>OBJET</a>
+            <a href="{{route("homePage")}}" class="logo"><span class="logo-first">LOC</span>OBJET</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,7 +56,7 @@
 
     @else
         <nav class="navbar navbar-expand-lg " style="background-color:#F8F0DF ;height: 70px !important;">
-            <a href="all-ads" class="logo"><span class="logo-first">LOC</span>OBJET</a>
+            <a href="{{route("homePage")}}" class="logo"><span class="logo-first">LOC</span>OBJET</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>

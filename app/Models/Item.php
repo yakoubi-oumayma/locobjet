@@ -46,11 +46,24 @@ class Item extends Model
 */
     public static function getItemsByUserId($user_id): array
     {
-        return DB::select("SELECT *, items.name as item_name,
+        $all_items = DB::select("SELECT *, items.name as item_name,
                                         categories.name as category_name, items.category_id as category_id
                                         FROM items,categories
                                         WHERE user_id = ?
                                         AND items.category_id = categories.category_id", [$user_id]);
+        $item_images = [];
+        foreach ($all_items as $item){
+            $image_name= DB::select("SELECT imagename FROM item_images WHERE item_id=? LIMIT 1",[$item->item_id]);
+            if (!empty($image_name)){
+                $item_images[$item->item_id] = $image_name[0]->imagename;
+            }
+            else{
+                $item_images[$item->item_id] = "";
+            }
+        }
+        $items_infos["all_items"] = $all_items;
+        $items_infos["item_images"] = $item_images;
+        return $items_infos;
     }
 
     public static function editItem($name, $price, $city, $description, $user_id, $category_id, $item_id): void
