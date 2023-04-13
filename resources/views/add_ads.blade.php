@@ -18,7 +18,7 @@
     </div>
 
     <a href="{{route('allItems')}}" class="button-59" role="button">Objet Déjà existant </a>
-    <a href="add_ad_new_item"><button  class="button-59" role="button">Nouveau Objet</button></a>
+    <a href="{{route('createAd')}}"><button  class="button-59" role="button">Nouveau Objet</button></a>
 
 
 

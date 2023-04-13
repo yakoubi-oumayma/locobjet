@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('reservation', function (Blueprint $table) {
+            $table->increments('reservation_id');
             $table->date('start_date');
             $table->date('end_date');
             $table->enum('state', ['requested','accepted', 'finished']);
@@ -19,7 +20,6 @@ return new class extends Migration
             $table->foreign('ad_id')->references('ad_id')->on('ads')->onDelete('cascade');
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
-            $table->primary(['user_id', 'ad_id']);
             $table->timestamps();
         });
     }

@@ -43,14 +43,14 @@
                                                 </a>
                                             </div>
                                             <div class="product-name">
-                                                <h3>Name: {{$item->item_name}}</h3>
-                                                <h5>Category: {{$item->category_name}}</h5>
-                                                <p>Description: {{substr($item->description,0,28)}}...</p>
-                                                <p>Ville: {{$item->city}}</p>
-                                                <button class="btn btn-primary" style="margin-right: 5px;" type="submit" data-toggle="modal" data-target="#edit{{$item->item_id}}">
-                                                    <i class="fa fa-pen " style="font-size: 15px; "></i>Editer</button>
-                                                <button class="btn btn-success" style="margin-left: 5px;" type="submit" data-toggle="modal" data-target="#validate{{$item->item_id}}">
-                                                    <i class="fa fa-check" style="font-size: 15px; color: white"></i>Valider</button>
+                                                <h5>Objet: {{$item->item_name}}</h5><br>
+                                                <h7>Categorie: {{$item->category_name}}</h7><br>
+                                                <span>Description: {{substr($item->description,0,28)}}</span><br>
+                                                <span>Disponible à: {{$item->city}}</span><br><br>
+                                                <button class="btn btn-primary" style="margin-right: 5px;" type="submit" data-toggle="modal" data-target="#edit{{$item->item_id}}"><i class="fa fa-pen " style="font-size: 15px; "></i>Editer</button>
+                                                <button class="btn btn-success" style="margin-left: 5px;background-color: orangered; border: none;" type="submit"><i class="fa fa-check" style="font-size: 15px; color: white"></i>
+                                                    <a href="{{route("createAdFromItem",["item_id" => $item->item_id])}}" style="color: white">
+                                                    Publier</a></button>
                                             </div>
                                             <!-- Modal -->
                                             <div id="edit{{$item->item_id}}" class="modal fade" role="dialog">
@@ -58,7 +58,7 @@
                                                     <!-- Modal content-->
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h4 class="modal-title">Item ID: {{$item->item_id}}</h4>
+                                                            <h4 class="modal-title">objet n°{{$item->item_id}}</h4>
                                                             <button type="button" class="close" data-dismiss="modal">x</button>
                                                         </div>
                                                         <form method="post">
@@ -69,7 +69,7 @@
                                                             <input type="text" name="name" class="form-control" value="{{$item->item_name}}" />
                                                             <h5>Description</h5>
                                                             <textarea name="description" class="form-control" style="width: 100%; height: 150px;">{{$item->description}}</textarea>
-                                                            <h5>Price</h5>
+                                                            <h5>Prix</h5>
                                                             <div class="input-group mb-3">
                                                                 <input type="number" name="price" class="form-control" value="{{$item->price}}" aria-label="Recipient's username" aria-describedby="basic-addon2">
                                                                 <div class="input-group-append">
@@ -141,7 +141,7 @@
                                                     <img src="assets/img/star-empty.svg">
                                                 </div>
                                                 <div class="price">
-                                                    <h3>${{$item->price}}</h3>
+                                                    <h3>{{$item->price}}DH</h3>
                                                 </div>
                                             </div>
                                         </div>

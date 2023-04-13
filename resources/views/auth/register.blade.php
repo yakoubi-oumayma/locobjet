@@ -31,7 +31,8 @@
                                     @csrf
                                     <div class="mb-3"><input class="form-control form-control-user @error('username') is-invalid @enderror" type="text" id="exampleInputEmail"  placeholder="nom d'utilisateur..." name="username" value="{{ old('username') }}" required autocomplete="username" /></div>
                                     @error('username')
-                                    <span class="invalid-feedback" role="alert">
+
+                                        <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
@@ -79,6 +80,6 @@
 <script src="{{asset("assets/js/theme.js")}}"></script>
 </body>
 
-</html>
 
 @endsection
+
