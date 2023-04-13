@@ -13,22 +13,12 @@ if(!isset($cat_ids)) $cat_ids = "";
                             <div class="filters">
                                 <div class="filter-item">
                                     <h3>Categories</h3>
-                                    <div class="form-check"><input class="form-check-input" type="checkbox"
-                                                                   id="formCheck-1" value="1" onchange="redirectToPage()"  @php if(strstr($cat_ids,"1")) echo "checked" @endphp><label class="form-check-label"
-                                                                                           for="formCheck-1">Sports et Divertissement</label>
-                                    </div>
-                                    <div class="form-check"><input class="form-check-input" type="checkbox"
-                                                                   id="formCheck-2" value="2" onchange="redirectToPage()"  @php if(strstr($cat_ids,"2")) echo "checked" @endphp><label class="form-check-label"
-                                                                                           for="formCheck-2">Laptops</label>
-                                    </div>
-                                    <div class="form-check"><input class="form-check-input" type="checkbox"
-                                                                   id="formCheck-3" value="3" onchange="redirectToPage()"  @php if(strstr($cat_ids,"3")) echo "checked" @endphp><label class="form-check-label"
-                                                                                           for="formCheck-3">PC</label>
-                                    </div>
-                                    <div class="form-check"><input class="form-check-input" type="checkbox"
-                                                                   id="formCheck-4" value="4" onchange="redirectToPage()"  @php if(strstr($cat_ids,"4")) echo "checked" @endphp><label class="form-check-label"
-                                                                                           for="formCheck-4">Véhicules et automobiles</label>
-                                    </div>
+                                    @foreach($all_categories as $cat)
+                                        <div class="form-check"><input class="form-check-input" type="checkbox"
+                                                                       id="formCheck-1" value="{{$cat->category_id}}" onchange="redirectToPage()"  @php if(strstr($cat_ids,$cat->category_id)) echo "checked" @endphp><label class="form-check-label"
+                                                                                                                                                                                           for="formCheck-1">{{$cat->name}}</label>
+                                        </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
@@ -67,19 +57,20 @@ if(!isset($cat_ids)) $cat_ids = "";
                                 @foreach($all_ads as $ad)
                                     <div class="col-12 col-md-6 col-lg-4">
                                         <div class="clean-product-item">
-                                            <div class="image"><a href="#"><img class="img-fluid d-block mx-auto"
+                                            <div class="image"><a href="{{route("showAd",["ad_id" => $ad->ad_id])}}"><img class="img-fluid d-block mx-auto"
                                                                                 src="{{asset("storage/".$ad_images[$ad->ad_id])}}"></a>
                                             </div>
-                                            <div class="product-name"><a href="#">{{$ad->title}}</a></div>
+                                            <div class="product-name"><a href="{{route("showAd",["ad_id" => $ad->ad_id])}}">{{$ad->title}}</a></div>
                                             <div class="about">
-                                                <div class="rating"><img src="assets/img/star.svg"><img
-                                                        src="assets/img/star.svg"><img src="assets/img/star.svg"><img
-                                                        src="assets/img/star-half-empty.svg"><img
-                                                        src="assets/img/star-empty.svg"></div>
-                                                <div class="price">
-                                                    <h3>$100</h3>
+                                                <div class="rating"><img src="{{asset("assets/img/star.svg")}}">
+                                                    <img src="{{asset("assets/img/star.svg")}}">
+                                                    <img src="{{asset("assets/img/star.svg")}}">
+                                                    <img src="{{asset("assets/img/star.svg")}}">
+                                                    <img src="{{asset("assets/img/star.svg")}}">
                                                 </div>
-                                                <a href="{{route("showAd",["ad_id" => $ad->ad_id])}}"> view ad</a>
+                                                <div class="price">
+                                                    <h3>{{$ad->price}} MAD</h3>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

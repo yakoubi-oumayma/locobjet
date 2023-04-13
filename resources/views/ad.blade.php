@@ -104,54 +104,29 @@
                     </div>
                 </div>
                 <div class="clean-related-items">
-                    <h3>Related Products</h3>
+                    <h3>Annonces semblables</h3>
                     <div class="items">
                         <div class="row justify-content-center">
-                            <div class="col-sm-6 col-lg-4">
-                                <div class="clean-related-item">
-                                    <div class="image"><a href="#"><img class="img-fluid d-block mx-auto"
-                                                                        src="{{asset("assets/img/tech/image2.jpg")}}"></a>
+                            @foreach($related_ads as $related_ad)
+                                @if($related_ad->ad_id != $ad->ad_id)
+                                    <div class="col-sm-6 col-lg-4">
+                                        <div class="clean-related-item">
+                                            <div class="image"><a href="#"><img class="img-fluid d-block mx-auto"
+                                                                                src="{{asset("assets/img/tech/image2.jpg")}}"></a>
+                                            </div>
+                                            <div class="related-name"><a href="#">{{$related_ad->name}}</a>
+                                                <div class="rating"><img src="{{asset("assets/img/star.svg")}}"><img
+                                                        src="{{asset("assets/img/star.svg")}}"><img
+                                                        src="{{asset("assets/img/star.svg")}}"><img
+                                                        src="{{asset("assets/img/star-half-empty.svg")}}"><img
+                                                        src="{{asset("assets/img/star-empty.svg")}}"></div>
+                                                <h4>{{$related_ad->price}} MAD</h4>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="related-name"><a href="#">Lorem Ipsum dolor</a>
-                                        <div class="rating"><img src="{{asset("assets/img/star.svg")}}"><img
-                                                src="{{asset("assets/img/star.svg")}}"><img
-                                                src="{{asset("assets/img/star.svg")}}"><img
-                                                src="{{asset("assets/img/star-half-empty.svg")}}"><img
-                                                src="{{asset("assets/img/star-empty.svg")}}"></div>
-                                        <h4>$300</h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-lg-4">
-                                <div class="clean-related-item">
-                                    <div class="image"><a href="#"><img class="img-fluid d-block mx-auto"
-                                                                        src="{{asset("assets/img/tech/image2.jpg")}}"></a>
-                                    </div>
-                                    <div class="related-name"><a href="#">Lorem Ipsum dolor</a>
-                                        <div class="rating"><img src="{{asset("assets/img/star.svg")}}"><img
-                                                src="{{asset("assets/img/star.svg")}}"><img
-                                                src="{{asset("assets/img/star.svg")}}"><img
-                                                src="{{asset("assets/img/star-half-empty.svg")}}"><img
-                                                src="{{asset("assets/img/star-empty.svg")}}"></div>
-                                        <h4>$300</h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-lg-4">
-                                <div class="clean-related-item">
-                                    <div class="image"><a href="#"><img class="img-fluid d-block mx-auto"
-                                                                        src="{{asset("assets/img/tech/image2.jpg")}}"></a>
-                                    </div>
-                                    <div class="related-name"><a href="#">Lorem Ipsum dolor</a>
-                                        <div class="rating"><img src="{{asset("assets/img/star.svg")}}"><img
-                                                src="{{asset("assets/img/star.svg")}}"><img
-                                                src="{{asset("assets/img/star.svg")}}"><img
-                                                src="{{asset("assets/img/star-half-empty.svg")}}"><img
-                                                src="{{asset("assets/img/star-empty.svg")}}"></div>
-                                        <h4>$300</h4>
-                                    </div>
-                                </div>
-                            </div>
+                                @endif
+
+                            @endforeach
                         </div>
                     </div>
                 </div>

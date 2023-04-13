@@ -24,6 +24,10 @@
 
 <main class="page catalog-page">
     <section class="clean-block clean-catalog dark">
+        <div class="block-heading">
+            <h2 class="text-info">Mes objets</h2>
+        </div>
+
         <div class="container">
             <div class="content">
                 <div class="row">
@@ -62,7 +66,7 @@
                                                         <div class="modal-body">
                                                             <h5>Nom</h5>
                                                             <input type="hidden" name="item_id" value="{{$item->item_id}}">
-                                                            <input type="text" name="name" class="form-control" value="{{$item->name}}" />
+                                                            <input type="text" name="name" class="form-control" value="{{$item->item_name}}" />
                                                             <h5>Description</h5>
                                                             <textarea name="description" class="form-control" style="width: 100%; height: 150px;">{{$item->description}}</textarea>
                                                             <h5>Price</h5>

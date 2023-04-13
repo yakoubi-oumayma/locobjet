@@ -27,9 +27,12 @@ class Ad extends Model
 
 
 
-
+  public static function getAllCategories(){
+        $all_categories = DB::select("SELECT * FROM categories");
+        return $all_categories;
+  }
     public static function getAllAd(){
-        $all_ads = DB::select("SELECT * FROM ads order by ad_id ASC");
+        $all_ads = DB::select("SELECT * FROM ads,items WHERE ads.item_id=items.item_id order by ad_id ASC");
         $ad_images = [];
         foreach ($all_ads as $ad){
             $image_name= DB::select("SELECT imagename FROM item_images WHERE item_id=? LIMIT 1",[$ad->item_id]);
