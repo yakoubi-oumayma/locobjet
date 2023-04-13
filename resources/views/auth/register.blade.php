@@ -1,89 +1,80 @@
-@extends('master.navbar')
-@section('link-style')
-    <link rel="stylesheet" href="{{ asset('assets/css/register.css') }}">
-@endsection
+<!DOCTYPE html>
+<html lang="en">
 
-@section('content')
-    <div class="container">
-        <div class="screen">
-            <div class="screen__content">
-                <form method="POST" class="login" action="{{ route('register') }}">
-                    @csrf
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Login - Brand</title>
+    <link rel="stylesheet" href="{{asset("assets/bootstrap/css/bootstrap.min.css")}}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
+    <link rel="stylesheet" href="{{asset("assets/fonts/fontawesome-all.min.css")}}">
+</head>
 
-                    <div class="login__field">
-                        <i class="login__icon fas fa-user"></i>
-                        <input id="username" type="text" class="login__input @error('name') is-invalid @enderror"
-                            type="text" placeholder="Nom d'utilisateur" name="username" value="{{ old('username') }}"
-                            required autocomplete="username" />
-                        @error('username')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
+<body class="bg-gradient-primary">
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-9 col-lg-12 col-xl-10">
+            <div class="card shadow-lg o-hidden border-0 my-5">
+                <div class="card-body p-0">
+                    <div class="row">
+                        <div class="col-lg-6 d-none d-lg-flex">
+                            <div class="flex-grow-1 bg-login-image" style="background-image: url({{asset("assets/img/dogs/image3.jpeg")}});"></div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="p-5">
+                                <div class="text-center">
+                                    <h4 class="text-dark mb-4">Inscrivez-vous maintenant!</h4>
+                                </div>
+                                <form method="POST" action="{{ route('register') }}" class="user">
+                                    @csrf
+                                    <div class="mb-3"><input class="form-control form-control-user @error('username') is-invalid @enderror" type="text" id="exampleInputEmail"  placeholder="nom d'utilisateur..." name="username" value="{{ old('username') }}" required autocomplete="username" /></div>
+                                    @error('username')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    <div class="mb-3"><input class="form-control form-control-user @error('l_name') is-invalid @enderror" type="text" id="" placeholder="Nom" name="l_name" value="{{ old('l_name') }}" required autocomplete="l_name" /></div>
+                                    @error('l_name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                    <div class="mb-3"><input class="form-control form-control-user @error('f_name') is-invalid @enderror" type="text" id="exampleInputEmail"  placeholder="Prenom..." name="f_name" value="{{ old('f_name') }}" required autocomplete="f_name" /></div>
+                                    @error('f_name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                    <div class="mb-3"><input class="form-control form-control-user @error('email') is-invalid @enderror" type="email" id="exampleInputEmail" placeholder="Adresse email" name="email" value="{{ old('email') }}"  required autocomplete="email" /></div>
+                                    @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                    <div class="mb-3"><input class="form-control form-control-user @error('password') is-invalid @enderror" type="password" id="exampleInputPassword" placeholder="mot de passe.." name="password" value="{{ old('password') }}" required autocomplete="new-password" /></div>
+                                    @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                    <div class="mb-3"><input class="form-control form-control-user @error('password_confirmation') is-invalid @enderror" type="password" id="exampleInputPassword" placeholder="confirmer votre mot de passe.." name="password_confirmation" value="{{ old('password_confirmation') }}"required autocomplete="new-password" /></div>
+                                    @error('password_confirmation')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                   <button class="btn btn-primary d-block btn-user w-100" type="submit">S'inscrire</button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                    <div class="login__field">
-                        <i class="login__icon fas fa-user"></i>
-                        <input id="f_name" type="text" class="login__input @error('f_name') is-invalid @enderror"
-                            type="text" placeholder="Prenom" name="f_name" value="{{ old('f_name') }}" required
-                            autocomplete="f_name" />
-                        @error('f_name')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="login__field">
-                        <i class="login__icon fas fa-user"></i>
-                        <input id="l_name" type="text" class="login__input @error('l_name') is-invalid @enderror"
-                            type="text" placeholder="Nom" name="l_name" value="{{ old('l_name') }}" required
-                            autocomplete="l_name" />
-                        @error('l_name')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="login__field">
-                        <i class="login__icon fas fa-user"></i>
-                        <input id="email" type="email" class="login__input @error('email') is-invalid @enderror"
-                            type="email" placeholder="Email" name="email" value="{{ old('email') }}" required
-                            autocomplete="email" />
-                        @error('email')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="login__field">
-                        <input id="password" type="password" class="login__input @error('password') is-invalid @enderror"
-                            type="password" placeholder="Mot de passe" name="password" required
-                            autocomplete="new-password" />
-                        @error('password')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="login__field">
-                        <i class="login__icon fas fa-user"></i>
-                        <input id="password-confirm" name="password_confirmation" required autocomplete="new-password"
-                            class="login__input" type="password" placeholder="Confirmer mot de passe" />
-                    </div>
-                    <br>
-                    <button type="submit" class="button login_submit"> <span class="button_text">S'inscrire</span>
-                        <i class="button__icon fas fa-chevron-right"></i></button>
-                    <br>
-
-
-                    <center><a class="qust" href="/login">Vous avez deja un compte?</a></center>
-                </form>
-            </div>
-            <div class="screen__background">
-                <span class="screen_backgroundshape screenbackground_shape4"></span>
-                <span class="screen_backgroundshape screenbackground_shape3"></span>
-                <span class="screen_backgroundshape screenbackground_shape2"></span>
-                <span class="screen_backgroundshape screenbackground_shape1"></span>
+                </div>
             </div>
         </div>
     </div>
-@endsection
+</div>
+<script src="{{asset("assets/bootstrap/js/bootstrap.min.js")}}"></script>
+<script src="{{asset("assets/js/theme.js")}}"></script>
+</body>
+
+</html>

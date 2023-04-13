@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ads_availab', function (Blueprint $table) {
+        Schema::create('ads_availability', function (Blueprint $table) {
             $table->integer('day');
             $table->integer('month');
             $table->unsignedInteger('ad_id');

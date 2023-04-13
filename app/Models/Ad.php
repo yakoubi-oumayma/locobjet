@@ -40,6 +40,7 @@ class Ad extends Model
                 $ad_images[$ad->ad_id] = "";
             }
         }
+
         return ["all_ads" => $all_ads, "ad_images" => $ad_images];
     }
     public static function getAllAdsByUserId($user_id){
