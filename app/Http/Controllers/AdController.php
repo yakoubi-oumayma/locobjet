@@ -130,10 +130,7 @@ class AdController extends Controller
         }
 
         }
-    public function storeReservations(Request $request){
-        $ad_id=$request->submit;
-        $start=$request->date_debut;
-        $end=$request->date_fin;
+    public function storeReservations($ad_id,$start, $end ){
         AdReservation::insertReservation( $ad_id,$start , $end , 1);
     }
 

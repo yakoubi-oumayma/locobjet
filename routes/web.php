@@ -26,7 +26,8 @@ Route::get("/all-ads", [AdController::class, "showAllAds"])->name("allAds");
 
 Route::get("/ad/{ad_id}", [AdController::class, "showAd"])->name("showAd");
 Route::post("/ad/{ad_id}",[AdController::class,"verifyReservation"]);
-Route::post("/ad/{ad_id}",[AdController::class,"storeReservations"]);
+
+Route::get("/ad/{ad_id}/{start_date}/{end_date}",[AdController::class,"storeReservations"]);
 
 
 
