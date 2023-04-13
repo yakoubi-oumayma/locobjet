@@ -21,7 +21,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get("/add_ads", [AdController::class, "index"]);
+Route::get("/add_ads", [AdController::class, "index"])->name("addAd");
 
 Route::get("/add_ad_new_item", [AdController::class, "createNewItem"]);
 
@@ -48,7 +48,7 @@ Route::get("/my_reservation",[\App\Http\Controllers\MyreservationsController::cl
 
 
 Route::post("/my_reservation" ,[MyreservationsController::class ,"addCom"]);
-Route::get("/my_locations",[\App\Http\Controllers\MylocationsController::class,"ShowMylocations"]);
+Route::get("/my_locations",[\App\Http\Controllers\MylocationsController::class,"ShowMylocations"])->name("myLocations");
 Route::post("/my_locations" ,[\App\Http\Controllers\MylocationsController::class ,"addCom"]);
 //Route::get("/profile",[ProfileController::class,"index"])->name('profile');
 Route::get("/my_ads", [AdController::class, "showMyAds"])->name('myAds');

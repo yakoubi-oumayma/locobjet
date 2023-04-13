@@ -16,17 +16,19 @@ class AdController extends Controller
     }
 
     public function showAllAds(){
+        $all_categories = Ad::getAllCategories();
         $ads_info = Ad::getAllAd();
         $all_ads = $ads_info["all_ads"];
         $ad_images = $ads_info["ad_images"];
-        return view("all_ads",compact("all_ads","ad_images"));
+        return view("all_ads",compact("all_ads","ad_images", "all_categories"));
     }
 
     public function showAdsByCategory($cat_ids){
+        $all_categories = Ad::getAllCategories();
         $ads_info = Ad::getAdsByCategory($cat_ids);
         $all_ads = $ads_info["all_ads"];
         $ad_images = $ads_info["ad_images"];
-        return view("all_ads",compact("all_ads","ad_images",'cat_ids'));
+        return view("all_ads",compact("all_ads","ad_images",'cat_ids','all_categories'));
     }
 
 
@@ -36,7 +38,10 @@ class AdController extends Controller
         $ad = $info["ad_infos"];
         $ad_images = $info["ad_images"];
         $ad_reviews = $info["ad_reviews"];
-        return view("ad",compact("ad","ad_images","ad_reviews"));
+        $related_ads_info = Ad::getAdsByCategory($ad->category_id);
+        $related_ads = $related_ads_info["all_ads"];
+        $related_ads_images = $related_ads_info["ad_images"];
+        return view("ad",compact("ad","ad_images","ad_reviews", "related_ads", "related_ads_images"));
     }
 
     public function createAdFromItem($itemId)
