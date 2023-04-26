@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
+
+
 class AdController extends Controller
 {
     public function index(){
@@ -217,5 +219,41 @@ class AdController extends Controller
     }
 
 
+    public function search(Request $request)
+    {
 
+        $output="";
+        $searchTerm = $request->search;
+        $data = DB::table('items')
+            ->join('ads', 'ads.item_id', '=', 'items.item_id')
+            ->select('items.*','ads.*', 'ads.title as ads_title')
+            ->where(function ($query) use ($searchTerm) {
+                $query->where('ads.title', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('items.description', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('items.name', 'LIKE', '%' . $searchTerm . '%');
+            })
+            ->get();
+
+        foreach ($data as $ad){
+        $ad_image = DB::select("SELECT imagename FROM item_images,ads,items WHERE ads.ad_id=? AND ads.item_id=items.item_id AND item_images.item_id=items.item_id LIMIT 1",[$ad->ad_id]);
+            $output.='<div class="row g-0">
+                                    <div class="col-12 col-md-6 col-lg-4">
+                                        <div class="clean-product-item">
+                                            <div class="image"><a href="/ad/'.$ad->ad_id.'"><img class="img-fluid d-block mx-auto"
+                                                                                src="'.asset("storage/".$ad_image[0]->imagename).'"></a>
+                                            </div>
+                                            <div class="product-name"><a href="/ad/'.$ad->ad_id.'">'.$ad->title.'</a></div>
+                                            <div class="about">
+                                                <div class="price">
+                                                    <h3>'.$ad->price.' MAD</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>';
+
+        }
+        return response($output);
+
+
+    }
 }
