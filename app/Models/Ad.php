@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class Ad extends Model
@@ -46,22 +47,49 @@ class Ad extends Model
         return ["all_ads" => $all_ads, "ad_images" => $ad_images];
     }
 
-    public static function getAdsByCategory($cat_ids_str){
+    public static function getAdsByCategory($cat_ids_str,$cities_str,$price_str){
 
         $cat_ids = explode(",",$cat_ids_str);
+        $cities_arr = explode(",",$cities_str);
+        $price_arr = explode(",",$price_str);
+
         $nb_cat = count($cat_ids);
-        $categories = "(";
-        for ($i=0;$i<$nb_cat;$i++){
-            if ($i == $nb_cat - 1){
-                $categories .= $cat_ids[$i].")";
-                break;
-            }
-            else{
-                $categories .=$cat_ids[$i].",";
+        $nb_cities = count($cities_arr);
+        $nb_price = count($price_arr);
+
+        $categories = "1=1";
+        $cities = "1=1";
+        $price = "1=1";
+
+        if ($cat_ids_str != "null"){
+            $categories = "category_id IN (";
+            for ($i=0;$i<$nb_cat;$i++){
+                if ($i == $nb_cat - 1){
+                    $categories .= $cat_ids[$i].")";
+                    break;
+                }
+                else{
+                    $categories .=$cat_ids[$i].",";
+                }
             }
         }
-        $all_ads = DB::select("SELECT * FROM ads,items WHERE ads.item_id=items.item_id AND category_id IN $categories order by ad_id ASC",);
+        if ($cities_str != "null"){
+            $cities = "items.city IN (";
+            for ($i=0;$i<$nb_cities;$i++){
+                if ($i == $nb_cities - 1){
+                    $cities .= "'".$cities_arr[$i]."')";
+                    break;
+                }
+                else{
+                    $cities .= "'".$cities_arr[$i]."',";
+                }
+            }
+        }
+        if ($price_str != "null" && $nb_price > 0){
+            $price = "items.price". " ".$price_arr[0];
+        }
 
+        $all_ads = DB::select("SELECT * FROM ads,items WHERE ads.item_id=items.item_id AND $categories AND $cities AND $price order by ad_id ASC");
         $ad_images = [];
         foreach ($all_ads as $ad){
             $image_name= DB::select("SELECT imagename FROM item_images WHERE item_id=? LIMIT 1",[$ad->item_id]);
@@ -93,10 +121,16 @@ class Ad extends Model
 
     public static function getAdInfo($ad_id){
         $ad = DB::select("SELECT * FROM ads,items WHERE ads.item_id=items.item_id AND ad_id=? LIMIT 1",[$ad_id]);
-        $ad_images = DB::select("SELECT imagename FROM item_images WHERE item_id=?",[$ad[0]->item_id]);
+        $ad_images = DB::select("SELECT imagename FROM item_images WHERE item_id=?",[$ad_id]);
         $ad_reviews = DB::select("SELECT * FROM ad_reviews WHERE ad_id=?",[$ad_id]);
         $ad_infos = ["ad_infos" => $ad[0], "ad_images" => $ad_images, "ad_reviews" => $ad_reviews];
         return $ad_infos;
+    }
+
+    public static function updateAd($new_infos){
+        $update = DB::update("UPDATE ads SET title=?,state=?,min_rent_period=?,available_from=? WHERE ad_id=?",
+            [$new_infos["title"],$new_infos["state"],$new_infos["min_rent_period"],$new_infos["available_from"],$new_infos["ad_id"]]);
+
     }
 
     static public function addAd(
@@ -113,7 +147,7 @@ class Ad extends Model
         $available_month,
         $available_days
     ) {
-        DB::insert('INSERT INTO items (name, price, city, description, category_id, user_id ) VALUES (?,?,?,?,?,?)', [$name, $price, $city, $description, $category_id, 1]);
+        DB::insert('INSERT INTO items (name, price, city, description, category_id, user_id ) VALUES (?,?,?,?,?,?)', [$name, $price, $city, $description, $category_id, Auth::user()->user_id]);
 
         $lastId = DB::table('items')->latest('item_id')->first()->item_id;
 

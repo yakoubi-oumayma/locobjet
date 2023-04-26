@@ -1,5 +1,9 @@
 @php
 if(!isset($cat_ids)) $cat_ids = "";
+if(!isset($cities)) $cities = "";
+if(!isset($price)) $price = "";
+
+
 @endphp
 <section class="clean-block clean-catalog dark">
         <div class="container">
@@ -14,11 +18,37 @@ if(!isset($cat_ids)) $cat_ids = "";
                                 <div class="filter-item">
                                     <h3>Categories</h3>
                                     @foreach($all_categories as $cat)
-                                        <div class="form-check"><input class="form-check-input" type="checkbox"
+                                        <div class="form-check"><input class="form-check-input" type="checkbox" name="categorie"
                                                                        id="formCheck-{{$cat->category_id}}" value="{{$cat->category_id}}" onchange="redirectToPage()"  @php if(strstr($cat_ids,$cat->category_id)) echo "checked" @endphp><label class="form-check-label"
                                                                                                                                                                                            for="formCheck-{{$cat->category_id}}">{{$cat->name}}</label>
                                         </div>
                                     @endforeach
+                                </div>
+
+                                <div class="filter-item">
+                                    <h3>Villes</h3>
+                                        <div class="form-check"><input class="form-check-input" type="checkbox" name="city"
+                                                                       value="Casablanca" onchange="redirectToPage()"  @php if(strstr($cities,"Casablanca")) echo "checked" @endphp><label class="form-check-label">Casablanca</label>
+                                        </div>
+                                    <div class="form-check"><input class="form-check-input" type="checkbox" name="city"
+                                                                   value="Tetouan" onchange="redirectToPage()" @php if(strstr($cities,"Tetouan")) echo "checked" @endphp><label class="form-check-label">Tetouan</label>
+                                    </div>
+                                    <div class="form-check"><input class="form-check-input" type="checkbox" name="city"
+                                                                   value="tanger" onchange="redirectToPage()" @php if(strstr($cities,"Tetouan")) echo "checked" @endphp><label class="form-check-label">Tanger</label>
+                                    </div>
+                                </div>
+
+                                <div class="filter-item">
+                                    <h3>Prix</h3>
+                                    <div class="form-check"><input class="form-check-input" type="checkbox" name="price"
+                                                                   value="<=300" onchange="redirectToPage()"><label class="form-check-label" @if($price == "<=300") style="color: green; font-weight: bold" @endif> <= 300 MAD</label>
+                                    </div>
+                                    <div class="form-check"><input class="form-check-input" type="checkbox" name="price"
+                                                                   value="<=1000" onchange="redirectToPage()"><label class="form-check-label" @if($price == "<=1000") style="color: green; font-weight: bold" @endif> <= 1000 MAD </label>
+                                    </div>
+                                </div>
+                                <div class="filter-item">
+                                    <a href="{{route("allAds")}}" class="link-info">Rénitialiser filtre</a>
                                 </div>
                             </div>
                         </div>
@@ -95,26 +125,51 @@ if(!isset($cat_ids)) $cat_ids = "";
     </section>
  <script>
      function redirectToPage() {
-         console.log("hahahahahaha");
          // get all the checkboxes
-         const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+         const categoriesCheckboxes = document.querySelectorAll('input[name="categorie"]');
+         const citiesCheckboxes = document.querySelectorAll('input[name="city"]');
+         const priceCheckboxes = document.querySelectorAll('input[name="price"]');
+
+
 
          // initialize an empty array to store the selected checkboxes
-         const selectedCheckboxes = [];
+         const categoriesSelectedCheckboxes = [];
+         const citiesSelectedCheckboxes = [];
+         const priceSelectedCheckboxes = [];
+
+
 
          // loop through the checkboxes and check if they are checked
-         checkboxes.forEach(checkbox => {
+         categoriesCheckboxes.forEach(checkbox => {
              if (checkbox.checked) {
                  // if checked, add the checkbox to the selectedCheckboxes array
-                 selectedCheckboxes.push(checkbox.value);
+                 categoriesSelectedCheckboxes.push(checkbox.value);
+             }
+         });
+         citiesCheckboxes.forEach(checkbox => {
+             if (checkbox.checked) {
+                 // if checked, add the checkbox to the selectedCheckboxes array
+                 citiesSelectedCheckboxes.push(checkbox.value);
+             }
+         });
+
+         priceCheckboxes.forEach(checkbox => {
+             if (checkbox.checked) {
+                 // if checked, add the checkbox to the selectedCheckboxes array
+                 priceSelectedCheckboxes.push(checkbox.value);
              }
          });
 
          // if any checkbox is selected, redirect to the desired page
-         if (selectedCheckboxes.length > 0) {
-             console.log("pppp")
-             const selectedCheckboxesValue = selectedCheckboxes.join(",");
-             window.location.href = "/all-ads/" + selectedCheckboxesValue;
+         if (categoriesSelectedCheckboxes.length > 0 || citiesSelectedCheckboxes.length > 0 || priceSelectedCheckboxes.length > 0) {
+             if(categoriesSelectedCheckboxes.length == 0) categoriesSelectedCheckboxes.push("null");
+             if(citiesSelectedCheckboxes.length == 0) citiesSelectedCheckboxes.push("null")
+             if(priceSelectedCheckboxes.length == 0) priceSelectedCheckboxes.push("null")
+             const categoriesSelectedCheckboxesValue = categoriesSelectedCheckboxes.join(",");
+             const citiesSelectedCheckboxesValue = citiesSelectedCheckboxes.join(",");
+             const priceSelectedCheckboxesValue = priceSelectedCheckboxes.join(",");
+             window.location.href = "/all-ads/" + categoriesSelectedCheckboxesValue + "/" +
+                 citiesSelectedCheckboxesValue + "/" + priceSelectedCheckboxesValue;
          }
          else{
              window.location.href = "/all-ads";
