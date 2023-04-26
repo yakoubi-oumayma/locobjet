@@ -62,7 +62,7 @@ Route::get("/add_ads", [AdController::class, "index"])->name("addAd");
 Route::get("/add_ad_new_item", [AdController::class, "createNewItem"]);
 
 Route::get("/all-ads", [AdController::class, "showAllAds"])->name("allAds");
-Route::get("/all-ads/{cat_ids}", [AdController::class, "showAdsByCategory"])->name("AdsByCategory");
+Route::get("/all-ads/{cat_ids}/{cities}/{price}", [AdController::class, "showAdsByCategory"])->name("AdsByCategory");
 
 Route::get("/ad/{ad_id}", [AdController::class, "showAd"])->name("showAd");
 Route::post("/ad/{ad_id}", [AdController::class, "verifyReservation"]);
@@ -83,6 +83,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get("/all_items", [ItemController::class, 'listItems'])->name('allItems');
 Route::post("/all_items", [ItemController::class, 'editItem'])->name('editItem');
 
+Route::get("/editAd/{ad_id}",[AdController::class, "editAd"])->name("editAd");
+Route::post("/editAd/{ad_id}",[AdController::class, "updateAd"])->name("editAd");
 Route::get("/createAd/{item_id}", [AdController::class, 'createAdFromItem'])->name('createAdFromItem');
 Route::get("/createAd", [AdController::class, 'createAd'])->name('createAd');
 Route::post("/createAd/{itemId}", [AdController::class, "storeExistenItemAd"]);
