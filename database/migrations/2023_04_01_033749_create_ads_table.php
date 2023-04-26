@@ -17,6 +17,7 @@ return new class extends Migration
             $table->String('title');
             $table->enum('state', ['active', 'inactive']);
             $table->date('available_from');
+            $table->date('available_end');
             $table->integer('min_rent_period');
             $table->enum('availability', ['allTime', 'limited']);
             $table->date('createdAt');

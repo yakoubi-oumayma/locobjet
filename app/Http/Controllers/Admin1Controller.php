@@ -14,7 +14,7 @@ class Admin1Controller extends Controller
         $annonces=Admin1::inRandomOrder()->get();
         $activeAdsCount = Admin1::where('state', 'active')->count();
         $usersCount = DB::select('SELECT COUNT(*) AS count FROM users')[0]->count;
-        $reservedReservCount = Reservation::where('state','reserved')->count();
+        $reservedReservCount = Reservation::where('state','accepted')->count();
         //return view('admin.DeleteUser',compact("utilisateurs"));
 
         return view('admin.DeleteAd', ['annonces' => $annonces, 'activeAdsCount' => $activeAdsCount, 'usersCount' => $usersCount, 'reservedReservCount' => $reservedReservCount]);

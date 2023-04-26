@@ -105,12 +105,15 @@
                                 <a href="{{ url('/ad', ['ad_id' => $ad->ad_id, 'start_date' => $start , 'end_date' => $end]) }}" style="text-decoration: none;color:white ;">Je confirme ma réservation</a>
                             </button>
 
-                            <a href="" class="btn btn-success" style="margin-left: 5px;background-color: orangered;border: none; " type="submit">
+                            <button  type="submit" name="send" value="" id="sendRes" class="btn btn-success" style="margin-left: 5px;background-color: orangered;border: none; " type="submit">
                                 <svg xmlns="http://www.w3.org/2000/svg" style="margin-top:-8px;"width="18" height="18" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
                                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                                     <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
                                 </svg>
-                                Annuler la réservation</a>
+                                <a onclick="backPage()" style="text-decoration: none;color:white ;">J'annule ma réservation</a>
+                            </button>
+
+
                         </div>
                     </div>
                 </div>
@@ -122,7 +125,15 @@
 
     </section>
 <script>
+    function backPage(){
 
+        window.history.back();
+        swal("Message", "votre réservation est annulé", {
+            button: "Ok",
+            icon: "success",
+            timer:10000
+        });
+    }
     const acceptedCheckbox = document.getElementById('accepted');
     const notAcceptedCheckbox = document.getElementById('notAccepted');
     const sendButton = document.getElementById('sendRes');
@@ -145,6 +156,8 @@
 
 
 </script>
+
+
 
 @endsection
 
