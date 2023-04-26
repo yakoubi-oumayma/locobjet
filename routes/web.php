@@ -47,6 +47,7 @@ Route::prefix('admin')->middleware(['auth','isAdmin'])->group(function (){
     Route::get('/type', [TypeController::class,'AddType'])->name("categories");
     Route::get('/type/create', [TypeController::class,'create'])->name("categorie.create");
     Route::post('/type/create', [TypeController::class,'store'])->name("categorie.ajouter");
+    Route::post('/type/delete', [TypeController::class,'delete'])->name("type.supprimer");
 
     Route::get('/reservation', [ReservationController::class, 'ShowReserv'])->name('Reservations');
 });
