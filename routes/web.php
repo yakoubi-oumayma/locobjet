@@ -105,3 +105,4 @@ Route::get('/store_email', [App\Http\Controllers\ProfileController::class, 'stor
 Route::get('/inscription', [App\Http\Controllers\Auth\RegisterController::class, 'index']);
 Route::get('/', [App\Http\Controllers\WelcomeController::class, 'index'])->name("homePage");
 
+Route::get('/search', [App\Http\Controllers\AdController::class, 'search']);

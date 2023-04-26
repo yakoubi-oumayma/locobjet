@@ -16,6 +16,7 @@
                 @endif
             </div>
             <div class="all-ads">
+
                 @include("components.ads")
             </div>
             <div class="achievements">
@@ -62,6 +63,7 @@
             </div>
         </footer>
     </div>
+
 
 @endsection
 

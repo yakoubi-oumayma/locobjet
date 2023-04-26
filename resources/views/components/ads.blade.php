@@ -5,8 +5,10 @@ if(!isset($cat_ids)) $cat_ids = "";
         <div class="container">
             <div class="block-heading">
                 <h2 class="text-info">Annonces</h2>
+
             </div>
             <div class="content">
+
                 <div class="row">
                     <div class="col-md-3">
                         <div class="d-none d-md-block">
@@ -52,7 +54,17 @@ if(!isset($cat_ids)) $cat_ids = "";
                         </div>
                     </div>
                     <div class="col-md-9">
-                        <div class="products">
+
+                        <div class="box">
+                            <form name="search">
+                                <input type="text" id="search-input"  class="input" name="txt" onmouseout="this.value = ''; this.blur();">
+                                <i class="fas fa-search"></i>
+                            </form>
+
+
+
+                        </div>
+                        <div id="products" class="products">
                             <div class="row g-0">
                                 @foreach($all_ads as $ad)
                                     <div class="col-12 col-md-6 col-lg-4">
@@ -75,6 +87,9 @@ if(!isset($cat_ids)) $cat_ids = "";
                                         </div>
                                     </div>
                                 @endforeach
+                                    <div id="#search_list">
+
+                                    </div>
                             </div>
                             <nav>
                                 <ul class="pagination">
@@ -93,11 +108,46 @@ if(!isset($cat_ids)) $cat_ids = "";
             </div>
         </div>
     </section>
- <script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+</script>
+
+<script type="text/javascript">
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $(function( $ ){
+        $('#search-input').on('keyup', function() {
+            // Code à exécuter lors de l'événement keyup
+            console.log('dd');
+            $value = $(this).val();
+            $.ajax({
+
+                type: 'GET',
+                url: '{{URL::to('search')}}',
+                data: {'search':$value},
+                success: function(data) {
+                    console.log(data)
+                    $('#products').html(data);
+                },
+                error:function (xhr){
+                    console.log(xhr.responseText);
+                }
+            });
+        });
+    });
+</script>
+
+<script >
+
      function redirectToPage() {
          console.log("hahahahahaha");
          // get all the checkboxes
          const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
 
          // initialize an empty array to store the selected checkboxes
          const selectedCheckboxes = [];

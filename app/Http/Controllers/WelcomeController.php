@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ad;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class WelcomeController
+
 {
 public function index(){
     $all_categories = Ad::getAllCategories();
@@ -13,4 +16,6 @@ public function index(){
     $ad_images = $ads_info["ad_images"];
     return view('welcome', compact("all_ads","ad_images","all_categories"));
 }
+
+
 }
