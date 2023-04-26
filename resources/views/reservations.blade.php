@@ -79,7 +79,8 @@
                                                                         data-dismiss="modal">x
                                                                     </button>
                                                                 </div>
-                                                                <form method="post" action="{{ route('sentEmail') }}">
+                                                                <form method="post" name="accept"
+                                                                    action="{{ route('sentEmail') }}">
                                                                     @csrf
                                                                     <input type="hidden" name="user_id"
                                                                         value="{{ $client[0]->user_id }}">
@@ -101,10 +102,10 @@
                                                                         value="{{ $reservation->price }}">
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-default"
-                                                                            data-dismiss="modal">Close
+                                                                            data-dismiss="modal" name="close">Close
                                                                         </button>
-                                                                        <button type="submit"
-                                                                            class="btn btn-primary">Accepte
+                                                                        <button type="submit" class="btn btn-primary"
+                                                                            name="accept">Accepte
                                                                         </button>
 
                                                                     </div>
@@ -132,13 +133,36 @@
                                                                 <div class="modal-body">
 
                                                                 </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-default"
-                                                                        data-dismiss="modal">Close
-                                                                    </button>
-                                                                    <button type="submit"
-                                                                        class="btn btn-danger">Refuse</button>
-                                                                </div>
+                                                                <form method="post" name="refuse"
+                                                                    action="{{ route('sentEmail') }}">
+                                                                    @csrf
+                                                                    <input type="hidden" name="user_id"
+                                                                        value="{{ $client[0]->user_id }}">
+                                                                    <input type="hidden" name="email"
+                                                                        value="{{ $client[0]->email }}">
+                                                                    <input type="hidden" name="f_name"
+                                                                        value="{{ $client[0]->f_name }}">
+                                                                    <input type="hidden" name="l_name"
+                                                                        value="{{ $client[0]->l_name }}">
+                                                                    <input type="hidden" name="username"
+                                                                        value="{{ $client[0]->username }}">
+                                                                    <input type="hidden" name="start_date"
+                                                                        value="{{ $reservation->start_date }}">
+                                                                    <input type="hidden" name="end_date"
+                                                                        value="{{ $reservation->end_date }}">
+                                                                    <input type="hidden" name="object_name"
+                                                                        value="{{ $reservation->title }}">
+                                                                    <input type="hidden" name="price"
+                                                                        value="{{ $reservation->price }}">
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-default"
+                                                                            data-dismiss="modal">Close
+                                                                        </button>
+                                                                        <button type="submit" class="btn btn-danger"
+                                                                            name="refuse">Refuse</button>
+                                                                    </div>
+                                                                    @method('put')
+                                                                </form>
                                                             </div>
                                                         </div>
                                                     </div>
