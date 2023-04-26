@@ -68,13 +68,13 @@ class User extends Authenticatable
         $user = User::where('email', $email)->orderBy('username', 'asc')->get();
         return $user;
     }
-    public static function selectUserInfo($user_id)
+    /* public static function selectUserInfo($user_id)
     {
 
         $user = DB::select("SELECT * FROM users WHERE user_id=?", [$user_id]);
         return $user;
     }
-
+*/
     public static function getUserId()
     {
         $email =  session('email');
