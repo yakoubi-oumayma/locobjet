@@ -5,7 +5,12 @@
 
 
 
-    <h2>Items</h2>
+    <h2>Objets</h2>
+    <style>
+  .btn-danger {
+  background-color: #f4661b !important;
+}
+</style>
     @if(session()->has("succesDelete"))
         <div class="alert alert-succes">
             <h3>{{session()->get('succesDelete')}}</h3>
@@ -17,12 +22,12 @@
 
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">Price</th>
-                <th scope="col">City</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Prix</th>
+                <th scope="col">Ville</th>
                 <th scope="col">Description</th>
                 <th scope="col">Categorie</th>
-                <th scope="col">Item</th>
+                <th scope="col">Objet</th>
                 <th scope="col">Action</th>
 
             </tr>
@@ -30,7 +35,7 @@
             <tbody>
             @foreach ($objets as $objet)
                 <tr>
-                    <td>{{$objet->item_id}}</td>
+                    <td>{{$loop->index+1}}</td>
                     <td>{{$objet->name}}</td>
                     <td>{{$objet->price}}</td>
                     <td>{{$objet->city}}</td>
