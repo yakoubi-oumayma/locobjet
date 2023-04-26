@@ -100,4 +100,8 @@ class User extends Authenticatable
         }
         $this->update($data);
     }
+    public static function getUserById($id): array
+    {
+        return DB::select("SELECT * FROM users WHERE user_id=?", [$id]);
+    }
 }
