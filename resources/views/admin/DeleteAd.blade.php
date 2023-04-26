@@ -5,6 +5,11 @@
 
 
     <h2>Annonces</h2>
+    <style>
+  .btn-danger {
+  background-color: #f4661b !important;
+}
+</style>
     @if(session()->has("succesDelete"))
         <div class="alert alert-succes">
             <h3>{{session()->get('succesDelete')}}</h3>
@@ -16,11 +21,11 @@
 
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">title</th>
-                <th scope="col">State</th>
-                <th scope="col">Available_from</th>
-                <th scope="col">Min_Rent_Period</th>
-                <th scope="col">Availability</th>
+                <th scope="col">Titre</th>
+                <th scope="col">Etat</th>
+                <th scope="col">Disponible Depuis</th>
+                <th scope="col">Periode Minmale</th>
+                <th scope="col">Disponibilite</th>
                 <th scope="col">Action</th>
 
             </tr>
@@ -28,7 +33,7 @@
             <tbody>
             @foreach ($annonces as $annonce)
                 <tr>
-                    <td>{{$annonce->ad_id}}</td>
+                    <td>{{$loop->index+1}}</td>
                     <td>{{$annonce->title}}</td>
                     <td>{{$annonce->state}}</td>
                     <td>{{$annonce->available_from}}</td>

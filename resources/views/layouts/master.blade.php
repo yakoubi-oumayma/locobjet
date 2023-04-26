@@ -95,6 +95,47 @@
             z-index: 1500;
         }
 
+        .circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-color: #f0f0f0;
+  margin: 10px;
+  text-align: center;
+  background-color:#fbcca7 ;
+  color: #f4661b;
+  
+}
+
+.circle-text {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+ 
+}
+
+.circle-label {
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.nav-link.active h1 {
+  color: #f4661b;
+}
+h1.h2 {
+  color: gray;
+}
+
+#sidebarMenu {
+  background-color: #b3b3b3 !important;
+}
+
+
+
 
     </style>
 
@@ -155,97 +196,87 @@
 </div>
 
 
-<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="#">LocObjet</a>
-    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
 
-    <div class="navbar-nav">
-        <div class="nav-item text-nowrap">
-            <a class="nav-link px-3" href="#">Sign out</a>
-        </div>
-    </div>
-</header>
+
+ 
 
 <div class="container-fluid">
-    <div class="row">
-        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-body-tertiary sidebar collapse">
-            <div class="position-sticky pt-3 sidebar-sticky">
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">
-                            <span data-feather="home" class="align-text-bottom"></span>
-                            Dashboard
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('users')}}">
-                            <span data-feather="file" class="align-text-bottom"></span>
-                            Users
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('ads')}}">
-                            <span data-feather="shopping-cart" class="align-text-bottom"></span>
-                            Ads
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('objects')}}">
-                            <span data-feather="users" class="align-text-bottom"></span>
-                            Objects
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('categories')}}">
-                            <span data-feather="bar-chart-2" class="align-text-bottom"></span>
-                            Categories
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('Reservations')}}">
-                            <span data-feather="layers" class="align-text-bottom"></span>
-                            Reservations
-                        </a>
-                    </li>
-                </ul>
+  <div class="row">
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-body-tertiary sidebar collapse">
+      <div class="position-sticky pt-3 sidebar-sticky">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">
+              <span data-feather="home" class="align-text-bottom"></span>
+              <h1 class="h2">LocObjet</h1>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{route('users')}}">
+              <span data-feather="file" class="align-text-bottom"></span>
+              Utilsateurs
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{route('ads')}}">
+              <span data-feather="shopping-cart" class="align-text-bottom"></span>
+              Annonces
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{route('objects')}}">
+              <span data-feather="users" class="align-text-bottom"></span>
+              Objets
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{route('categories')}}">
+              <span data-feather="bar-chart-2" class="align-text-bottom"></span>
+              Categories
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{route('Reservations')}}">
+              <span data-feather="layers" class="align-text-bottom"></span>
+              Reservations
+            </a>
+          </li>
+        </ul>
 
-                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">
-                    <span></span>
-                    <a class="link-secondary" href="#" aria-label="Add a new report">
-                        <span data-feather="plus-circle" class="align-text-bottom"></span>
-                    </a>
-                </h6>
-                <ul class="nav flex-column mb-2">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <span data-feather="file-text" class="align-text-bottom"></span>
-
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <span data-feather="file-text" class="align-text-bottom"></span>
-
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <span data-feather="file-text" class="align-text-bottom"></span>
-
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <span data-feather="file-text" class="align-text-bottom"></span>
-
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">
+          <span></span>
+          <a class="link-secondary" href="#" aria-label="Add a new report">
+            <span data-feather="plus-circle" class="align-text-bottom"></span>
+          </a>
+        </h6>
+        <ul class="nav flex-column mb-2">
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="file-text" class="align-text-bottom"></span>
+              
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="file-text" class="align-text-bottom"></span>
+              
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="file-text" class="align-text-bottom"></span>
+              
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="file-text" class="align-text-bottom"></span>
+              
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="h2">Dashboard</h1>
@@ -262,28 +293,29 @@
             </div>
 
             <div class="row">
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            Annonces actives {{ $activeAdsCount }}
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            Users Total {{$usersCount}}
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            Reservation faites{{$reservedReservCount}}
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <div class="col-md-4">
+    <div class="circle">
+      <div class="circle-label">Annonces actives</div>
+      <div class="circle-text">{{ $activeAdsCount }}</div>
+      
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="circle">
+      <div class="circle-label">Utilisateurs Total</div>
+      <div class="circle-text">{{ $usersCount }}</div>
+    
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="circle">
+      <div class="circle-label">Réservations faites</div>
+      <div class="circle-text">{{ $reservedReservCount }}</div>
+      
+    </div>
+  </div>
+</div>
+
 
 
             @yield("contenu")

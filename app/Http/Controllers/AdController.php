@@ -6,6 +6,8 @@ use App\Models\Ad;
 use App\Models\AdReservation;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -24,12 +26,12 @@ class AdController extends Controller
         return view("all_ads",compact("all_ads","ad_images", "all_categories"));
     }
 
-    public function showAdsByCategory($cat_ids){
+    public function showAdsByCategory($cat_ids,$cities,$price){
         $all_categories = Ad::getAllCategories();
-        $ads_info = Ad::getAdsByCategory($cat_ids);
+        $ads_info = Ad::getAdsByFiltre($cat_ids,$cities,$price);
         $all_ads = $ads_info["all_ads"];
         $ad_images = $ads_info["ad_images"];
-        return view("all_ads",compact("all_ads","ad_images",'cat_ids','all_categories'));
+        return view("all_ads",compact("all_ads","ad_images",'cat_ids','cities','price','all_categories'));
     }
 
 
@@ -39,7 +41,7 @@ class AdController extends Controller
         $ad = $info["ad_infos"];
         $ad_images = $info["ad_images"];
         $ad_reviews = $info["ad_reviews"];
-        $related_ads_info = Ad::getAdsByCategory($ad->category_id);
+        $related_ads_info = Ad::getAdsByFiltre($ad->category_id,"null","null");
         $related_ads = $related_ads_info["all_ads"];
         $related_ads_images = $related_ads_info["ad_images"];
         return view("ad",compact("ad","ad_images","ad_reviews", "related_ads", "related_ads_images"));
@@ -114,7 +116,7 @@ class AdController extends Controller
 
 
     public function ShowMyAds(){
-        $user_id = 1;
+        $user_id = Auth::user()->user_id;
         $ads_info = Ad::getAllAdsByUserId($user_id);
         $all_ads = $ads_info["all_ads"];
         $ad_images = $ads_info["ad_images"];
@@ -190,6 +192,29 @@ class AdController extends Controller
 
     }
 
+    public function editAd($ad_id){
+        $ad = Ad::getAdInfo($ad_id);
+        $ad_infos = $ad["ad_infos"];
+        $ad_images = $ad["ad_images"];
+        return view("edit_ad", compact("ad_infos", "ad_images"));
+    }
+
+    public function updateAd(Request $request){
+        $new_infos = [];
+        $new_infos["ad_id"] = $request->ad_id;
+        $new_infos["title"] = $request->title;
+        $new_infos["min_rent_period"] = $request->min_rent_period;
+        $new_infos["available_from"] = $request->available_from;
+
+        if ($request->state == "active"){
+            $new_infos["state"] = "active";
+        }
+        else{
+            $new_infos["state"] = "inactive";
+        }
+        Ad::updateAd($new_infos);
+        return redirect()->back();
+    }
 
 
 
