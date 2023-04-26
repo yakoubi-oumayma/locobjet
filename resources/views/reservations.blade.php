@@ -36,18 +36,22 @@
                         <div class="products" style="padding-right: 60px;padding-left: 62px;">
                             <div class="row g-0">
                                 @foreach($reservations as $reservation)
+                                    @php
+                                        $client = \App\Models\User::getUserById($reservation->client);
+                                        $info = \App\Models\Ad::getAdInfo($reservation->ad_id);
+//                                        dd($info);
+                                        $ad = $info["ad_infos"];
+                                        $ad_images = $info["ad_images"];
+                                    @endphp
                                     <div class="col-12 col-md-6 col-lg-4">
                                         <div class="clean-product-item">
                                             <div class="image">
-                                                <img class="img-fluid d-block mx-auto" src="assets/img/tech/image2.jpg">
+                                                <img class="img-fluid d-block mx-auto" src="{{asset("storage/".$ad_images[0])}}">
                                             </div>
                                             <div class="product-name">
                                                 <h3>Id: {{$reservation->reservation_id}}</h3>
                                                 <h3>Titre : {{$reservation->title}}</h3>
                                                 <h3>Description : {{$reservation->description}}</h3>
-                                                @php
-                                                    $client = \App\Models\User::getUserById($reservation->client);
-                                                @endphp
                                                 <h3>Client : {{$client[0]->username}}</h3>
 
                                                 <button class="btn btn-success" style="margin-right: 5px;" type="submit"
