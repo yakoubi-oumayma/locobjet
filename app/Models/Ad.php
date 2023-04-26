@@ -47,7 +47,7 @@ class Ad extends Model
         return ["all_ads" => $all_ads, "ad_images" => $ad_images];
     }
 
-    public static function getAdsByCategory($cat_ids_str,$cities_str,$price_str){
+    public static function getAdsByFiltre($cat_ids_str, $cities_str, $price_str){
 
         $cat_ids = explode(",",$cat_ids_str);
         $cities_arr = explode(",",$cities_str);

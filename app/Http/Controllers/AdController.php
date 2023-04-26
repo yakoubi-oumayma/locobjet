@@ -30,7 +30,7 @@ class AdController extends Controller
 
     public function showAdsByCategory($cat_ids,$cities,$price){
         $all_categories = Ad::getAllCategories();
-        $ads_info = Ad::getAdsByCategory($cat_ids,$cities,$price);
+        $ads_info = Ad::getAdsByFiltre($cat_ids,$cities,$price);
         $all_ads = $ads_info["all_ads"];
         $ad_images = $ads_info["ad_images"];
         return view("all_ads",compact("all_ads","ad_images",'cat_ids','cities','price','all_categories'));
@@ -43,7 +43,7 @@ class AdController extends Controller
         $ad = $info["ad_infos"];
         $ad_images = $info["ad_images"];
         $ad_reviews = $info["ad_reviews"];
-        $related_ads_info = Ad::getAdsByCategory($ad->category_id);
+        $related_ads_info = Ad::getAdsByFiltre($ad->category_id,"null","null");
         $related_ads = $related_ads_info["all_ads"];
         $related_ads_images = $related_ads_info["ad_images"];
         return view("ad",compact("ad","ad_images","ad_reviews", "related_ads", "related_ads_images"));

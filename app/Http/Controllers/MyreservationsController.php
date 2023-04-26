@@ -6,6 +6,7 @@ use App\Models\Myreservations;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class MyreservationsController
@@ -40,10 +41,35 @@ class MyreservationsController
 
     public function listRequestedReservation()
     {
-        $reservations = Myreservations::getRequestedReservationByUserId(1);
-
-
-
-        return view('reservations', ['reservations' => $reservations]);
+        $reservations = Myreservations::getRequestedReservationByUserId(Auth::user()->user_id);
+        //        dd($reservations);
+//        +"ad_id": 2
+//        +"title": "ad 2"
+//        +"state": "requested"
+//        +"available_from": "2023-04-01"
+//        +"min_rent_period": 3
+//        +"availability": "allTime"
+//        +"createdAt": "2023-04-01"
+//        +"item_id": 3
+//        +"created_at": null
+//        +"updated_at": null
+//        +"name": "hanan"
+//        +"price": "620.00"
+//        +"city": "hamid"
+//        +"description": "hamid hamid"
+//        +"user_id": 1
+//        +"category_id": 1
+//        +"start_date": "2023-04-01"
+//        +"end_date": "2023-04-08"
+//        +"reservation_id": 2
+//        +"username": "zaka"
+//        +"email": "zaka@gmail.com"
+//        +"f_name": "zaka"
+//        +"l_name": "ria"
+//        +"email_verified_at": null
+//        +"password": "qwertyuiop"
+//        +"remember_token": null
+//        +"client": 1
+        return view('reservations',['reservations' => $reservations]);
     }
 }
