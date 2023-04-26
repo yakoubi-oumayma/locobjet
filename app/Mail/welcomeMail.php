@@ -13,51 +13,26 @@ class welcomeMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $data;
+
     /**
-     * The email content.
+     * Create a new message instance.
      *
-     * @var string
+     * @return void
      */
-    public $content;
-    public function __construct(string $content)
+    public function __construct($data)
     {
-        $this->content = $content;
-    }
-
-
-    /**
-     * Get the message envelope.
-     */
-    public function envelope(): Envelope
-    {
-        return new Envelope(
-            subject: 'Welcome Mail',
-        );
+        $this->data = $data;
     }
 
     /**
-     * Get the message content definition.
+     * Build the message.
+     *
+     * @return $this
      */
     public function build()
     {
-        $this->withSwiftMessage(function ($message) {
-            $message->getHeaders()
-                ->addTextHeader('X-Mailgun-Tag', 'welcome-email')
-                ->addTextHeader('X-Mailgun-Dkim', 'yes')
-                ->addTextHeader('X-Mailgun-Spf', 'yes')
-                ->addTextHeader('X-Mailgun-Track', 'opens');
-        });
-        $messageBody = $this->content;
-        return $this->subject('Welcome Mail')->html($messageBody);
-    }
-
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
-    public function attachments(): array
-    {
-        return [];
+        return $this->view('email')
+            ->subject('Welcome to LocObjet!');
     }
 }

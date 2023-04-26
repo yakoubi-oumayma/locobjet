@@ -1,37 +1,62 @@
-<html lang="en">
+<!DOCTYPE html>
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Welcome to LocObjet!</title>
+    <style>
+        /* Add your CSS styles here */
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            margin: 0 auto;
+            max-width: 600px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #666;
+        }
+
+        ul {
+            margin: 20px 0;
+            padding: 0 0 0 20px;
+            list-style: disc;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 
 <body>
-    @php
-        $user_id = 1;
-    @endphp
-    <form action="{{ route('sentEmail') }}" method="post">
-
-        @csrf
-
-        <div class="row mt-3">
-            <div class="col-md-12">
-                <label class="labels">Content</label>
-                <input type="text" name="content" class="form-control">
-            </div>
-        </div>
-        <input type="hidden" name="user_id" value="{{ $user_id }}">
-
-
-
-        <div class="mt-5 text-center">
-            <button class="btn btn-primary profile-button" type="submit">Save Profile</button>
-        </div>
-
-
-        @method('put')
-    </form>
+    <div class="container">
+        <h1>Welcome, {{ $data['name'] }}!</h1>
+        <p>We're happy to inform you that your offer has been accepted by the owner for the rental of the following
+            item:</p>
+        <ul>
+            <li>Item name: {{ $data['object_name'] }}</li>
+            <li>Rental start date: {{ $data['start_date'] }}</li>
+            <li>Rental end date: {{ $data['end_date'] }}</li>
+            <li>Price: {{ $data['price'] }}</li>
+        </ul>
+        <p>We thank you for choosing LocObjet and we remain at your disposal for any questions or additional
+            information.</p>
+        <p>Best regards,<br>The LocObjet Team</p>
+    </div>
 </body>
 
 </html>
