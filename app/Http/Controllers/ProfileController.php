@@ -21,7 +21,7 @@ class ProfileController extends Controller
             $user_infos = $user::selectUser();
             $email_session = Auth::user()->email;
             //$userId = auth()->user()->id; // Get the ID of the currently logged in user
-            $user_id = Auth::user()->user_id ;
+            $user_id = Auth::user()->user_id;
             /* $reviews = DB::select("SELECT * FROM ad_reviews,ads,items,users WHERE
                         ad_reviews.ad_id=ads.ad_id AND ads.item_id=items.item_id AND items.user_id=users.user_id AND users.user_id=?",[$user_id]);*/
             $reviews = AdReview::whereHas('ad.item.user', function ($query) use ($user_id) {
@@ -36,23 +36,20 @@ class ProfileController extends Controller
         } else {
             return redirect()->route('login');
         }
-
     }
 
     public function settings()
     {
-        if (Auth::check()){
+        if (Auth::check()) {
             $user = new User();
             $user_Infos = $user::selectUser();
 
             return view('Settings')->with([
                 'user_infos' => $user_Infos
             ]);
-        }
-        else{
+        } else {
             return redirect()->route('login');
         }
-
     }
 
     public function update(Request $request, User $user)

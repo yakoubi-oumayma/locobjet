@@ -46,8 +46,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
-        'remember_token',
+        'password', 'remember_token',
     ];
 
     /**
@@ -55,9 +54,7 @@ class User extends Authenticatable
      *
      * @var array<string, string>
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    protected $casts = ['email_verified_at' => 'datetime',];
 
 
     public function receivedReviews()
@@ -71,12 +68,12 @@ class User extends Authenticatable
         $user = User::where('email', $email)->orderBy('username', 'asc')->get();
         return $user;
     }
-    /* public static function selectUser()
+    public static function selectUserInfo($user_id)
     {
-        $user_id =  1;
+
         $user = DB::select("SELECT * FROM users WHERE user_id=?", [$user_id]);
-        return $user[0];
-    }*/
+        return $user;
+    }
 
     public static function getUserId()
     {
