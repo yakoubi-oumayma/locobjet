@@ -78,7 +78,7 @@
                                                 <div class="price">
                                                     <h3>$100</h3>
                                                 </div>
-                                                <a href="#" class="btn btn-info"> Modifier</a>
+                                                <a href="{{route("editAd",["ad_id" => $ad->ad_id])}}" class="btn btn-info"> Modifier</a>
                                             </div>
                                         </div>
                                     </div>
