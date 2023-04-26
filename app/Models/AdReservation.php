@@ -23,19 +23,19 @@ class AdReservation extends Model
 
         if(empty($reservations)){
             $i=0;
-            echo "personne n'a réservé cet objet pour la periode que vous avez saisi!!";
         }
         else{
             foreach ($reservations as $reservation){
-                if($start <$reservation->start_date ){
-                    if($end>$reservation->start_date){
+                if($start < $reservation->start_date ){
+                    if($end > $reservation->start_date){
                         $i=1;
                         break;
                     }
                     else{
                         $i=0;
                     }
-                }elseif ($reservation->start_date<$start && $start <$reservation->end_date){
+                }
+                elseif ($reservation->start_date<=$start && $start <= $reservation->end_date){
                     $i=1;
                     break;
                 }
@@ -56,10 +56,10 @@ class AdReservation extends Model
 
     //2- Comparer date de début de la réservation et la date à partir de laquelle l'objet est disponible
 
-    public  static function isAvailableFrom($ad_id, $start){
+    public  static function isAvailableFrom($ad_id, $start, $end){
 
-        $availablity=DB::select('SELECT available_from FROM Ads WHERE ad_id=?', [$ad_id]);
-        if($start < $availablity[0]->available_from ){
+        $availablity=DB::select('SELECT available_from, available_end  FROM Ads WHERE ad_id=?', [$ad_id]);
+        if($start < $availablity[0]->available_from || $end > $availablity[0]->available_end ){
             return 0;
         }else{
             return 1;
@@ -96,7 +96,6 @@ class AdReservation extends Model
         $has_monthE= 0;
 
         if($dayMonths[0]->month == 0){
-            echo "l'objet disponible tous les mois";
             return -1;
         }
 
@@ -106,24 +105,20 @@ class AdReservation extends Model
 
             foreach ($dayMonths as $dayMonth) {
                 if ($dayMonth->month == $monthS ) {
-                    echo "l9ina le mois du debut existe ";
                     $has_monthS = 1;
                     break;
                 }
             }
             if($has_monthS==0){
-                echo "mois de debut makaynsh f les mois de disponibilité";
             }
             else{
                 foreach ($dayMonths as $dayMonth) {
                     if ($dayMonth->month == $monthE ) {
-                        echo "l9ina le mois du fin existe ";
                         $has_monthE = 1;
                         break;
                     }
                 }
                 if($has_monthE==0){
-                    echo "mois du fin  makaynsh f les mois de disponibilité";
                 }
                 else {
                     return 1; //1 cad que l'objet disponible pendant les mois saisis
@@ -169,9 +164,7 @@ class AdReservation extends Model
         return $nb;
         }
     public static function insertReservation($ad_id , $start , $end , $user_id){
-        echo "Réservation bien enregistrée";
         DB::insert('INSERT INTO reservation (start_date, end_date, ad_id, user_id ) VALUES (?,?,?,?)', [$start, $end, $ad_id, 1]);
-
     }
 }
 
