@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
+use App\Models\Items;
 use Illuminate\Http\Request;
 
 class ItemController extends Controller
@@ -10,10 +11,10 @@ class ItemController extends Controller
     // list all items
     public static function listItems()
     {
-        $items_infos = Item::getItemsByUserId(1);
+        $items_infos = Items::getItemsByUserId(1);
         $items = $items_infos["all_items"];
         $item_images = $items_infos["item_images"];
-        $categories = Item::getCategories();
+        $categories = Items::getCategories();
         return view('all_items', ['items' => $items, "item_images" => $item_images, 'categories' => $categories]);
     }
 
@@ -27,7 +28,7 @@ class ItemController extends Controller
         $category_id = $request->input('category_id');
         $item_id = $request->input('item_id');
 
-        Item::editItem($name, $price, $city, $description, $user_id , $category_id, $item_id);
+        Items::editItem($name, $price, $city, $description, $user_id , $category_id, $item_id);
         return ItemController::listItems();
     }
 }
