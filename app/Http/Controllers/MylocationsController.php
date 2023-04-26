@@ -6,6 +6,7 @@ use App\Models\Mylocations;
 use Illuminate\Http\Request;
 use DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class MylocationsController
 {
@@ -18,7 +19,7 @@ class MylocationsController
 
     public function ShowMylocations(){
         $user_id = 3; // votre variable contenant l'ID de l'utilisateur
-        $all_ads=Mylocations::getMylocations(2);
+        $all_ads=Mylocations::getMylocations(Auth::user()->user_id);
         $dt = Carbon::now();
         $dt->toDateString();
         return view('my_locations', compact("all_ads","dt"));
@@ -34,6 +35,6 @@ class MylocationsController
         $all_ads=Mylocations::getMylocations(2);
         $dt = Carbon::now();
         $dt->toDateString();
-        return view('my_locations', compact("all_ads","dt"));
+        return redirect()->back();
     }
 }

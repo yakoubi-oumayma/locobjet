@@ -6,7 +6,12 @@
 
 
 
-    <h2>Users</h2>
+    <h2>Utilisateurs</h2>
+    <style>
+  .btn-danger {
+  background-color: #f4661b !important;
+}
+</style>
     @if(session()->has("succesDelete"))
         <div class="alert alert-succes">
             <h3>{{session()->get('succesDelete')}}</h3>
@@ -20,8 +25,8 @@
                 <th scope="col">#</th>
                 <th scope="col">Username</th>
                 <th scope="col">Email</th>
-                <th scope="col">First Name</th>
-                <th scope="col">Last Name</th>
+                <th scope="col">Prenom</th>
+                <th scope="col">Nom</th>
                 <th scope="col">Action</th>
 
             </tr>
@@ -29,7 +34,7 @@
             <tbody>
             @foreach ($utilisateurs as $utilisateur)
                 <tr>
-                    <td>{{$utilisateur->user_id}}</td>
+                    <td>{{$loop->index+1}}</td>
                     <td>{{$utilisateur->username}}</td>
                     <td>{{$utilisateur->email}}</td>
                     <td>{{$utilisateur->f_name}}</td>
