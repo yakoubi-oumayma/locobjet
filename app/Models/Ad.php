@@ -122,7 +122,7 @@ class Ad extends Model
 
     public static function getAdInfo($ad_id){
         $ad = DB::select("SELECT * FROM ads,items WHERE ads.item_id=items.item_id AND ad_id=? LIMIT 1",[$ad_id]);
-        $ad_images = DB::select("SELECT imagename FROM item_images WHERE item_id=?",[$ad_id]);
+        $ad_images = DB::select("SELECT imagename FROM item_images WHERE item_id=?",[$ad[0]->item_id]);
         $ad_reviews = DB::select("SELECT * FROM ad_reviews WHERE ad_id=?",[$ad_id]);
         $ad_infos = ["ad_infos" => $ad[0], "ad_images" => $ad_images, "ad_reviews" => $ad_reviews];
         return $ad_infos;
