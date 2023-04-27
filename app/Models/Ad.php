@@ -150,9 +150,6 @@ class Ad extends Model
         $available_days
     ) {
 
-        DB::insert('INSERT INTO items (name, price, city, description, category_id, user_id ) VALUES (?,?,?,?,?,?)', [$name, $price, $city, $description, $category_id, Auth::user()->user_id]);
-
-
         $numberOfAds= DB::select('SELECT COUNT(*) AS total_ads FROM ads
                           INNER JOIN items ON ads.item_id = items.item_id
                           WHERE items.user_id =?
