@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Mail\ClientMail;
 use App\Mail\RefuseClientMail;
 use App\Mail\OwnerMail;
-
 use App\Models\Myreservations;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -69,5 +67,6 @@ class emailController extends Controller
             return redirect()->route('reservations');
 
         }
+
     }
 }

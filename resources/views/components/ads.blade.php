@@ -36,7 +36,7 @@ if(!isset($price)) $price = "";
                                                                    value="Tetouan" onchange="redirectToPage()" @php if(strstr($cities,"Tetouan")) echo "checked" @endphp><label class="form-check-label">Tetouan</label>
                                     </div>
                                     <div class="form-check"><input class="form-check-input" type="checkbox" name="city"
-                                                                   value="tanger" onchange="redirectToPage()" @php if(strstr($cities,"Tetouan")) echo "checked" @endphp><label class="form-check-label">Tanger</label>
+                                                                   value="Tanger" onchange="redirectToPage()" @php if(strstr($cities,"Tanger")) echo "checked" @endphp><label class="form-check-label">Tanger</label>
                                     </div>
                                 </div>
 

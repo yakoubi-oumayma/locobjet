@@ -27,15 +27,20 @@ use Illuminate\Support\Facades\Mail;
 
 Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/', [AdminController::class, 'DeleteUser'])->name("users");
+
     Route::delete("/{utilisateur}", [AdminController::class, 'delete'])->name("utilisateur.supprimer");
+
     Route::get('/ads', [Admin1Controller::class, 'DeleteAd'])->name('ads');
     //Route::get('/admin1', [Admin1Controller::class,'DeleteAd'])->name("ads");
     Route::delete("/admin1/{annonce}", [Admin1Controller::class, 'delete'])->name("annonce.supprimer");
+
     //Route::get('/admin1', [Admin1Controller::class,'DeleteAds'])->name("annonces");
+
     //Route::get('/admin1', [Admin1Controller::class, 'deleteAds'])->name('deleteAds');
     //Route::get('/ads', [Admin1Controller::class, 'DeleteAd'])->name('ads');
     Route::get('/master', [MasterController::class, 'index'])->name('master.index');
     //Route::get('/DeleteAd', [Admin1Controller::class, 'index'])->name('admin1.index');
+
     Route::get('/admin2', [Admin2Controller::class, 'DeleteObject'])->name("objects");
     Route::delete("/admin2/{objet}", [Admin2Controller::class, 'delete'])->name("objet.supprimer");
 
@@ -72,8 +77,9 @@ Route::get("/ad/{ad_id}/{start_date}/{end_date}", [AdController::class, "storeRe
 Auth::routes();
 
 Route::post("/my_reservation", [MyreservationsController::class, "addCom"]);
-Route::get("/my_reservation", [MyreservationsController::class, "showMyAdsactive"])->name("myReservations");
+Route::get("/my_reservation", [\App\Http\Controllers\MyreservationsController::class, "showMyAdsactive"])->name("myReservations");
 Route::get("/reservations", [MyreservationsController::class, "listRequestedReservation"])->name('reservations');
+Route::post("/reservations", [MyreservationsController::class, "handleReservation"])->name('handleReservation');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
