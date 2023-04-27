@@ -7,6 +7,7 @@ use App\Mail\ClientMail;
 use App\Mail\RefuseClientMail;
 use App\Mail\OwnerMail;
 
+use App\Models\Myreservations;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Models\User;
@@ -54,15 +55,19 @@ class emailController extends Controller
         if ($request->has('accept')) {
             Mail::to($emailOwner)->send(new OwnerMail($clientData));
             Mail::to($emailClient)->send(new ClientMail($ownerData));
+
+            $reservationId = $request->input('reservation_id');
+            $state = $request->input('state');
+            Myreservations::updateReservation($reservationId, $state);
+            return redirect()->route('reservations');
+
         } else if ($request->has('refuse')) {
-
-
             Mail::to($emailClient)->send(new RefuseClientMail($ownerData));
-        }
 
-        $reservationId = $request->input('reservation_id');
-        $state = $request->input('state');
-        Myreservations::updateReservation($reservationId, $state);
-        return redirect()->route('reservations');
+            $reservationId = $request->input('reservation_id');
+            Myreservations::deleteReservation($reservationId);
+            return redirect()->route('reservations');
+
+        }
     }
 }

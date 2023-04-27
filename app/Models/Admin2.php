@@ -15,6 +15,6 @@ class Admin2 extends Model
         return $this->belongsTo(Category::class, 'category_id');
     }
     public function items(){
-        return $this->belongsTo(items::class, 'item_id');
+        return $this->belongsTo(Item::class, 'item_id');
     }
 }

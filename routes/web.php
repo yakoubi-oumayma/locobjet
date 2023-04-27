@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdController;
 use App\Http\Controllers\ItemController;
-use App\Mail\welcomeMail;
 use Illuminate\Support\Facades\Mail;
 /*
 |--------------------------------------------------------------------------
