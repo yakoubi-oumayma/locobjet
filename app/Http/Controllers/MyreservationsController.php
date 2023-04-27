@@ -41,9 +41,7 @@ class MyreservationsController
     public function listRequestedReservation()
     {
         $reservations = Myreservations::getRequestedReservationByUserId(1);
-
-
-
         return view('reservations', ['reservations' => $reservations]);
     }
+
 }

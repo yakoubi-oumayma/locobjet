@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\welcomeMail;
+use App\Models\Myreservations;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Models\User;
@@ -72,6 +73,9 @@ class emailController extends Controller
         ];
         Mail::to($emailOwner)->send(new welcomeMail($ownerData));
 
-        return response()->json(['message' => 'Email sent successfully']);
+        $reservationId = $request->input('reservation_id');
+        $state = $request->input('state');
+        Myreservations::updateReservation($reservationId, $state);
+        return redirect()->route('reservations');
     }
 }
