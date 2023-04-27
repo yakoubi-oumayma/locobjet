@@ -161,5 +161,56 @@
             </div>
         </div>
     </section>
+    @if(Session::has('error_disponiblity1'))
+        <script>
+            swal("Message", "{{ Session::get('error_disponiblity1') }}", {
+                button: "Ok",
+                icon: "error"
+            });
+        </script>
+    @endif
+
+    @if(Session::has('error_disponiblity2'))
+        <script>
+            swal("Erreur", "{{ Session::get('error_disponiblity2') }}", {
+                button: "Ok",
+                icon: "error"
+            });
+        </script>
+    @endif
+    @if(Session::has('error_minRentDay'))
+        <script>
+            swal("Erreur", "{{ Session::get('error_minRentDay') }}", {
+                button: "Ok",
+                icon: "error"
+            });
+        </script>
+    @endif
+    @if(Session::has('error_disponiblity3'))
+        <script>
+            swal("Erreur", "{{ Session::get('error_disponiblity3') }}", {
+                button: "Ok",
+                icon: "error"
+            });
+        </script>
+    @endif
+    @if(Session::has('storeReservation'))
+        <script>
+            swal("Avec succès", "{{ Session::get('storeReservation') }}", {
+                button: "Ok",
+                icon: "success"
+            });
+        </script>
+    @endif
+
+
+    @if(Session::has('error_dates'))
+        <script>
+            swal("Erreur", "{{ Session::get('error_dates') }}", {
+                button: "Ok",
+                icon: "error"
+            });
+        </script>
+    @endif
 
 @endsection

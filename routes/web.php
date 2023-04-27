@@ -41,9 +41,12 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::delete("/admin2/{objet}", [Admin2Controller::class, 'delete'])->name("objet.supprimer");
 
 
-    Route::get('/type', [TypeController::class, 'AddType'])->name("categories");
-    Route::get('/type/create', [TypeController::class, 'create'])->name("categorie.create");
-    Route::post('/type/create', [TypeController::class, 'store'])->name("categorie.ajouter");
+
+    Route::get('/type', [TypeController::class,'AddType'])->name("categories");
+    Route::get('/type/create', [TypeController::class,'create'])->name("categorie.create");
+    Route::post('/type/create', [TypeController::class,'store'])->name("categorie.ajouter");
+    Route::post('/type/delete', [TypeController::class,'delete'])->name("type.supprimer");
+
 
     Route::get('/reservation', [ReservationController::class, 'ShowReserv'])->name('Reservations');
 });
@@ -54,15 +57,16 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
 
 Route::get("/add_ads", [AdController::class, "index"])->name("addAd");
 
-Route::get("/add_ad_new_item", [AdController::class, "createNewItem"]);
-
 Route::get("/all-ads", [AdController::class, "showAllAds"])->name("allAds");
 Route::get("/all-ads/{cat_ids}/{cities}/{price}", [AdController::class, "showAdsByCategory"])->name("AdsByCategory");
 
 Route::get("/ad/{ad_id}", [AdController::class, "showAd"])->name("showAd");
 Route::post("/ad/{ad_id}", [AdController::class, "verifyReservation"]);
 
+
 Route::get("/ad/{ad_id}/{start_date}/{end_date}", [AdController::class, "storeReservations"]);
+
+
 
 
 
@@ -106,9 +110,13 @@ Route::get('/store_email', [App\Http\Controllers\ProfileController::class, 'stor
 Route::get('/inscription', [App\Http\Controllers\Auth\RegisterController::class, 'index']);
 Route::get('/', [App\Http\Controllers\WelcomeController::class, 'index'])->name("homePage");
 
+
+Route::get('/search', [App\Http\Controllers\AdController::class, 'search']);
+
 //Mail
 Route::get('/test', function () {
     return view('email');
 });
 
 Route::put('/reservations', [App\Http\Controllers\emailController::class, 'sendWelcomeEmail'])->name('sentEmail');
+

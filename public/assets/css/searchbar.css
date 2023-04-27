@@ -1,0 +1,42 @@
+
+.box{
+    position: relative;
+    width: 80px;
+    float: right;
+
+}
+
+.input {
+
+    padding: 10px;
+    width: 80px;
+    height: 30px;
+    background: #FFFFFF;
+    border: 3px solid orangered;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-family: Comic Sans MS;
+    font-size: 15px;
+    color: orangered;
+    outline: none;
+    transition: .5s;
+}
+.box:hover input{
+    width: 350px;
+    background: #f0f0f0;
+    border-radius: 5px;
+    margin-left: -280px;
+}
+.box i{
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translate(-50%,-50%);
+    font-size: 26px;
+    color: orangered;
+    transition: .2s;
+}
+.box:hover i{
+    opacity: 0;
+    z-index: -1;
+}

@@ -6,6 +6,7 @@ use App\Models\Myreservations;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class MyreservationsController
@@ -40,8 +41,10 @@ class MyreservationsController
 
     public function listRequestedReservation()
     {
+
         $reservations = Myreservations::getRequestedReservationByUserId(1);
         return view('reservations', ['reservations' => $reservations]);
+
     }
 
 }

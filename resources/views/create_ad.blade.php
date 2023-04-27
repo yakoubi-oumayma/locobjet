@@ -1,16 +1,19 @@
 @extends("master.navbar")
-
-   @section('content')
+@section('content')
 
 <form action="" method="post" enctype="multipart/form-data">
     @csrf
+    <div class="background1">
+    </div>
+    <div class="background2">
+    </div>
     <div class="item-form" >
-        <span>Ajouter votre Objet</span>
+        <center><h4>Informations sur l'objet</h4></center>
         <div class="form-group">
             <input type="text" name="name" class="form-control" placeholder="Nom de l'objet *" value="@if(isset($item)){{$item[0]->name}}  @endif"  @if(isset($item))disabled @endif/>
         </div>
         <div class="form-group">
-            <textarea name="description" class="form-control" placeholder="Description de l'objet *" style="width: 100%; height: 150px;"  @if(isset($item)) disabled @endif"> @if(isset($item)){{$item[0]->description}}@endif</textarea>
+            <textarea name="description" class="form-control" placeholder="Description de l'objet *" style="width: 100%; height: 150px;" @if(isset($item)) disabled @endif">@if(isset($item)){{$item[0]->description}}@endif</textarea>
         </div>
         <div class="form-group">
             <div class="input-group mb-3">
@@ -51,13 +54,24 @@
                     <img src="{{ asset('storage/'.$image->imagename) }}" alt="Image de l'objet" style="width: 200px; heigh :200px;">
                 @endforeach
             @endif
-            <input type="file" name="item_images[]" multiple @if(isset($item))disabled @endif>
-            <small style="color: #FF4B2BFF;">Importer des photos de votre objet</small>
+            <input type="file" name="item_images[]" multiple @if(isset($item))disabled @endif><br>
+                @if(!isset($item))
+                    <small style="color: #FF4B2BFF;">Importer des photos de votre objet</small>
+                @endif
+            @if(isset($item))
+                 <a style="margin-left:70%; text-decoration: none;color: orangered" href="{{route("allItems")}}">Modifier l'objet
+                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                         <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                     </svg>
+                 </a>
+            @endif
         </div>
 
     </div>
+
+
     <div class="add-form">
-        <span >Ajouter votre Annonce</span>
+        <center><h4>Informations sur l'annonce</h4></center>
         <div class="row">
             <div class="form-group">
                 <input type="text" name="title" class="form-control" placeholder="Titre de l'annonce*" value="" />
@@ -65,9 +79,15 @@
             <div class="form-group">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">Valable à parir de</span>
+                        <span class="input-group-text" id="basic-addon1">date de début de disponibilité</span>
                     </div>
-                    <input type="date"  name="available_from" class="form-control" placeholder="Valable à parir de"   aria-describedby="basic-addon1">
+                    <input type="date"  name="available_from" class="form-control"  aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">date de fin de disponibilité &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    </div>
+                    <input type="date"  name="available_end" class="form-control" placeholder="Jusqu'à"   aria-describedby="basic-addon1">
                 </div>
             </div>
             <div class="form-group">
@@ -183,23 +203,41 @@
                     </div>
                 </div>
             </div>
+            <center>
+              <button  type="submit"  class="button-59" role="button" name="submit" value="@if(isset($item)){{$item[0]->item_id}} @endif">Ajouter l'annonce</button>
+
+            </center>
         </div>
+
     </div>
-    <button  type="submit"  class="button-59" role="button" name="submit" value="@if(isset($item)){{$item[0]->item_id}} @endif">Ajouter l'annonce</button>
 </form>
 
+@if(Session::has('success_message'))
+    <script>
+        swal("Message", "{{ Session::get('success_message') }}", {
+            button: "Ok",
+            icon: "success"
+        });
+    </script>
+@endif
 
-
-
-
-
-
-
-
-
-
-
-
+@if(Session::has('error_message'))
+    <script>
+        swal("Erreur", "{{ Session::get('error_message') }}", {
+            button: "Ok",
+            icon: "error"
+        });
+    </script>
+@endif
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
 
 <script>
@@ -251,48 +289,45 @@
 <style>
 
 
-
-    .row{
-        width: 550px;
-        padding: 20px;
-        margin-bottom: 80px;
+    .background1{
+        position: relative;
+        background-color: rgba(0, 0, 0, 0.6);
+        background-image: url({{asset('assets/img/3o.png')}});
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 580px;
+    }
+    .background2{
+        position: relative;
+        background-color: rgba(0, 0, 0, 0.6);
+        background-image: url({{asset('assets/img/4o.png')}});
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 580px;
     }
     .item-form {
-        float: left;
-        width: 50%;
+        padding: 20px;
+        background-color: #F8F0DF;
+        width: 600px;
+        position: absolute;
+        top: 64%;
+        left: 30%;
+        transform: translate(-50%, -50%);
     }
     .add-form{
-        float: right;
-        width: 50%;
-    }
-    .contact-form  {
-        border-radius:1rem;
-    }
-    .form-group{
-        margin-bottom: 15px;
-    }
-    .form-select{
-        border-radius:1rem;
-    }
+        padding: 20px;
+        background-color: #F8F0DF;
+        width: 600px;
+        position: absolute;
+        margin-top: -470px;
+        margin-left: 90px;
 
 
-    .contact-form form .row{
-        margin-bottom: -7%;
-    }
 
-    .contact-form span{
-        text-align: center;
-        color: #ff023a;
-    }
-    .form-check .form-check-input{
-        margin-left: 3px;
 
     }
-    .form-check .form-check-label{
-        margin-left: 4px;
-    }
+
     .button-59 {
-        margin-left: 350px;
         align-items: center;
         background-color: #fff;
         border: 2px solid #FF4B2BFF;
@@ -322,31 +357,29 @@
     .button-59:focus {
         color: #171e29;
     }
-
-    .button-59:hover {
-        border-color: #FF416CFF;
-        color: #FF416CFF;
-        fill: #FF416CFF;
+    .form-group{
+        margin-bottom: 10px;
+        padding-right: 30px;
+        padding-left: 30px;
+    }
+    .form-select{
+        border-radius:1rem;
+    }
+    h4{
+        color:orangered;
     }
 
-    .button-59:active {
-        border-color: #FF416CFF;
-        color: #FF416CFF;
-        fill: #FF416CFF;
-    }
-
-
-
-    .add-item {
-        background-color: orangered; /* Green */
-        border: none;
-        color: white;
-        padding: 15px 32px;
+     span{
         text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
+    }
+    .form-check .form-check-input{
+        margin-left: 3px;
 
     }
+    .form-check .form-check-label{
+        margin-left: 4px;
+    }
+
+
 </style>
-   @endsection
+@endsection

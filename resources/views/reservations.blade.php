@@ -53,6 +53,61 @@
                                                 @endphp
                                                 <h3>Client : {{ $client[0]->username }}</h3>
 
+                                                        <button class="btn btn-success" style="margin-right: 5px;"
+                                                            type="submit" data-toggle="modal"
+                                                            data-target="#accept{{ $reservation->reservation_id }}">
+                                                            <i class="fa fa-check " style="font-size: 15px; "></i>Accepter
+                                                        </button>
+                                                        <button class="btn btn-danger" style="margin-left: 5px;"
+                                                            type="submit" data-toggle="modal"
+                                                            data-target="#reject{{ $reservation->reservation_id }}">
+                                                            <i class="fa fa-x"
+                                                                style="font-size: 15px; color: white"></i>Refuser
+                                                        </button>
+                                                    </div>
+                                                    <!-- Modal -->
+                                                    <div id="accept{{ $reservation->reservation_id }}" class="modal fade"
+                                                        role="dialog">
+                                                        <div class="modal-dialog">
+                                                            <!-- Modal content-->
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h4 class="modal-title">Reservation
+                                                                        ID: {{ $reservation->reservation_id }}</h4>
+                                                                    <button type="button" class="close"
+                                                                        data-dismiss="modal">x
+                                                                    </button>
+                                                                </div>
+                                                                <form method="post" name="accept"
+                                                                    action="{{ route('sentEmail') }}">
+                                                                    @csrf
+                                                                    <input type="hidden" name="user_id"
+                                                                        value="{{ $client[0]->user_id }}">
+                                                                    <input type="hidden" name="email"
+                                                                        value="{{ $client[0]->email }}">
+                                                                    <input type="hidden" name="f_name"
+                                                                        value="{{ $client[0]->f_name }}">
+                                                                    <input type="hidden" name="l_name"
+                                                                        value="{{ $client[0]->l_name }}">
+                                                                    <input type="hidden" name="username"
+                                                                        value="{{ $client[0]->username }}">
+                                                                    <input type="hidden" name="start_date"
+                                                                        value="{{ $reservation->start_date }}">
+                                                                    <input type="hidden" name="end_date"
+                                                                        value="{{ $reservation->end_date }}">
+                                                                    <input type="hidden" name="object_name"
+                                                                        value="{{ $reservation->title }}">
+                                                                    <input type="hidden" name="price"
+                                                                        value="{{ $reservation->price }}">
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-default"
+                                                                            data-dismiss="modal" name="close">Close
+                                                                        </button>
+                                                                        <button type="submit" class="btn btn-primary"
+                                                                            name="accept">Accepte
+                                                                        </button>
+
+
                                                 <button class="btn btn-success" style="margin-right: 5px;"
                                                         type="submit" data-toggle="modal"
                                                         data-target="#accept{{ $reservation->reservation_id }}">
@@ -89,32 +144,38 @@
                                                                    value="{{$reservation->reservation_id}}">
                                                             <input type="hidden" name="state"
                                                                    value="accepted">
+                                                                </div>
+                                                                <form method="post" name="refuse"
+                                                                    action="{{ route('sentEmail') }}">
+                                                                    @csrf
+                                                                    <input type="hidden" name="user_id"
+                                                                        value="{{ $client[0]->user_id }}">
+                                                                    <input type="hidden" name="email"
+                                                                        value="{{ $client[0]->email }}">
+                                                                    <input type="hidden" name="f_name"
+                                                                        value="{{ $client[0]->f_name }}">
+                                                                    <input type="hidden" name="l_name"
+                                                                        value="{{ $client[0]->l_name }}">
+                                                                    <input type="hidden" name="username"
+                                                                        value="{{ $client[0]->username }}">
+                                                                    <input type="hidden" name="start_date"
+                                                                        value="{{ $reservation->start_date }}">
+                                                                    <input type="hidden" name="end_date"
+                                                                        value="{{ $reservation->end_date }}">
+                                                                    <input type="hidden" name="object_name"
+                                                                        value="{{ $reservation->title }}">
+                                                                    <input type="hidden" name="price"
+                                                                        value="{{ $reservation->price }}">
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-default"
+                                                                            data-dismiss="modal">Close
+                                                                        </button>
+                                                                        <button type="submit" class="btn btn-danger"
+                                                                            name="refuse">Refuse</button>
+                                                                    </div>
+                                                                    @method('put')
+                                                                </form>
 
-                                                            <input type="hidden" name="user_id"
-                                                                   value="{{ $client[0]->user_id }}">
-                                                            <input type="hidden" name="email"
-                                                                   value="{{ $client[0]->email }}">
-                                                            <input type="hidden" name="f_name"
-                                                                   value="{{ $client[0]->f_name }}">
-                                                            <input type="hidden" name="l_name"
-                                                                   value="{{ $client[0]->l_name }}">
-                                                            <input type="hidden" name="username"
-                                                                   value="{{ $client[0]->username }}">
-                                                            <input type="hidden" name="start_date"
-                                                                   value="{{ $reservation->start_date }}">
-                                                            <input type="hidden" name="end_date"
-                                                                   value="{{ $reservation->end_date }}">
-                                                            <input type="hidden" name="object_name"
-                                                                   value="{{ $reservation->title }}">
-                                                            <input type="hidden" name="price"
-                                                                   value="{{ $reservation->price }}">
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-default"
-                                                                        data-dismiss="modal">Close
-                                                                </button>
-                                                                <button type="submit"
-                                                                        class="btn btn-primary">Accepte
-                                                                </button>
                                                             </div>
                                                             @method('put')
                                                         </form>

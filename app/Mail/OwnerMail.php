@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class welcomeMail extends Mailable
+class OwnerMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -32,7 +32,7 @@ class welcomeMail extends Mailable
      */
     public function build()
     {
-        return $this->view('email')
+        return $this->view('emails.owner')
             ->subject('Welcome to LocObjet!');
     }
 }
