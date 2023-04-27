@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Mail\ClientMail;
 use App\Mail\RefuseClientMail;
 use App\Mail\OwnerMail;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Models\User;
@@ -60,9 +58,6 @@ class emailController extends Controller
             Mail::to($emailClient)->send(new RefuseClientMail($ownerData));
         }
 
-        $reservationId = $request->input('reservation_id');
-        $state = $request->input('state');
-        Myreservations::updateReservation($reservationId, $state);
-        return redirect()->route('reservations');
+        return response()->json(['message' => 'Email sent successfully']);
     }
 }
