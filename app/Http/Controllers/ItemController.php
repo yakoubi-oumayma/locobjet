@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ItemController extends Controller
 {
     // list all items
     public static function listItems()
     {
-        $items_infos = Item::getItemsByUserId(1);
+        $items_infos = Item::getItemsByUserId(Auth::user()->user_id);
         $items = $items_infos["all_items"];
         $item_images = $items_infos["item_images"];
         $categories = Item::getCategories();

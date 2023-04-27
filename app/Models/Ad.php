@@ -155,7 +155,7 @@ class Ad extends Model
                           WHERE items.user_id =?
                           AND ads.state="active" ' , [1]);
         if ($numberOfAds[0]->total_ads <5){
-            DB::insert('INSERT INTO items (name, price, city, description, category_id, user_id ) VALUES (?,?,?,?,?,?)', [$name, $price, $city, $description, $category_id, 1]);
+            DB::insert('INSERT INTO items (name, price, city, description, category_id, user_id ) VALUES (?,?,?,?,?,?)', [$name, $price, $city, $description, $category_id, Auth::user()->user_id]);
 
             $lastId = DB::table('items')->latest('item_id')->first()->item_id;
 

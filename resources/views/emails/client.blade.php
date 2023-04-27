@@ -44,11 +44,13 @@
 
 <body>
     <div class="container">
-        <h1>Welcome, {{ $data['name'] }}!</h1>
+        <h1>Welcome, {{ $data['client_name'] }}!</h1>
         <p>We're happy to inform you that your offer has been accepted by the owner for the rental of the following
             item:</p>
         <ul>
             <li>Item name: {{ $data['object_name'] }}</li>
+            <li>Owner name: {{ $data['name'] }}</li>
+            <li>Owner email: {{ $data['email'] }}</li>
             <li>Rental start date: {{ $data['start_date'] }}</li>
             <li>Rental end date: {{ $data['end_date'] }}</li>
             <li>Price: {{ $data['price'] }}</li>
