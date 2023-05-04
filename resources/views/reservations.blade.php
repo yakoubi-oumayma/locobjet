@@ -49,7 +49,7 @@
                                                         <h3>Titre : {{ $reservation->title }}</h3>
                                                         <h3>Description : {{ $reservation->description }}</h3>
                                                         @php
-                                                            $client = \App\Models\User::getUserById($reservation->client);
+                                                            $client = \App\Models\User::getUserById($reservation->user_id);
                                                             
                                                         @endphp
                                                         <h3>Client : {{ $client[0]->username }}</h3>
