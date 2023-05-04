@@ -38,6 +38,9 @@
                                 <div class="products" style="padding-right: 60px;padding-left: 62px;">
                                     <div class="row g-0">
                                         @foreach ($reservations as $reservation)
+                                            @php
+                                                $client = \App\Models\User::getUserById($reservation->client);
+                                            @endphp
                                             <div class="col-12 col-md-6 col-lg-4">
                                                 <div class="clean-product-item">
                                                     <div class="image">
@@ -48,10 +51,6 @@
                                                         <h3>Id: {{ $reservation->reservation_id }}</h3>
                                                         <h3>Titre : {{ $reservation->title }}</h3>
                                                         <h3>Description : {{ $reservation->description }}</h3>
-                                                        @php
-                                                            $client = \App\Models\User::getUserById($reservation->user_id);
-                                                            
-                                                        @endphp
                                                         <h3>Client : {{ $client[0]->username }}</h3>
 
                                                         <button class="btn btn-success" style="margin-right: 5px;"
@@ -82,6 +81,11 @@
                                                                 <form method="post" name="accept"
                                                                     action="{{ route('sentEmail') }}">
                                                                     @csrf
+                                                                    <input type="hidden" name="reservation_id"
+                                                                        value="{{ $reservation->reservation_id }}">
+
+                                                                    <input type="hidden" name="state" value="accepted">
+
                                                                     <input type="hidden" name="user_id"
                                                                         value="{{ $client[0]->user_id }}">
                                                                     <input type="hidden" name="email"
@@ -136,6 +140,9 @@
                                                                 <form method="post" name="refuse"
                                                                     action="{{ route('sentEmail') }}">
                                                                     @csrf
+                                                                    <input type="hidden" name="reservation_id"
+                                                                        value="{{ $reservation->reservation_id }}">
+
                                                                     <input type="hidden" name="user_id"
                                                                         value="{{ $client[0]->user_id }}">
                                                                     <input type="hidden" name="email"

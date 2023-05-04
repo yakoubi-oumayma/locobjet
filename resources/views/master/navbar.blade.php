@@ -75,6 +75,8 @@
                             <a class="dropdown-item" href="{{route("allItems")}}">Mes objets</a>
                             <a class="dropdown-item" href="{{route("myLocations")}}">Mes locations</a>
                             <a class="dropdown-item" href="{{route("myReservations")}}">Mes Réservations</a>
+                            <a class="dropdown-item" href="/reservations">Demandes</a>
+
 
                             <div class="dropdown-divider"></div>
                             <form action="{{ route('logout') }}" method="POST">

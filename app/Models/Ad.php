@@ -122,7 +122,7 @@ class Ad extends Model
 
     public static function getAdInfo($ad_id){
         $ad = DB::select("SELECT * FROM ads,items WHERE ads.item_id=items.item_id AND ad_id=? LIMIT 1",[$ad_id]);
-        $ad_images = DB::select("SELECT imagename FROM item_images WHERE item_id=?",[$ad_id]);
+        $ad_images = DB::select("SELECT imagename FROM item_images WHERE item_id=?",[$ad[0]->item_id]);
         $ad_reviews = DB::select("SELECT * FROM ad_reviews WHERE ad_id=?",[$ad_id]);
         $ad_infos = ["ad_infos" => $ad[0], "ad_images" => $ad_images, "ad_reviews" => $ad_reviews];
         return $ad_infos;
@@ -150,15 +150,12 @@ class Ad extends Model
         $available_days
     ) {
 
-        DB::insert('INSERT INTO items (name, price, city, description, category_id, user_id ) VALUES (?,?,?,?,?,?)', [$name, $price, $city, $description, $category_id, Auth::user()->user_id]);
-
-
         $numberOfAds= DB::select('SELECT COUNT(*) AS total_ads FROM ads
                           INNER JOIN items ON ads.item_id = items.item_id
                           WHERE items.user_id =?
                           AND ads.state="active" ' , [1]);
         if ($numberOfAds[0]->total_ads <5){
-            DB::insert('INSERT INTO items (name, price, city, description, category_id, user_id ) VALUES (?,?,?,?,?,?)', [$name, $price, $city, $description, $category_id, 1]);
+            DB::insert('INSERT INTO items (name, price, city, description, category_id, user_id ) VALUES (?,?,?,?,?,?)', [$name, $price, $city, $description, $category_id, Auth::user()->user_id]);
 
             $lastId = DB::table('items')->latest('item_id')->first()->item_id;
 
