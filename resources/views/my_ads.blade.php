@@ -76,7 +76,7 @@
                                                         src="assets/img/star-half-empty.svg"><img
                                                         src="assets/img/star-empty.svg"></div>
                                                 <div class="price">
-                                                    <h3>$100</h3>
+                                                    <h3>100MAD</h3>
                                                 </div>
                                                 <a href="{{route("editAd",["ad_id" => $ad->ad_id])}}" class="btn btn-info"> Modifier</a>
                                             </div>

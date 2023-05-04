@@ -189,7 +189,8 @@ class AdController extends Controller
 
         }
     public function storeReservations($ad_id,$start, $end ){
-        AdReservation::insertReservation( $ad_id,$start , $end , 1);
+        $user_id =Auth::user()->user_id;
+        AdReservation::insertReservation( $ad_id,$start , $end ,$user_id );
         return back()->with('storeReservation', 'Votre réservation a été bien envoyée!');
 
     }

@@ -114,6 +114,8 @@
                                 @foreach($ad_reviews as $review)
                                     <div class="reviews">
                                         <div class="review-item">
+                                            <span class="text-muted"><a href="#">{{$review->username}}</a></span>
+                                            <h4>{{$review->comment}}</h4>
                                             <div class="rating">
                                                 @for($i=0;$i<$review->rating;$i++)
                                                     <img src="{{asset("assets/img/star.svg")}}">
@@ -122,7 +124,6 @@
                                                         <img src="{{asset("assets/img/star-empty.svg")}}">
                                                     @endfor
                                             </div>
-                                            <h4>{{$review->comment}}</h4><span class="text-muted"><a href="#">John Smith</a></span>
                                         </div>
                                     </div>
 

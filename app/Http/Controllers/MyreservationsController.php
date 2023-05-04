@@ -16,12 +16,12 @@ class MyreservationsController
         return view('my_reservation');
     }
 
-    public function ShowMyAdsactive()
+    public function ShowMyAdsActive()
     {
 
-        $user_id = 2; // votre variable contenant l'ID de l'utilisateur
+       // votre variable contenant l'ID de l'utilisateur
 
-        $all_ads = Myreservations::getMyreservations(2);
+        $all_ads = Myreservations::getMyreservations(Auth::user()->user_id);
         $dt = Carbon::now();
         $dt->toDateString();
         return view('my_reservation', compact("all_ads", "dt"));
@@ -31,9 +31,9 @@ class MyreservationsController
         $ad_id = $request->submit;
         $comment = $request->comment;
         $rating = $request->rating;
-        $user_id = 2;
+        $user_id = Auth::user()->user_id;
         DB::insert('INSERT INTO ad_reviews (ad_id, user_id, comment, rating) VALUES (?,?,?,?)', [$ad_id, $user_id, $comment, $rating]);
-        $all_ads = Myreservations::getMyreservations(2);
+        $all_ads = Myreservations::getMyreservations(Auth::user()->user_id);
         $dt = Carbon::now();
         $dt->toDateString();
         return view('my_reservation', compact("all_ads", "dt"));

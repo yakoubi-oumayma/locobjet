@@ -11,7 +11,7 @@ class Myreservations
 {
     public static function getMyreservations($user_id)
     {
-        $all_ads = DB::select("SELECT title,description,reservation.user_id as client,end_date,username from ads,items,reservation,users WHERE items.user_id=? and users.user_id=reservation.user_id AND ads.ad_id=reservation.ad_id  ",[$user_id]);
+        $all_ads = DB::select("Select *, username, reservation.user_id as auth_user FROM users,ads,items,reservation WHERE reservation.ad_id=ads.ad_id AND ads.item_id=items.item_id AND items.user_id=users.user_id AND reservation.user_id=? AND reservation.state!='requested' ORDER BY reservation_id DESC",[$user_id]);
         return $all_ads;
     }
 

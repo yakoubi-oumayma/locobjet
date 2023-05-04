@@ -164,7 +164,7 @@ class AdReservation extends Model
         return $nb;
         }
     public static function insertReservation($ad_id , $start , $end , $user_id){
-        DB::insert('INSERT INTO reservation (start_date, end_date, ad_id, user_id ) VALUES (?,?,?,?)', [$start, $end, $ad_id, 1]);
+        DB::insert('INSERT INTO reservation (start_date, end_date, ad_id, user_id ) VALUES (?,?,?,?)', [$start, $end, $ad_id, $user_id]);
     }
 }
 
