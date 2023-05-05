@@ -191,7 +191,10 @@ class AdController extends Controller
     public function storeReservations($ad_id,$start, $end ){
         $user_id =Auth::user()->user_id;
         AdReservation::insertReservation( $ad_id,$start , $end ,$user_id );
+        // methode pour update state of ad to inactive
+        AdReservation::updateToInactive($ad_id);
         return back()->with('storeReservation', 'Votre réservation a été bien envoyée!');
+
 
     }
 
@@ -218,6 +221,7 @@ class AdController extends Controller
         Ad::updateAd($new_infos);
         return redirect()->back();
     }
+
 
 
     public function search(Request $request)

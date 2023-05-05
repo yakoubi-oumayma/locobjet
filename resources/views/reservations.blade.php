@@ -104,6 +104,8 @@
                                                                    value="{{ $reservation->title }}">
                                                             <input type="hidden" name="price"
                                                                    value="{{ $reservation->price }}">
+                                                            <input type="hidden" name="ad_id"
+                                                                   value="{{ $reservation->ad_id }}">
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-default"
                                                                         data-dismiss="modal" name="close">Close
@@ -160,6 +162,8 @@
                                                                    value="{{ $reservation->title }}">
                                                             <input type="hidden" name="price"
                                                                    value="{{ $reservation->price }}">
+                                                            <input type="hidden" name="ad_id"
+                                                                   value="{{ $reservation->ad_id }}">
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-default"
                                                                         data-dismiss="modal">Close

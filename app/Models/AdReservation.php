@@ -14,7 +14,9 @@ class AdReservation extends Model
 {
     use HasFactory;
 
-
+    public static function updateToInactive($ad_id){
+        DB::update('UPDATE ads SET state ="inactive" WHERE ad_id =? ', [$ad_id]);
+    }
     //1- Vérifier si un objet est déjà réservé
     public static function isAlreadyReserved($ad_id, $start, $end)
     {

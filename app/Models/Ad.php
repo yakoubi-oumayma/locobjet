@@ -34,7 +34,7 @@ class Ad extends Model
         return $all_categories;
   }
     public static function getAllAd(){
-        $all_ads = DB::select("SELECT * FROM ads,items WHERE ads.item_id=items.item_id order by ad_id ASC");
+        $all_ads = DB::select("SELECT * FROM ads,items WHERE ads.item_id=items.item_id AND ads.state='active' order by ad_id ASC");
         $ad_images = [];
         foreach ($all_ads as $ad){
             $image_name= DB::select("SELECT imagename FROM item_images WHERE item_id=? LIMIT 1",[$ad->item_id]);
@@ -90,7 +90,7 @@ class Ad extends Model
             $price = "items.price". " ".$price_arr[0];
         }
 
-        $all_ads = DB::select("SELECT * FROM ads,items WHERE ads.item_id=items.item_id AND $categories AND $cities AND $price order by ad_id ASC");
+        $all_ads = DB::select("SELECT * FROM ads,items WHERE ads.item_id=items.item_id AND ads.state='active' AND $categories AND $cities AND $price order by ad_id ASC");
         $ad_images = [];
         foreach ($all_ads as $ad){
             $image_name= DB::select("SELECT imagename FROM item_images WHERE item_id=? LIMIT 1",[$ad->item_id]);

@@ -7,6 +7,7 @@ use App\Mail\RefuseClientMail;
 use App\Mail\OwnerMail;
 use App\Models\Myreservations;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use App\Models\User;
 
@@ -15,7 +16,7 @@ class emailController extends Controller
 
     public function sendWelcomeEmail(Request $request)
     {
-
+        $ad_id= $request->input('ad_id');
         $user_id = $request->input('user_id');
         $username = $request->input('username');
         $emailClient = $request->input('email');
@@ -51,6 +52,7 @@ class emailController extends Controller
             'email' => $emailOwner
         ];
         if ($request->has('accept')) {
+            DB::update('UPDATE ads SET state ="active" WHERE ad_id =? ', [$ad_id]);
             Mail::to($emailOwner)->send(new OwnerMail($clientData));
             Mail::to($emailClient)->send(new ClientMail($ownerData));
 
@@ -60,6 +62,8 @@ class emailController extends Controller
             return redirect()->route('reservations');
 
         } else if ($request->has('refuse')) {
+            DB::update('UPDATE ads SET state ="active" WHERE ad_id =? ', [$ad_id]);
+
             Mail::to($emailClient)->send(new RefuseClientMail($ownerData));
 
             $reservationId = $request->input('reservation_id');
