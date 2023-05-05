@@ -19,6 +19,8 @@ return new class extends Migration
             $table->foreign('ad_id')->references('ad_id')->on('ads')->onDelete('cascade');
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
+            $table->unsignedInteger('reservation_id');
+            $table->foreign('reservation_id')->references('reservation_id')->on('reservation')->onDelete('cascade');
             $table->timestamps();
             Schema::enableForeignKeyConstraints();
 

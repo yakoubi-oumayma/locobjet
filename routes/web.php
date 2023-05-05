@@ -83,6 +83,7 @@ Route::post("/reservations", [MyreservationsController::class, "handleReservatio
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+
 Route::get("/all_items", [ItemController::class, 'listItems'])->name('allItems');
 Route::post("/all_items", [ItemController::class, 'editItem'])->name('editItem');
 

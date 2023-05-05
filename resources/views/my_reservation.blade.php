@@ -21,9 +21,16 @@
                                             </div>
                                             <div class="about">
                                                 <br>
-                                                        @if(  (strtotime($dt)-strtotime($ad->end_date))<604800 )
-                                                    <button type="button" class="btn btn-primary" style="width: 140px" data-bs-toggle="modal" data-bs-target="#modif{{$ad->ad_id}}">Ajouter commentaire</button>
+                                                @if(  (strtotime($dt)>strtotime($ad->end_date)))
+                                                        @if(  (strtotime($dt)-strtotime($ad->end_date))<604800)
+
+                                                            @if(app('App\Http\Controllers\MyreservationsController')-> getcommentadded(Auth::user()->user_id,$ad->reservation_id)>0)
+                                                                <button type="button" class="btn btn-primary" style="width: 140px" data-bs-toggle="modal" data-bs-target="#modif{{$ad->ad_id}}" disabled>Ajouter commentaire</button>
+                                                            @else
+                                                                <button type="button" class="btn btn-primary" style="width: 140px" data-bs-toggle="modal" data-bs-target="#modif{{$ad->ad_id}}">Ajouter commentaire</button>
+                                                            @endif
                                                         @endif
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -38,6 +45,7 @@
                                                     <form method="post" action="" >
                                                         @csrf
                                                         <div class="mb-3">
+                                                            <input type="hidden" id="reservation_id" name="reservation_id" value=" {{$ad->reservation_id}}" />
                                                             <h6  style="margin-left: 20px;"><span style="font-weight: bolder; color: orangered !important;">l'objet : </span>{{$ad->title}}</h6>
                                                             <label for="message-text" class="col-form-label" style="margin-left: 20px;font-weight: bolder">le commentaire : </label>
                                                             <input class="form-control" id="message-text" name="comment" value="">
@@ -58,6 +66,7 @@
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
                                                             <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" name="submit" value="{{$ad->ad_id}}">Ajouter</button>
+
                                                         </div>
                                                     </form>
                                                 </div>

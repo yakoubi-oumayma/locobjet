@@ -17,8 +17,12 @@ return new class extends Migration
             $table->text('comment');
             $table->unsignedInteger('from_user_id');
             $table->foreign('from_user_id')->references('user_id')->on('users')->onDelete('cascade');
+            $table->unsignedInteger('reservation_id');
+            $table->foreign('reservation_id')->references('reservation_id')->on('reservation')->onDelete('cascade');
             $table->unsignedInteger('to_user_id');
             $table->foreign('to_user_id')->references('user_id')->on('users')->onDelete('cascade');
+
+
             $table->timestamps();
             Schema::enableForeignKeyConstraints();
 

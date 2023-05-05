@@ -114,7 +114,7 @@
                                 @foreach($ad_reviews as $review)
                                     <div class="reviews">
                                         <div class="review-item">
-                                            <span class="text-muted"><a href="#">{{$review->username}}</a></span>
+                                            <span class="text-muted"><a href="{{route("")}}">{{$review->username}}</a></span>
                                             <h4>{{$review->comment}}</h4>
                                             <div class="rating">
                                                 @for($i=0;$i<$review->rating;$i++)

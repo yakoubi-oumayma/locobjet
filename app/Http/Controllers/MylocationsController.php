@@ -26,13 +26,18 @@ class MylocationsController
 
 
     }
+    public static function getcommentadded($user_id,$reservation_id){
+        $comment_exist = DB::select("Select count(*) FROM user_reviews WHERE user_reviews.user_id=? and user_reviews.reservation_id=?",[$user_id,$reservation_id]);
+        return $comment_exist;
+    }
+
     public function addCom(Request $request){
         $client = $request->submit;
+        $reservation_id=$request->reservation_id;
         $comment=$request->comment;
         $rating=$request->rating;
-        $user_id = 2;
-        DB::insert('INSERT INTO user_reviews (from_user_id, to_user_id, comment, rating) VALUES (?,?,?,?)', [$user_id, $client, $comment, $rating]);
-        $all_ads=Mylocations::getMylocations(2);
+        DB::insert('INSERT INTO user_reviews (from_user_id, to_user_id, comment, rating,reservation_id) VALUES (?,?,?,?,?)', [Auth::user()->user_id, $client, $comment, $rating,$reservation_id]);
+        $all_ads=Mylocations::getMylocations(Auth::user()->user_id);
         $dt = Carbon::now();
         $dt->toDateString();
         return redirect()->back();

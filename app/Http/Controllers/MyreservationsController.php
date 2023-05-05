@@ -26,13 +26,19 @@ class MyreservationsController
         $dt->toDateString();
         return view('my_reservation', compact("all_ads", "dt"));
     }
+    public static function getcommentadded($user_id,$reservation_id){
+        $comment_exist = DB::select("Select count(*) FROM ad_reviews WHERE ad_reviews.user_id=? and ad_reviews.reservation_id=?",[$user_id,$reservation_id]);
+        return $comment_exist;
+    }
+
     public function addCom(Request $request)
     {
         $ad_id = $request->submit;
         $comment = $request->comment;
         $rating = $request->rating;
+        $reservation_id=$request->reservation_id;
         $user_id = Auth::user()->user_id;
-        DB::insert('INSERT INTO ad_reviews (ad_id, user_id, comment, rating) VALUES (?,?,?,?)', [$ad_id, $user_id, $comment, $rating]);
+        DB::insert('INSERT INTO ad_reviews (ad_id, user_id, comment, rating,reservation_id) VALUES (?,?,?,?,?)', [$ad_id, $user_id, $comment, $rating,$reservation_id]);
         $all_ads = Myreservations::getMyreservations(Auth::user()->user_id);
         $dt = Carbon::now();
         $dt->toDateString();

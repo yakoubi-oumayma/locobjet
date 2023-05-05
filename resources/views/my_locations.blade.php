@@ -24,8 +24,14 @@
                                         </div>
                                         <div class="about">
                                             <br>
-                                            @if( (strtotime($dt)-strtotime($ad->end_date))<604800 )
-                                                <button type="button" class="btn btn-primary" style="width: 200px ;" data-bs-toggle="modal" data-bs-target="#modif{{$ad->client}}">Ajouter commentaire sur le locataire</button>
+                                            @if(  (strtotime($dt)>strtotime($ad->end_date)))
+                                                @if( (strtotime($dt)-strtotime($ad->end_date))<604800 )
+                                                    @if(app('App\Http\Controllers\MyreservationsController')-> getcommentadded(Auth::user()->user_id,$ad->reservation_id)>0)
+                                                        <button type="button" class="btn btn-primary" style="width: 200px ;" data-bs-toggle="modal" data-bs-target="#modif{{$ad->client}}" disabled>Ajouter commentaire sur le locataire</button>
+                                                    @else
+                                                        <button type="button" class="btn btn-primary" style="width: 200px ;" data-bs-toggle="modal" data-bs-target="#modif{{$ad->client}}">Ajouter commentaire sur le locataire</button>
+                                                    @endif
+                                                @endif
                                             @endif
                                         </div>
                                     </div>
@@ -42,6 +48,7 @@
                                                 @csrf
                                                 <div class="mb-3">
                                                     <h6 style="margin-left: 20px;"><span  style="font-weight: bolder; color: orangered !important;">Le locataire</span> : {{$ad->username}}</h6>
+                                                    <input type="hidden" id="reservation_id" name="reservation_id" value=" {{$ad->reservation_id}}" />
                                                     <label  for="message-text" class="col-form-label" style="margin-left: 20px;font-weight: bolder">Le commentaire : </label>
                                                     <input style="padding: 10px" class="form-control" id="message-text" name="comment" value="">
                                                     <label    style="margin-left: 20px; font-weight: bolder" for="message-text" class="col-form-label">Sa note sur 5 : </label>

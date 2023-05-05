@@ -217,6 +217,8 @@
         swal("Message", "{{ Session::get('success_message') }}", {
             button: "Ok",
             icon: "success"
+        }).then(function() {
+            window.location.href = "{{ route('myAds') }}";
         });
     </script>
 @endif
@@ -226,6 +228,8 @@
         swal("Erreur", "{{ Session::get('error_message') }}", {
             button: "Ok",
             icon: "error"
+        }).then(function() {
+            window.location.href = "{{ route('myAds') }}";
         });
     </script>
 @endif
