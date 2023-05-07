@@ -47,12 +47,12 @@
         <h1>Congratulations!</h1>
         <p>You have accepted a rental request for the following item:</p>
         <ul>
-            <li>Item name: {{ $data['object_name'] }}</li>
-            <li>Rental start date: {{ $data['start_date'] }}</li>
-            <li>Rental end date: {{ $data['end_date'] }}</li>
-            <li>Rental price: {{ $data['price'] }}</li>
-            <li>Client name: {{ $data['name'] }}</li>
-            <li>Client email: {{ $data['email'] }}</li>
+            <li>Item name: {{ $ownerData['object_name'] }}</li>
+            <li>Rental start date: {{ $ownerData['start_date'] }}</li>
+            <li>Rental end date: {{ $ownerData['end_date'] }}</li>
+            <li>Rental price: {{ $ownerData['price'] }}</li>
+            <li>Client name: {{ $ownerData['name'] }}</li>
+            <li>Client email: {{ $ownerData['email'] }}</li>
 
         </ul>
         <p>We have notified the client of your acceptance and they will be in touch with you soon to arrange payment and

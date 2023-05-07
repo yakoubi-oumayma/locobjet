@@ -11,10 +11,12 @@ class Reservation extends Model
     protected $table = 'reservation';
 
 
-    public function Annonces(){
+    public function Annonces()
+    {
         return $this->belongsTo(Admin1::class, 'ad_id');
     }
-    public function utilisateurs(){
+    public function utilisateurs()
+    {
         return $this->belongsTo(Admin::class, 'user_id');
     }
 }

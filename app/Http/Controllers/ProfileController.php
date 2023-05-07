@@ -20,10 +20,9 @@ class ProfileController extends Controller
             $user = new User();
             $user_infos = $user::selectUser();
             $email_session = Auth::user()->email;
-            //$userId = auth()->user()->id; // Get the ID of the currently logged in user
+
             $user_id = Auth::user()->user_id;
-            /* $reviews = DB::select("SELECT * FROM ad_reviews,ads,items,users WHERE
-                        ad_reviews.ad_id=ads.ad_id AND ads.item_id=items.item_id AND items.user_id=users.user_id AND users.user_id=?",[$user_id]);*/
+
             $reviews = AdReview::whereHas('ad.item.user', function ($query) use ($user_id) {
                 $query->where('user_id', $user_id);
             })->get();
@@ -38,6 +37,28 @@ class ProfileController extends Controller
         }
     }
 
+    //VISITER LE PROFIL DUN USER
+    public function visitProfil($user_id)
+    {
+
+        $user = new User();
+        $user_infos = $user::selectUserById($user_id);
+
+        $email_session = Auth::user()->email;
+
+
+
+        $reviews = AdReview::whereHas('ad.item.user', function ($query) use ($user_id) {
+            $query->where('user_id', $user_id);
+        })->get();
+
+        return view('Profile')->with([
+            'user_infos' => $user_infos,
+            'reviews'    => $reviews,
+            'email_session' => $email_session
+
+        ]);
+    }
     public function settings()
     {
         if (Auth::check()) {

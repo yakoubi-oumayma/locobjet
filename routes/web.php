@@ -46,10 +46,10 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
 
 
 
-    Route::get('/type', [TypeController::class,'AddType'])->name("categories");
-    Route::get('/type/create', [TypeController::class,'create'])->name("categorie.create");
-    Route::post('/type/create', [TypeController::class,'store'])->name("categorie.ajouter");
-    Route::post('/type/delete', [TypeController::class,'delete'])->name("type.supprimer");
+    Route::get('/type', [TypeController::class, 'AddType'])->name("categories");
+    Route::get('/type/create', [TypeController::class, 'create'])->name("categorie.create");
+    Route::post('/type/create', [TypeController::class, 'store'])->name("categorie.ajouter");
+    Route::post('/type/delete', [TypeController::class, 'delete'])->name("type.supprimer");
 
 
     Route::get('/reservation', [ReservationController::class, 'ShowReserv'])->name('Reservations');
@@ -86,8 +86,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get("/all_items", [ItemController::class, 'listItems'])->name('allItems');
 Route::post("/all_items", [ItemController::class, 'editItem'])->name('editItem');
 
-Route::get("/editAd/{ad_id}",[AdController::class, "editAd"])->name("editAd");
-Route::post("/editAd/{ad_id}",[AdController::class, "updateAd"])->name("editAd");
+Route::get("/editAd/{ad_id}", [AdController::class, "editAd"])->name("editAd");
+Route::post("/editAd/{ad_id}", [AdController::class, "updateAd"])->name("editAd");
 Route::get("/createAd/{item_id}", [AdController::class, 'createAdFromItem'])->name('createAdFromItem');
 Route::get("/createAd", [AdController::class, 'createAd'])->name('createAd');
 Route::post("/createAd/{itemId}", [AdController::class, "storeExistenItemAd"]);
@@ -108,12 +108,14 @@ Route::get("/my_ads", [AdController::class, "showMyAds"])->name('myAds');
 
 
 Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile');
+Route::get('/visitProfil/{id}', [App\Http\Controllers\ProfileController::class, 'visitProfil'])->name('visitProfil');
 Route::get('/settings', [App\Http\Controllers\ProfileController::class, 'settings'])->name('settings');
 Route::put('/settings/{user}', [App\Http\Controllers\ProfileController::class, 'update'])->name('user.update');
 Route::get('/store_email', [App\Http\Controllers\ProfileController::class, 'storeEmail'])->name('storeEmail');
 
 Route::get('/inscription', [App\Http\Controllers\Auth\RegisterController::class, 'index']);
 Route::get('/', [App\Http\Controllers\WelcomeController::class, 'index'])->name("homePage");
+
 
 
 Route::get('/search', [App\Http\Controllers\AdController::class, 'search']);
@@ -124,4 +126,3 @@ Route::get('/test', function () {
 });
 
 Route::put('/reservations', [App\Http\Controllers\emailController::class, 'sendWelcomeEmail'])->name('sentEmail');
-
